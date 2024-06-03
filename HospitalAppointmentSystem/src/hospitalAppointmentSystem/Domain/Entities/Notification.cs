@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Entities;
-public class Notification : Entity<Guid>
+public class Notification : Entity<int>
 {
     public Notification()
     {
     }
 
-    public Notification(Guid id, string message, bool emailStatus, bool smsStatus)
+    public Notification(int id, string message, bool emailStatus, bool smsStatus)
     {
         Id = id;
 
@@ -26,7 +26,7 @@ public class Notification : Entity<Guid>
     public bool EmailStatus { get; set; }
     public bool SmsStatus { get; set; }
 
-    public virtual Appointment Appointment { get; set; }
+    public virtual Appointment? Appointment { get; set; }
 
 }
 

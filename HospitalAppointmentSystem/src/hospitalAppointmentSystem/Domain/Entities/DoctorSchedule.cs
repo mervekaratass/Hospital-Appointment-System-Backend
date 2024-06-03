@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Entities;
-public class DoctorSchedule : Entity<Guid>
+public class DoctorSchedule : Entity<int>
 {
     public DoctorSchedule()
     {
     }
 
-    public DoctorSchedule(Guid id, DateOnly date, TimeOnly startTime, TimeOnly endTime)
+    public DoctorSchedule(int id, DateOnly date, TimeOnly startTime, TimeOnly endTime)
     {
         Id = id;
 
@@ -26,5 +26,5 @@ public class DoctorSchedule : Entity<Guid>
     public TimeOnly StartTime { get; set; }
     public TimeOnly EndTime { get; set; }
 
-    public virtual Doctor Doctor { get; set; }
+    public virtual Doctor? Doctor { get; set; }
 }

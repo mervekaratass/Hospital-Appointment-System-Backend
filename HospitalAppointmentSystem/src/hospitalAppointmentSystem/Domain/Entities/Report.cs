@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Entities;
-public class Report : Entity<Guid>
+public class Report : Entity<int>
 {
     public Report()
     {
     }
 
-    public Report(Guid id, string text)
+    public Report(int id, string text)
     {
         Id = id;
         Text = text;
@@ -21,5 +21,5 @@ public class Report : Entity<Guid>
 
     public string Text { get; set; }
 
-    public virtual Appointment Appointment { get; set; }
+    public virtual Appointment? Appointment { get; set; }
 }

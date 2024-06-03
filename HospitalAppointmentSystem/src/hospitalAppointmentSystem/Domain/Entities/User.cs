@@ -18,12 +18,12 @@ public class User : NArchitecture.Core.Security.Entities.User<Guid>
 
 
 
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
-    public DateTime? DateOfBirth { get; set; } = null;
-    public string? NationalIdentity { get; set; } = null;
-    public string? Phone { get; set; }
-    public string? Address { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public DateTime DateOfBirth { get; set; } 
+    public string NationalIdentity { get; set; } 
+    public string Phone { get; set; }
+    public string Address { get; set; }
 
 
 

@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Entities;
-public class Branch : Entity<Guid>
+public class Branch : Entity<int>
 {
     public Branch()
     {
     }
 
-    public Branch(Guid id, string name)
+    public Branch(int id, string name)
     {
         Id = id;
         Name = name;

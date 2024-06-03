@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Entities;
-public class Feedback : Entity<Guid>
+public class Feedback : Entity<int>
 {
     public Feedback()
     {
     }
 
-    public Feedback(Guid id, string text)
+    public Feedback(int id, string text)
     {
         Id = id;
 
@@ -22,6 +22,6 @@ public class Feedback : Entity<Guid>
 
     public string Text { get; set; }
 
-    public virtual User User { get; set; }
+    public virtual User? User { get; set; }
 }
 

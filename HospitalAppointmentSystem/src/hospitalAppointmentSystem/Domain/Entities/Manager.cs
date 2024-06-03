@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Entities;
-public class Manager : User<Guid>
+public class Manager : User
 {
     public Manager()
     {
