@@ -13,6 +13,9 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
 
     public void Configure(EntityTypeBuilder<Appointment> builder)
     {
+
+    
+
         builder.HasOne(a => a.Doctor)
               .WithMany(d => d.Appointments)
               .HasForeignKey(a => a.Id)
