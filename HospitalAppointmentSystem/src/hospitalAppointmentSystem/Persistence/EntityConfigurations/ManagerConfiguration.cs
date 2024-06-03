@@ -15,7 +15,7 @@ public class ManagerConfiguration : IEntityTypeConfiguration<Manager>
     {
 
 
-        builder.ToTable("Manager");
+        builder.ToTable("Managers");
 
         builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
         builder.Property(p => p.CreatedDate).HasColumnName("CreatedDate").IsRequired();

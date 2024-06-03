@@ -13,12 +13,12 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.Id).HasColumnName("Id").IsRequired();
 
-        builder.Property(u => u.FirstName).HasColumnName("FirstName");
-        builder.Property(u => u.LastName).HasColumnName("LastName");
-        builder.Property(x => x.DateOfBirth).HasColumnName("DateOfBirth");
-        builder.Property(x => x.NationalIdentity).HasColumnName("NationalIdentity");
-        builder.Property(u => u.Phone).HasColumnName("Phone");
-        builder.Property(u => u.Address).HasColumnName("Address");
+        builder.Property(u => u.FirstName).HasColumnName("FirstName").IsRequired();
+        builder.Property(u => u.LastName).HasColumnName("LastName").IsRequired();
+        builder.Property(x => x.DateOfBirth).HasColumnName("DateOfBirth").IsRequired();
+        builder.Property(x => x.NationalIdentity).HasColumnName("NationalIdentity").IsRequired().HasMaxLength(11);
+        builder.Property(u => u.Phone).HasColumnName("Phone").IsRequired();
+        builder.Property(u => u.Address).HasColumnName("Address").IsRequired();
         builder.Property(u => u.Email).HasColumnName("Email").IsRequired();
         builder.Property(u => u.PasswordSalt).HasColumnName("PasswordSalt").IsRequired();
         builder.Property(u => u.PasswordHash).HasColumnName("PasswordHash").IsRequired();
@@ -53,8 +53,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 new()
                 {
                     Id = AdminId,
-                    //UserName = "Admin",
-                    Email = "admin@codecamp.com",
+                    FirstName = "Fatma",
+                    LastName = "Birel",                  
+                    DateOfBirth = new DateOnly(2000,11,20),
+                    NationalIdentity = "12345678901",
+                    Phone="05279563492",
+                    Address="Tekirdağ",
+                    Email = "fatmabireltr@gmail.com",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt
                 };

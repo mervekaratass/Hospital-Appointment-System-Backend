@@ -5,7 +5,7 @@ public class User : NArchitecture.Core.Security.Entities.User<Guid>
     public User()
     {
     }
-    public User(Guid id, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string phone, string address)
+    public User(Guid id, string firstName, string lastName, DateOnly dateOfBirth, string nationalIdentity, string phone, string address)
     {
         Id = id;
         FirstName = firstName;
@@ -20,7 +20,7 @@ public class User : NArchitecture.Core.Security.Entities.User<Guid>
 
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public DateTime DateOfBirth { get; set; } 
+    public DateOnly DateOfBirth { get; set; } 
     public string NationalIdentity { get; set; } 
     public string Phone { get; set; }
     public string Address { get; set; }

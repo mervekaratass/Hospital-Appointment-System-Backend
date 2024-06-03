@@ -19,6 +19,7 @@ public class PatientConfiguration : IEntityTypeConfiguration<Patient>
         builder.Property(p => p.Age).HasColumnName("Age").IsRequired();
         builder.Property(p => p.Height).HasColumnName("Height").IsRequired();
         builder.Property(p => p.Weight).HasColumnName("Weight").IsRequired();
+        builder.Property(p => p.BloodGroup).HasColumnName("BloodGroup").IsRequired();
         builder.Property(p => p.CreatedDate).HasColumnName("CreatedDate").IsRequired();
         builder.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(p => p.DeletedDate).HasColumnName("DeletedDate");

@@ -12,14 +12,14 @@ public class Feedback : Entity<int>
     {
     }
 
-    public Feedback(int id, string text)
+    public Feedback(int id,Guid userID, string text)
     {
         Id = id;
-
+        UserID = userID;
         Text = text;
     }
 
-
+    public Guid UserID { get; set; }
     public string Text { get; set; }
 
     public virtual User? User { get; set; }

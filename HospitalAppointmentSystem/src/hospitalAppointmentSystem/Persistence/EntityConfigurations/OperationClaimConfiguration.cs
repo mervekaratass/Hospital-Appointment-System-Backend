@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NArchitecture.Core.Security.Constants;
 
+
 namespace Persistence.EntityConfigurations;
 
 public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationClaim>
@@ -97,6 +98,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         );
         #endregion
 
+
+        
         return featureOperationClaims;
     }
 #pragma warning restore S1854 // Unused assignments should be removed

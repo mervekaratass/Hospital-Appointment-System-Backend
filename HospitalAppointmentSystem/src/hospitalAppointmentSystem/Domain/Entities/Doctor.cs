@@ -7,15 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Entities;
-public class Doctor :Entity<Guid>
+public class Doctor :User
 {
     public Doctor()
     {
     }
 
-    public Doctor(string title, string schoolName)
+    public Doctor(Guid id,string title, string schoolName,int branchID)
     {
-
+        Id= id;
+        BranchID = branchID;
         Title = title;
         SchoolName = schoolName;
     }
@@ -24,10 +25,10 @@ public class Doctor :Entity<Guid>
 
     public string Title { get; set; }
     public string SchoolName { get; set; }
-
+    public int BranchID { get; set; }
     public virtual Branch? Branch { get; set; }
 
-    public virtual ICollection<DoctorSchedule> Schedules { get; set; } = new HashSet<DoctorSchedule>();
+    public virtual ICollection<DoctorSchedule> DoctorSchedules { get; set; } = new HashSet<DoctorSchedule>();
 
     public virtual ICollection<Appointment> Appointments { get; set; } = new HashSet<Appointment>();
 }
