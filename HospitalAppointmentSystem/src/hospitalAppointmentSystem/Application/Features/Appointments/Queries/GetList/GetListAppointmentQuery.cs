@@ -9,6 +9,8 @@ using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using static Application.Features.Appointments.Constants.AppointmentsOperationClaims;
+using Microsoft.EntityFrameworkCore;
+using Application.Features.Patients.Constants;
 
 namespace Application.Features.Appointments.Queries.GetList;
 
@@ -38,8 +40,10 @@ public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointme
         {
             IPaginate<Appointment> appointments = await _appointmentRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
-                cancellationToken: cancellationToken
+                size: request.PageRequest.PageSize,
+                cancellationToken: cancellationToken,
+                   orderBy: x => x.OrderByDescending(y => y.Date),
+                include: x => x.Include(x => x.Doctor).Include(x => x.Patient).Include(x => x.Doctor.Branch)
             );
 
             GetListResponse<GetListAppointmentListItemDto> response = _mapper.Map<GetListResponse<GetListAppointmentListItemDto>>(appointments);

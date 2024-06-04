@@ -1,9 +1,14 @@
-using NArchitecture.Core.Application.Responses;
+﻿using NArchitecture.Core.Application.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Application.Features.Appointments.Queries.GetById;
-
-public class GetByIdAppointmentResponse : IResponse
+namespace Application.Features.Appointments.Queries.GetByPatientId;
+public class GetListByPatientDto:IDto
 {
+
     public int Id { get; set; }
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
@@ -18,6 +23,7 @@ public class GetByIdAppointmentResponse : IResponse
 
 
     public Guid PatientID { get; set; }
-    public string PatientFirstName { get; set; } //burda gerekli konfig�rasyonu yap
+    public string PatientFirstName { get; set; } //burda gerekli konfigürasyonu yap
     public string PatientLastName { get; set; }
+
 }

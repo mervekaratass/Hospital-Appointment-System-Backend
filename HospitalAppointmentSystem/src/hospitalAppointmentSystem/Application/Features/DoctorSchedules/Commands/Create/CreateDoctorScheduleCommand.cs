@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.DoctorSchedules.Constants.DoctorSchedulesOperationClaims;
+using Application.Features.Doctors.Constants;
 
 namespace Application.Features.DoctorSchedules.Commands.Create;
 
@@ -19,7 +20,7 @@ public class CreateDoctorScheduleCommand : IRequest<CreatedDoctorScheduleRespons
     public required TimeOnly StartTime { get; set; }
     public required TimeOnly EndTime { get; set; }
 
-    public string[] Roles => [Admin, Write, DoctorSchedulesOperationClaims.Create];
+    public string[] Roles => [Admin, Write, DoctorSchedulesOperationClaims.Create,DoctorsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

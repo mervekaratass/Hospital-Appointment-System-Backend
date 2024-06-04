@@ -23,6 +23,7 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
                 .HasForeignKey<Doctor>(d => d.Id)
                 .OnDelete(DeleteBehavior.Cascade);
 
+
         builder.HasOne(a => a.Branch)
                   .WithMany(d => d.Doctors)
                   .HasForeignKey(a => a.BranchID)
