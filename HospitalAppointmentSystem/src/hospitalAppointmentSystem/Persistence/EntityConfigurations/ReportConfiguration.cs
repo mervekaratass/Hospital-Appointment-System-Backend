@@ -1,16 +1,11 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfigurations;
+
 public class ReportConfiguration : IEntityTypeConfiguration<Report>
 {
-
     public void Configure(EntityTypeBuilder<Report> builder)
     {
         builder.ToTable("Reports");
@@ -18,7 +13,7 @@ public class ReportConfiguration : IEntityTypeConfiguration<Report>
         builder.Property(d => d.Id).HasColumnName("Id").IsRequired();
         builder.Property(d => d.AppointmentID).HasColumnName("AppointmentID").IsRequired();
         builder.Property(d => d.Text).HasColumnName("Text").IsRequired();
-      
+
         builder.Property(d => d.CreatedDate).HasColumnName("CreatedDate").IsRequired();
         builder.Property(d => d.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(d => d.DeletedDate).HasColumnName("DeletedDate");
@@ -29,5 +24,3 @@ public class ReportConfiguration : IEntityTypeConfiguration<Report>
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
-
-

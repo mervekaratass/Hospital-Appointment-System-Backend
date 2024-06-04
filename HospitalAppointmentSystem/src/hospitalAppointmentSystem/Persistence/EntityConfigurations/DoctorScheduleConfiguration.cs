@@ -1,18 +1,14 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfigurations;
+
 public class DoctorScheduleConfiguration : IEntityTypeConfiguration<DoctorSchedule>
 {
-
     public void Configure(EntityTypeBuilder<DoctorSchedule> builder)
     {
+
         builder.ToTable("DoctorSchedules");
 
         builder.Property(d => d.Id).HasColumnName("Id").IsRequired();
@@ -20,7 +16,7 @@ public class DoctorScheduleConfiguration : IEntityTypeConfiguration<DoctorSchedu
         builder.Property(d => d.StartTime).HasColumnName("StartTime").IsRequired();
         builder.Property(d => d.EndTime).HasColumnName("EndTime").IsRequired();
         builder.Property(d => d.DoctorID).HasColumnName("DoctorID").IsRequired();
-      
+
         builder.Property(d => d.CreatedDate).HasColumnName("CreatedDate").IsRequired();
         builder.Property(d => d.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(d => d.DeletedDate).HasColumnName("DeletedDate");
@@ -31,5 +27,3 @@ public class DoctorScheduleConfiguration : IEntityTypeConfiguration<DoctorSchedu
                 .OnDelete(DeleteBehavior.Cascade);
     }
 }
-
-
