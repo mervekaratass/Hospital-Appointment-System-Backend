@@ -54,11 +54,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 {
                     Id = AdminId,
                     FirstName = "Fatma",
-                    LastName = "Birel",                  
-                    DateOfBirth = new DateOnly(2000,11,20),
+                    LastName = "Birel",
+                    DateOfBirth = new DateOnly(2000, 11, 20),
                     NationalIdentity = "12345678901",
-                    Phone="05279563492",
-                    Address="Tekirdağ",
+                    Phone = "05279563492",
+                    Address = "Tekirdağ",
                     Email = "fatmabireltr@gmail.com",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt

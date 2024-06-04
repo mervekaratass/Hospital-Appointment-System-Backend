@@ -1,16 +1,11 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfigurations;
+
 public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
 {
-
     public void Configure(EntityTypeBuilder<Notification> builder)
     {
         builder.ToTable("Notifications");
@@ -28,10 +23,6 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
         builder.HasOne(a => a.Appointment)
             .WithMany(d => d.Notifications)
             .HasForeignKey(a => a.AppointmentID)
-            .OnDelete(DeleteBehavior.Cascade); // Cascade yerine Restrict veya NoAction kullanıyoruz
-
-
+            .OnDelete(DeleteBehavior.Cascade); 
     }
 }
-
-

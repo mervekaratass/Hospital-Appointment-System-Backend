@@ -1,4 +1,5 @@
-﻿using NArchitecture.Core.Security.Entities;
+﻿using NArchitecture.Core.Persistence.Repositories;
+using NArchitecture.Core.Security.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

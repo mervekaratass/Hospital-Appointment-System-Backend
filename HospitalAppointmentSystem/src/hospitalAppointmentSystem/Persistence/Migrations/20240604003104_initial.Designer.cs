@@ -12,7 +12,7 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20240603200948_initial")]
+    [Migration("20240604003104_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -440,6 +440,330 @@ namespace Persistence.Migrations
                             Id = 23,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Users.Delete"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Appointments.Admin"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Appointments.Read"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Appointments.Write"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Appointments.Create"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Appointments.Update"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Appointments.Delete"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Branches.Admin"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Branches.Read"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Branches.Write"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Branches.Create"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Branches.Update"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Branches.Delete"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Doctors.Admin"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Doctors.Read"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Doctors.Write"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Doctors.Create"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Doctors.Update"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Doctors.Delete"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "DoctorSchedules.Admin"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "DoctorSchedules.Read"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "DoctorSchedules.Write"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "DoctorSchedules.Create"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "DoctorSchedules.Update"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "DoctorSchedules.Delete"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Feedbacks.Admin"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Feedbacks.Read"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Feedbacks.Write"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Feedbacks.Create"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Feedbacks.Update"
+                        },
+                        new
+                        {
+                            Id = 53,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Feedbacks.Delete"
+                        },
+                        new
+                        {
+                            Id = 54,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Managers.Admin"
+                        },
+                        new
+                        {
+                            Id = 55,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Managers.Read"
+                        },
+                        new
+                        {
+                            Id = 56,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Managers.Write"
+                        },
+                        new
+                        {
+                            Id = 57,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Managers.Create"
+                        },
+                        new
+                        {
+                            Id = 58,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Managers.Update"
+                        },
+                        new
+                        {
+                            Id = 59,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Managers.Delete"
+                        },
+                        new
+                        {
+                            Id = 60,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Notifications.Admin"
+                        },
+                        new
+                        {
+                            Id = 61,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Notifications.Read"
+                        },
+                        new
+                        {
+                            Id = 62,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Notifications.Write"
+                        },
+                        new
+                        {
+                            Id = 63,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Notifications.Create"
+                        },
+                        new
+                        {
+                            Id = 64,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Notifications.Update"
+                        },
+                        new
+                        {
+                            Id = 65,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Notifications.Delete"
+                        },
+                        new
+                        {
+                            Id = 66,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Patients.Admin"
+                        },
+                        new
+                        {
+                            Id = 67,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Patients.Read"
+                        },
+                        new
+                        {
+                            Id = 68,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Patients.Write"
+                        },
+                        new
+                        {
+                            Id = 69,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Patients.Create"
+                        },
+                        new
+                        {
+                            Id = 70,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Patients.Update"
+                        },
+                        new
+                        {
+                            Id = 71,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Patients.Delete"
+                        },
+                        new
+                        {
+                            Id = 72,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Reports.Admin"
+                        },
+                        new
+                        {
+                            Id = 73,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Reports.Read"
+                        },
+                        new
+                        {
+                            Id = 74,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Reports.Write"
+                        },
+                        new
+                        {
+                            Id = 75,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Reports.Create"
+                        },
+                        new
+                        {
+                            Id = 76,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Reports.Update"
+                        },
+                        new
+                        {
+                            Id = 77,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Reports.Delete"
                         });
                 });
 
@@ -657,7 +981,7 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("80cae923-246b-4ea1-836c-7dd210759b1c"),
+                            Id = new Guid("12ca6357-dbb4-4ab7-b74c-ec89b35f5b6d"),
                             Address = "Tekirdağ",
                             AuthenticatorType = 0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -666,8 +990,8 @@ namespace Persistence.Migrations
                             FirstName = "Fatma",
                             LastName = "Birel",
                             NationalIdentity = "12345678901",
-                            PasswordHash = new byte[] { 126, 54, 23, 104, 18, 233, 74, 240, 202, 36, 238, 113, 239, 172, 83, 179, 167, 229, 83, 208, 53, 83, 159, 53, 160, 59, 75, 72, 197, 70, 190, 64, 29, 88, 106, 247, 211, 250, 68, 35, 104, 49, 82, 66, 156, 37, 60, 225, 83, 55, 193, 90, 157, 211, 233, 115, 173, 72, 254, 106, 182, 225, 10, 30 },
-                            PasswordSalt = new byte[] { 246, 180, 110, 81, 109, 25, 16, 161, 13, 200, 120, 166, 242, 227, 104, 76, 59, 225, 53, 235, 134, 11, 247, 222, 21, 60, 243, 205, 188, 66, 63, 27, 0, 205, 152, 81, 43, 111, 235, 185, 210, 166, 225, 165, 165, 43, 194, 238, 84, 147, 44, 139, 236, 31, 132, 60, 253, 156, 202, 241, 171, 39, 13, 128, 207, 236, 187, 172, 196, 133, 15, 155, 234, 108, 3, 169, 231, 52, 208, 144, 111, 176, 42, 61, 115, 204, 159, 196, 214, 88, 183, 192, 89, 47, 46, 198, 206, 230, 118, 28, 43, 87, 187, 91, 90, 217, 115, 243, 63, 37, 103, 166, 106, 129, 160, 165, 171, 126, 64, 221, 218, 49, 3, 160, 127, 162, 129, 31 },
+                            PasswordHash = new byte[] { 94, 171, 213, 193, 223, 45, 94, 73, 91, 95, 184, 54, 138, 120, 241, 81, 150, 222, 139, 211, 42, 67, 175, 235, 55, 84, 14, 25, 175, 26, 182, 81, 229, 200, 10, 27, 252, 13, 51, 27, 47, 70, 67, 42, 72, 158, 201, 108, 69, 1, 7, 110, 4, 15, 118, 21, 212, 106, 207, 227, 23, 156, 233, 200 },
+                            PasswordSalt = new byte[] { 18, 5, 105, 235, 152, 172, 210, 195, 201, 26, 198, 194, 216, 112, 113, 105, 223, 179, 160, 85, 92, 13, 95, 178, 240, 111, 4, 4, 0, 218, 4, 183, 211, 211, 157, 18, 25, 132, 85, 254, 104, 148, 211, 170, 135, 228, 250, 29, 17, 107, 19, 154, 162, 123, 172, 49, 60, 173, 198, 212, 40, 248, 126, 81, 73, 16, 80, 79, 208, 46, 35, 76, 57, 88, 19, 30, 117, 122, 44, 74, 85, 200, 117, 84, 0, 179, 234, 142, 46, 106, 172, 213, 251, 75, 247, 95, 3, 163, 73, 141, 75, 166, 42, 140, 65, 90, 246, 130, 63, 128, 235, 2, 202, 115, 39, 14, 130, 176, 19, 40, 74, 167, 158, 79, 188, 179, 221, 228 },
                             Phone = "05279563492"
                         });
                 });
@@ -710,10 +1034,10 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("298d0f10-1a83-4ad5-ba07-84517a830274"),
+                            Id = new Guid("62e2d3db-4f64-4c5c-9b8b-2fb09410c98a"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OperationClaimId = 1,
-                            UserId = new Guid("80cae923-246b-4ea1-836c-7dd210759b1c")
+                            UserId = new Guid("12ca6357-dbb4-4ab7-b74c-ec89b35f5b6d")
                         });
                 });
 

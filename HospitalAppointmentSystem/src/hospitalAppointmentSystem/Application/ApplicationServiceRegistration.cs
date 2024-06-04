@@ -20,6 +20,15 @@ using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.DependencyInjection;
 using NArchitecture.Core.Security.JWT;
+using Application.Services.Appointments;
+using Application.Services.Branches;
+using Application.Services.Doctors;
+using Application.Services.DoctorSchedules;
+using Application.Services.Feedbacks;
+using Application.Services.Managers;
+using Application.Services.Notifications;
+using Application.Services.Patients;
+using Application.Services.Reports;
 
 
 namespace Application;
@@ -62,6 +71,15 @@ public static class ApplicationServiceRegistration
 
         services.AddSecurityServices<Guid, int, Guid>(tokenOptions);
 
+        services.AddScoped<IAppointmentService, AppointmentManager>();
+        services.AddScoped<IBranchService, BranchManager>();
+        services.AddScoped<IDoctorService, DoctorManager>();
+        services.AddScoped<IDoctorScheduleService, DoctorScheduleManager>();
+        services.AddScoped<IFeedbackService, FeedbackManager>();
+        services.AddScoped<IManagerService, ManagerManager>();
+        services.AddScoped<INotificationService, NotificationManager>();
+        services.AddScoped<IPatientService, PatientManager>();
+        services.AddScoped<IReportService, ReportManager>();
         return services;
     }
 
