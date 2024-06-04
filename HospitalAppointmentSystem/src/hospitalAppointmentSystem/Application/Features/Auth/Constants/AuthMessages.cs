@@ -4,14 +4,15 @@ public static class AuthMessages
 {
     public const string SectionName = "Auth";
 
-    public const string EmailAuthenticatorDontExists = "EmailAuthenticatorDontExists";
-    public const string OtpAuthenticatorDontExists = "OtpAuthenticatorDontExists";
-    public const string AlreadyVerifiedOtpAuthenticatorIsExists = "AlreadyVerifiedOtpAuthenticatorIsExists";
-    public const string EmailActivationKeyDontExists = "EmailActivationKeyDontExists";
-    public const string UserDontExists = "UserDontExists";
-    public const string UserHaveAlreadyAAuthenticator = "UserHaveAlreadyAAuthenticator";
-    public const string RefreshDontExists = "RefreshDontExists";
-    public const string InvalidRefreshToken = "InvalidRefreshToken";
-    public const string UserMailAlreadyExists = "UserMailAlreadyExists";
-    public const string PasswordDontMatch = "PasswordDontMatch";
+    public const string EmailAuthenticatorDontExists = "Böyle bir e-posta doðrulayýcý yok";
+    public const string OtpAuthenticatorDontExists = "Böyle bir OTP doðrulayýcý yok";
+    public const string AlreadyVerifiedOtpAuthenticatorIsExists = "Bu OTP doðrulayýcý zaten doðrulandý";
+    public const string EmailActivationKeyDontExists = "Böyle bir e-posta aktivasyon anahtarý yok";
+    public const string UserDontExists = "Böyle bir kullanýcý bulunmamaktadýr";
+    public const string UserHaveAlreadyAAuthenticator = "Kullanýcýnýn zaten bir doðrulayýcýsý var";
+    public const string RefreshDontExists = "Böyle bir yenileme yok";
+    public const string InvalidRefreshToken = "Geçersiz yenileme belirteci";
+    public const string UserMailAlreadyExists = "Böyle bir mail adresi zaten var";
+    public const string PasswordDontMatch = "Þifreler eþleþmiyor";
+
 }

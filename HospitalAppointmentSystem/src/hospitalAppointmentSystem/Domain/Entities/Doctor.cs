@@ -22,7 +22,6 @@ public class Doctor :User
     }
 
 
-
     public string Title { get; set; }
     public string SchoolName { get; set; }
     public int BranchID { get; set; }
