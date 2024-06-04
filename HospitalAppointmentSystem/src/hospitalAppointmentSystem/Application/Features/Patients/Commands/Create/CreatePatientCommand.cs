@@ -12,7 +12,7 @@ using static Application.Features.Patients.Constants.PatientsOperationClaims;
 
 namespace Application.Features.Patients.Commands.Create;
 
-public class CreatePatientCommand : IRequest<CreatedPatientResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreatePatientCommand : IRequest<CreatedPatientResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
 
     public required int Age { get; set; }
