@@ -1,7 +1,7 @@
 ﻿using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Security.JWT;
 
-namespace Application.Features.Auth.Commands.Register;
+namespace Application.Features.Auth.Commands.Register.UserRegister;
 
 public class RegisteredResponse : IResponse
 {

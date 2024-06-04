@@ -22,10 +22,10 @@ public class Patient : User
         BloodGroup = bloodGroup;
     }
 
-    public int Age { get; set; }
-    public double Height { get; set; }
-    public double Weight { get; set; }
-    public string BloodGroup {  get; set; } 
+    public int? Age { get; set; }
+    public double? Height { get; set; }
+    public double? Weight { get; set; }
+    public string? BloodGroup {  get; set; } 
 
     public virtual ICollection<Appointment> Appointments { get; set; } = new HashSet<Appointment>();
 

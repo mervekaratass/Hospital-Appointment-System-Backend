@@ -6,6 +6,7 @@ using Domain.Entities;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
 using static Application.Features.DoctorSchedules.Constants.DoctorSchedulesOperationClaims;
+using Application.Features.Doctors.Constants;
 
 namespace Application.Features.DoctorSchedules.Queries.GetById;
 
@@ -13,7 +14,7 @@ public class GetByIdDoctorScheduleQuery : IRequest<GetByIdDoctorScheduleResponse
 {
     public int Id { get; set; }
 
-    public string[] Roles => [Admin, Read];
+    public string[] Roles => [Admin, Read, DoctorsOperationClaims.Update];
 
     public class GetByIdDoctorScheduleQueryHandler : IRequestHandler<GetByIdDoctorScheduleQuery, GetByIdDoctorScheduleResponse>
     {

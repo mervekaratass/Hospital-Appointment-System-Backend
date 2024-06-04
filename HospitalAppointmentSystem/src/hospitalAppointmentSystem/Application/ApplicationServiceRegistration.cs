@@ -71,15 +71,17 @@ public static class ApplicationServiceRegistration
 
         services.AddSecurityServices<Guid, int, Guid>(tokenOptions);
 
-        services.AddScoped<IAppointmentService, AppointmentManager>();
-        services.AddScoped<IBranchService, BranchManager>();
-        services.AddScoped<IDoctorService, DoctorManager>();
-        services.AddScoped<IDoctorScheduleService, DoctorScheduleManager>();
-        services.AddScoped<IFeedbackService, FeedbackManager>();
-        services.AddScoped<IManagerService, ManagerManager>();
-        services.AddScoped<INotificationService, NotificationManager>();
-        services.AddScoped<IPatientService, PatientManager>();
-        services.AddScoped<IReportService, ReportManager>();
+        //services.AddScoped<IAppointmentService, AppointmentManager>();
+        //services.AddScoped<IBranchService, BranchManager>();
+        //services.AddScoped<IDoctorService, DoctorManager>();
+        //services.AddScoped<IDoctorScheduleService, DoctorScheduleManager>();
+        //services.AddScoped<IFeedbackService, FeedbackManager>();
+        //services.AddScoped<IManagerService, ManagerManager>();
+        //services.AddScoped<INotificationService, NotificationManager>();
+        //services.AddScoped<IPatientService, PatientManager>();
+        //services.AddScoped<IReportService, ReportManager>();
+
+        services.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.ServiceType.Name.EndsWith("Manager"));
         return services;
     }
 
@@ -96,6 +98,20 @@ public static class ApplicationServiceRegistration
                 services.AddScoped(item);
             else
                 addWithLifeCycle(services, type);
+        return services;
+    }
+
+    public static IServiceCollection RegisterAssemblyTypes(this IServiceCollection services, Assembly assembly)
+    {
+        var types = assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract);
+        foreach (Type? type in types)
+        {
+            var interfaces = type.GetInterfaces();
+            foreach (var @interface in interfaces)
+            {
+                services.AddScoped(@interface, type);
+            }
+        }
         return services;
     }
 }

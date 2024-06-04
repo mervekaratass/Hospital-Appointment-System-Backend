@@ -26,7 +26,7 @@ public class CreatePatientCommand : IRequest<CreatedPatientResponse>, ISecuredRe
     public string Phone { get; set; }
     public string Address { get; set; }
 
-    public string[] Roles => [Admin, Write, PatientsOperationClaims.Create];
+    public string[] Roles => [Admin, Write];
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

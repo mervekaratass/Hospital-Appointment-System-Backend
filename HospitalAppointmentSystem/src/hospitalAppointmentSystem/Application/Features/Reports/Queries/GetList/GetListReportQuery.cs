@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using static Application.Features.Reports.Constants.ReportsOperationClaims;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Reports.Queries.GetList;
 
@@ -39,7 +40,8 @@ public class GetListReportQuery : IRequest<GetListResponse<GetListReportListItem
             IPaginate<Report> reports = await _reportRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                 include: x => x.Include(x => x.Appointment)
             );
 
             GetListResponse<GetListReportListItemDto> response = _mapper.Map<GetListResponse<GetListReportListItemDto>>(reports);

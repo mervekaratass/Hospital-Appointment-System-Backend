@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Appointments.Constants.AppointmentsOperationClaims;
+using Application.Features.Patients.Constants;
 
 namespace Application.Features.Appointments.Commands.Create;
 
@@ -20,7 +21,7 @@ public class CreateAppointmentCommand : IRequest<CreatedAppointmentResponse>, IS
     public required Guid DoctorID { get; set; }
     public required Guid PatientID { get; set; }
 
-    public string[] Roles => [Admin, Write, AppointmentsOperationClaims.Create];
+    public string[] Roles => [Admin, Write, AppointmentsOperationClaims.Create, PatientsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

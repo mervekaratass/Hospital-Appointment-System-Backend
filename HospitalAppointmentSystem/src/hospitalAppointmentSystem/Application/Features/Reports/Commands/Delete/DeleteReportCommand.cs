@@ -10,6 +10,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Reports.Constants.ReportsOperationClaims;
+using Application.Features.Doctors.Constants;
 
 namespace Application.Features.Reports.Commands.Delete;
 
@@ -17,7 +18,7 @@ public class DeleteReportCommand : IRequest<DeletedReportResponse>, ISecuredRequ
 {
     public int Id { get; set; }
 
-    public string[] Roles => [Admin, Write, ReportsOperationClaims.Delete];
+    public string[] Roles => [Admin, Write, ReportsOperationClaims.Delete,DoctorsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

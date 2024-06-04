@@ -221,7 +221,7 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         );
         #endregion
         
-        
+
         #region Reports CRUD
         featureOperationClaims.AddRange(
             [

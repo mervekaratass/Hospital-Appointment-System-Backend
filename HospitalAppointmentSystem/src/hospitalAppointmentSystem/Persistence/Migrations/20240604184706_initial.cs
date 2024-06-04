@@ -52,10 +52,10 @@ namespace Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
-                    NationalIdentity = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: true),
+                    NationalIdentity = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -186,10 +186,10 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Height = table.Column<double>(type: "float", nullable: false),
-                    Weight = table.Column<double>(type: "float", nullable: false),
-                    BloodGroup = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Age = table.Column<int>(type: "int", nullable: true),
+                    Height = table.Column<double>(type: "float", nullable: true),
+                    Weight = table.Column<double>(type: "float", nullable: true),
+                    BloodGroup = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -450,12 +450,12 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Address", "AuthenticatorType", "CreatedDate", "DateOfBirth", "DeletedDate", "Email", "FirstName", "LastName", "NationalIdentity", "PasswordHash", "PasswordSalt", "Phone", "UpdatedDate" },
-                values: new object[] { new Guid("12ca6357-dbb4-4ab7-b74c-ec89b35f5b6d"), "Tekirdağ", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2000, 11, 20), null, "fatmabireltr@gmail.com", "Fatma", "Birel", "12345678901", new byte[] { 94, 171, 213, 193, 223, 45, 94, 73, 91, 95, 184, 54, 138, 120, 241, 81, 150, 222, 139, 211, 42, 67, 175, 235, 55, 84, 14, 25, 175, 26, 182, 81, 229, 200, 10, 27, 252, 13, 51, 27, 47, 70, 67, 42, 72, 158, 201, 108, 69, 1, 7, 110, 4, 15, 118, 21, 212, 106, 207, 227, 23, 156, 233, 200 }, new byte[] { 18, 5, 105, 235, 152, 172, 210, 195, 201, 26, 198, 194, 216, 112, 113, 105, 223, 179, 160, 85, 92, 13, 95, 178, 240, 111, 4, 4, 0, 218, 4, 183, 211, 211, 157, 18, 25, 132, 85, 254, 104, 148, 211, 170, 135, 228, 250, 29, 17, 107, 19, 154, 162, 123, 172, 49, 60, 173, 198, 212, 40, 248, 126, 81, 73, 16, 80, 79, 208, 46, 35, 76, 57, 88, 19, 30, 117, 122, 44, 74, 85, 200, 117, 84, 0, 179, 234, 142, 46, 106, 172, 213, 251, 75, 247, 95, 3, 163, 73, 141, 75, 166, 42, 140, 65, 90, 246, 130, 63, 128, 235, 2, 202, 115, 39, 14, 130, 176, 19, 40, 74, 167, 158, 79, 188, 179, 221, 228 }, "05279563492", null });
+                values: new object[] { new Guid("98d841a2-b19a-4731-ae26-b3fcda255db9"), "Tekirdağ", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2000, 11, 20), null, "fatmabireltr@gmail.com", "Fatma", "Birel", "12345678901", new byte[] { 110, 53, 170, 95, 113, 28, 156, 199, 103, 198, 36, 186, 155, 123, 101, 195, 249, 37, 211, 212, 106, 212, 177, 125, 35, 248, 21, 139, 116, 84, 40, 12, 210, 252, 199, 48, 166, 174, 93, 251, 0, 103, 211, 101, 101, 200, 119, 173, 28, 184, 36, 130, 99, 159, 69, 110, 97, 245, 247, 217, 88, 74, 59, 17 }, new byte[] { 114, 116, 243, 223, 95, 14, 52, 246, 74, 101, 126, 138, 242, 220, 10, 134, 195, 168, 0, 120, 13, 3, 6, 154, 229, 30, 183, 22, 228, 37, 83, 88, 218, 234, 9, 18, 8, 84, 83, 239, 88, 36, 183, 146, 117, 53, 196, 173, 118, 175, 134, 50, 229, 48, 32, 93, 80, 156, 56, 115, 226, 11, 192, 8, 96, 184, 221, 110, 234, 125, 85, 21, 68, 153, 251, 136, 122, 99, 71, 33, 215, 218, 163, 22, 154, 88, 5, 253, 183, 178, 95, 154, 152, 66, 236, 207, 100, 42, 102, 42, 89, 133, 141, 191, 124, 103, 37, 76, 167, 144, 59, 94, 218, 15, 30, 101, 154, 216, 165, 159, 63, 189, 177, 142, 189, 12, 205, 65 }, "05279563492", null });
 
             migrationBuilder.InsertData(
                 table: "UserOperationClaims",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "OperationClaimId", "UpdatedDate", "UserId" },
-                values: new object[] { new Guid("62e2d3db-4f64-4c5c-9b8b-2fb09410c98a"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("12ca6357-dbb4-4ab7-b74c-ec89b35f5b6d") });
+                values: new object[] { new Guid("de075674-5259-4dd2-b414-9b86f4505e19"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("98d841a2-b19a-4731-ae26-b3fcda255db9") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_DoctorID",
