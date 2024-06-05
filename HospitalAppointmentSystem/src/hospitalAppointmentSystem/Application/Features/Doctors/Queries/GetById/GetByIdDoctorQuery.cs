@@ -15,7 +15,7 @@ public class GetByIdDoctorQuery : IRequest<GetByIdDoctorResponse>, ISecuredReque
 {
     public Guid Id { get; set; }
 
-    public string[] Roles => [Admin, Read];
+    public string[] Roles => [Admin,Read , DoctorsOperationClaims.Update];
 
     public class GetByIdDoctorQueryHandler : IRequestHandler<GetByIdDoctorQuery, GetByIdDoctorResponse>
     {

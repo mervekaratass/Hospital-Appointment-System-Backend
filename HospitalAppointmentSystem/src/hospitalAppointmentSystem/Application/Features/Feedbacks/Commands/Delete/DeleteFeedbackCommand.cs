@@ -10,6 +10,8 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
+using Application.Features.Doctors.Constants;
+using Application.Features.Patients.Constants;
 
 namespace Application.Features.Feedbacks.Commands.Delete;
 
@@ -17,7 +19,7 @@ public class DeleteFeedbackCommand : IRequest<DeletedFeedbackResponse>, ISecured
 {
     public int Id { get; set; }
 
-    public string[] Roles => [Admin, Write, FeedbacksOperationClaims.Delete];
+    public string[] Roles => [Admin, Write, FeedbacksOperationClaims.Delete, PatientsOperationClaims.Update, DoctorsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

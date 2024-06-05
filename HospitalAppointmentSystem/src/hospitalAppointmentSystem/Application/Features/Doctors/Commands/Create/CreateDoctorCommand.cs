@@ -24,8 +24,10 @@ public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ISecuredRequ
     public string NationalIdentity { get; set; }
     public string Phone { get; set; }
     public string Address { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
 
-    public string[] Roles => [Admin, Write, DoctorsOperationClaims.Create];
+    public string[] Roles => [Admin, Write];
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

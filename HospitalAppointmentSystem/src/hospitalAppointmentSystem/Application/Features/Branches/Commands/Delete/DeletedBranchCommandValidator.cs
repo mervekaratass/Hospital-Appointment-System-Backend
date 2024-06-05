@@ -6,6 +6,6 @@ public class DeleteBranchCommandValidator : AbstractValidator<DeleteBranchComman
 {
     public DeleteBranchCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id boþ olamaz");
     }
 }

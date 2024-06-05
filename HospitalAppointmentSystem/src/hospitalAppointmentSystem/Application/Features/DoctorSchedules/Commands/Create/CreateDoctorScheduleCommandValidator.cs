@@ -6,9 +6,16 @@ public class CreateDoctorScheduleCommandValidator : AbstractValidator<CreateDoct
 {
     public CreateDoctorScheduleCommandValidator()
     {
-        RuleFor(c => c.DoctorID).NotEmpty();
-        RuleFor(c => c.Date).NotEmpty();
-        RuleFor(c => c.StartTime).NotEmpty();
-        RuleFor(c => c.EndTime).NotEmpty();
+        RuleFor(c => c.DoctorID).NotEmpty().WithMessage("Id alaný boþ olamaz");
+
+        RuleFor(c => c.Date)
+            .NotEmpty().WithMessage("Tarih alaný boþ olamaz.");
+
+        RuleFor(c => c.StartTime)
+            .NotEmpty().WithMessage("Baþlangýç saati alaný boþ olamaz.");
+
+        RuleFor(c => c.EndTime)
+            .NotEmpty().WithMessage("Bitiþ saati alaný boþ olamaz.");
+
     }
 }

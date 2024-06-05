@@ -6,6 +6,6 @@ public class DeleteManagerCommandValidator : AbstractValidator<DeleteManagerComm
 {
     public DeleteManagerCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id alaný boþ olamaz");
     }
 }

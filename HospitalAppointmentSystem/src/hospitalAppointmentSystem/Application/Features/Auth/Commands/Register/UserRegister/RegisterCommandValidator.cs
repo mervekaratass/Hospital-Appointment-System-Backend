@@ -1,20 +1,27 @@
 ﻿using System.Text.RegularExpressions;
 using FluentValidation;
 
-namespace Application.Features.Auth.Commands.Register;
+namespace Application.Features.Auth.Commands.Register.UserRegister;
 
 public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 {
     public RegisterCommandValidator()
     {
-        RuleFor(c => c.UserForRegisterDto.Email).NotEmpty().EmailAddress();
+        RuleFor(c => c.UserForRegisterDto.Email).NotEmpty().WithMessage("E-posta alanı boş olamaz.");
         RuleFor(c => c.UserForRegisterDto.Password)
             .NotEmpty()
             .MinimumLength(6)
             .Must(StrongPassword)
             .WithMessage(
-                "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character."
+                "Şifre en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir."
             );
+
+        RuleFor(c => c.UserForRegisterDto.FirstName).NotEmpty().WithMessage("İsim alanı boş geçilemez");
+
+        RuleFor(c => c.UserForRegisterDto.LastName).NotEmpty().WithMessage("Soyisim alanı boş geçilemez");
+
+        RuleFor(c=>c.UserForRegisterDto.Phone).NotEmpty().WithMessage("Telefon alanı boş geçilemez");
+
     }
 
     private bool StrongPassword(string value)

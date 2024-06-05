@@ -77,7 +77,9 @@ public class DoctorManager : IDoctorService
     }
 
     public async Task<Doctor> DeleteAsync(Doctor doctor, bool permanent = false)
-    {
+    { 
+
+
         Doctor deletedDoctor = await _doctorRepository.DeleteAsync(doctor);
 
         return deletedDoctor;

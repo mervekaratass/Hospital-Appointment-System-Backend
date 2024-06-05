@@ -4,5 +4,5 @@ public static class AppointmentsBusinessMessages
 {
     public const string SectionName = "Appointment";
 
-    public const string AppointmentNotExists = "AppointmentNotExists";
+    public const string AppointmentNotExists = "Böyle bir randevu bulunmamaktadýr";
 }

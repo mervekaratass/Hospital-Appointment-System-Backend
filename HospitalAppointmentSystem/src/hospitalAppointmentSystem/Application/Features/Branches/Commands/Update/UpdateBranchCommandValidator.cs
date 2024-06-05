@@ -6,7 +6,7 @@ public class UpdateBranchCommandValidator : AbstractValidator<UpdateBranchComman
 {
     public UpdateBranchCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
-        RuleFor(c => c.Name).NotEmpty();
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id deðeri boþ olamaz");
+        RuleFor(c => c.Name).NotEmpty().WithMessage("Ýsim alaný boþ olamaz").MinimumLength(5).WithMessage("Ýsim alaný minimum 5 karakter olmalý.");
     }
 }

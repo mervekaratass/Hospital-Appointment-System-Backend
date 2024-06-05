@@ -9,6 +9,8 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
+using Application.Features.Patients.Constants;
+using Application.Features.Doctors.Constants;
 
 namespace Application.Features.Feedbacks.Commands.Create;
 
@@ -17,7 +19,7 @@ public class CreateFeedbackCommand : IRequest<CreatedFeedbackResponse>, ISecured
     public required Guid UserID { get; set; }
     public required string Text { get; set; }
 
-    public string[] Roles => [Admin, Write, FeedbacksOperationClaims.Create];
+    public string[] Roles => [Admin, Write, FeedbacksOperationClaims.Create, PatientsOperationClaims.Update,DoctorsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

@@ -6,6 +6,7 @@ using Application.Features.Appointments.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Application.Features.Appointments.Queries.GetByPatientId;
 
 namespace WebAPI.Controllers;
 
@@ -56,6 +57,16 @@ public class AppointmentsController : BaseController
 
         GetListResponse<GetListAppointmentListItemDto> response = await Mediator.Send(query);
 
+        return Ok(response);
+    }
+
+
+
+    [HttpGet("getByPatientId")]
+    public async Task<IActionResult> GetListByIPatient([FromQuery] PageRequest pageRequest, [FromQuery] Guid patientId)
+    {
+        GetListByPatientQuery getListByInstructorBootcampQuery = new() { PageRequest = pageRequest, PatientId = patientId };
+        GetListResponse<GetListByPatientDto> response = await Mediator.Send(getListByInstructorBootcampQuery);
         return Ok(response);
     }
 }

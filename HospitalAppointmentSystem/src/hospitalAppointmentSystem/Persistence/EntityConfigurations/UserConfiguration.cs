@@ -15,10 +15,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.FirstName).HasColumnName("FirstName").IsRequired();
         builder.Property(u => u.LastName).HasColumnName("LastName").IsRequired();
-        builder.Property(x => x.DateOfBirth).HasColumnName("DateOfBirth").IsRequired();
-        builder.Property(x => x.NationalIdentity).HasColumnName("NationalIdentity").IsRequired().HasMaxLength(11);
+        builder.Property(x => x.DateOfBirth).HasColumnName("DateOfBirth");
+        builder.Property(x => x.NationalIdentity).HasColumnName("NationalIdentity").HasMaxLength(11);
         builder.Property(u => u.Phone).HasColumnName("Phone").IsRequired();
-        builder.Property(u => u.Address).HasColumnName("Address").IsRequired();
+        builder.Property(u => u.Address).HasColumnName("Address");
         builder.Property(u => u.Email).HasColumnName("Email").IsRequired();
         builder.Property(u => u.PasswordSalt).HasColumnName("PasswordSalt").IsRequired();
         builder.Property(u => u.PasswordHash).HasColumnName("PasswordHash").IsRequired();
@@ -37,6 +37,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasData(_seeds);
 
         builder.HasBaseType((string)null!);
+
+
+   
     }
 
     public static Guid AdminId { get; } = Guid.NewGuid();

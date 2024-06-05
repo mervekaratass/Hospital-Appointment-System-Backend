@@ -2,7 +2,9 @@
 using Application.Features.Auth.Commands.EnableOtpAuthenticator;
 using Application.Features.Auth.Commands.Login;
 using Application.Features.Auth.Commands.RefreshToken;
-using Application.Features.Auth.Commands.Register;
+using Application.Features.Auth.Commands.Register.DoctorRegister;
+using Application.Features.Auth.Commands.Register.PatientRegister;
+using Application.Features.Auth.Commands.Register.UserRegister;
 using Application.Features.Auth.Commands.RevokeToken;
 using Application.Features.Auth.Commands.VerifyEmailAuthenticator;
 using Application.Features.Auth.Commands.VerifyOtpAuthenticator;
@@ -39,14 +41,39 @@ public class AuthController : BaseController
         return Ok(result.ToHttpResponse());
     }
 
+
     [HttpPost("Register")]
-    public async Task<IActionResult> Register([FromBody] UserForRegisterDto userForRegisterDto)
+    public async Task<IActionResult> Register(
+       [FromBody] Application.Features.Auth.Commands.Register.UserRegister.UserForRegisterDto userForRegisterDto
+   )
     {
         RegisterCommand registerCommand = new() { UserForRegisterDto = userForRegisterDto, IpAddress = getIpAddress() };
         RegisteredResponse result = await Mediator.Send(registerCommand);
         setRefreshTokenToCookie(result.RefreshToken);
         return Created(uri: "", result.AccessToken);
     }
+
+    [HttpPost("Register/Patient")]
+    public async Task<IActionResult> RegisterPatient([FromBody] PatientForRegisterDto patientForRegisterDto)
+    {
+        PatientRegisterCommand registerCommand =
+            new() { PatientForRegisterDto = patientForRegisterDto, IpAddress = getIpAddress() };
+        PatientRegisteredResponse result = await Mediator.Send(registerCommand);
+        setRefreshTokenToCookie(result.RefreshToken);
+        return Created(uri: "", result.AccessToken);
+    }
+
+
+    [HttpPost("Register/Doctor")]
+    public async Task<IActionResult> RegisterDoctor([FromBody] DoctorForRegisterDto doctorForRegisterDto)
+    {
+        DoctorRegisterCommand registerCommand =
+            new() { DoctorForRegisterDto = doctorForRegisterDto, IpAddress = getIpAddress() };
+        DoctorRegisteredResponse result = await Mediator.Send(registerCommand);
+        setRefreshTokenToCookie(result.RefreshToken);
+        return Created(uri: "", result.AccessToken);
+    }
+
 
     [HttpGet("RefreshToken")]
     public async Task<IActionResult> RefreshToken()
