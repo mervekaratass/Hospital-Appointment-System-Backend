@@ -6,9 +6,17 @@ public class CreateNotificationCommandValidator : AbstractValidator<CreateNotifi
 {
     public CreateNotificationCommandValidator()
     {
-        RuleFor(c => c.AppointmentID).NotEmpty();
-        RuleFor(c => c.Message).NotEmpty();
-        RuleFor(c => c.EmailStatus).NotEmpty();
-        RuleFor(c => c.SmsStatus).NotEmpty();
+        RuleFor(c => c.AppointmentID)
+           .NotEmpty().WithMessage("Randevu ID alaný boþ olamaz.");
+
+        RuleFor(c => c.Message)
+            .NotEmpty().WithMessage("Mesaj alaný boþ olamaz.");
+
+        RuleFor(c => c.EmailStatus)
+            .NotEmpty().WithMessage("E-posta durumu alaný boþ olamaz.");
+
+        RuleFor(c => c.SmsStatus)
+            .NotEmpty().WithMessage("SMS durumu alaný boþ olamaz.");
+
     }
 }
