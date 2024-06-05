@@ -17,7 +17,7 @@ public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>, ICacheRemove
 {
     public Guid Id { get; set; }
 
-    public string[] Roles => [Admin, Write, DoctorsOperationClaims.Delete];
+    public string[] Roles => [Admin, Write]; // DoctorsOperationClaims.Delete
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

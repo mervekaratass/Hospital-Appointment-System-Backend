@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using static Application.Features.Notifications.Constants.NotificationsOperationClaims;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Notifications.Queries.GetList;
 
@@ -39,7 +40,8 @@ public class GetListNotificationQuery : IRequest<GetListResponse<GetListNotifica
             IPaginate<Notification> notifications = await _notificationRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                 include: x => x.Include(x => x.Appointment).Include(x=>x.Appointment.Doctor).Include(x=>x.Appointment.Patient)
             );
 
             GetListResponse<GetListNotificationListItemDto> response = _mapper.Map<GetListResponse<GetListNotificationListItemDto>>(notifications);

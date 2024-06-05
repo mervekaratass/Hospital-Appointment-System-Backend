@@ -1,13 +1,14 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
+using Application.Services.UsersService;
 using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Dtos;
 using NArchitecture.Core.Security.Hashing;
 using NArchitecture.Core.Security.JWT;
 
-namespace Application.Features.Auth.Commands.Register;
+namespace Application.Features.Auth.Commands.Register.UserRegister;
 
 public class RegisterCommand : IRequest<RegisteredResponse>
 {
@@ -28,17 +29,13 @@ public class RegisterCommand : IRequest<RegisteredResponse>
 
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisteredResponse>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
         private readonly IAuthService _authService;
         private readonly AuthBusinessRules _authBusinessRules;
 
-        public RegisterCommandHandler(
-            IUserRepository userRepository,
-            IAuthService authService,
-            AuthBusinessRules authBusinessRules
-        )
+        public RegisterCommandHandler(IUserService userService, IAuthService authService, AuthBusinessRules authBusinessRules)
         {
-            _userRepository = userRepository;
+            _userService = userService;
             _authService = authService;
             _authBusinessRules = authBusinessRules;
         }
@@ -54,12 +51,15 @@ public class RegisterCommand : IRequest<RegisteredResponse>
             );
             User newUser =
                 new()
-                {
+                {                   
+                    FirstName = request.UserForRegisterDto.FirstName,
+                    LastName = request.UserForRegisterDto.LastName,                  
+                    Phone = request.UserForRegisterDto.Phone,
                     Email = request.UserForRegisterDto.Email,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
                 };
-            User createdUser = await _userRepository.AddAsync(newUser);
+            User createdUser = await _userService.AddAsync(newUser);
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
 

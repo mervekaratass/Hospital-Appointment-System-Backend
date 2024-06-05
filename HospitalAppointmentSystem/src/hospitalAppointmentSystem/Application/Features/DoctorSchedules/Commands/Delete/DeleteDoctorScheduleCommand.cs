@@ -10,6 +10,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.DoctorSchedules.Constants.DoctorSchedulesOperationClaims;
+using Application.Features.Doctors.Constants;
 
 namespace Application.Features.DoctorSchedules.Commands.Delete;
 
@@ -17,7 +18,7 @@ public class DeleteDoctorScheduleCommand : IRequest<DeletedDoctorScheduleRespons
 {
     public int Id { get; set; }
 
-    public string[] Roles => [Admin, Write, DoctorSchedulesOperationClaims.Delete];
+    public string[] Roles => [Admin, Write, DoctorSchedulesOperationClaims.Delete, DoctorsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

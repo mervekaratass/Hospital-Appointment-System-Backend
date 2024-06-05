@@ -9,6 +9,8 @@ using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using static Application.Features.DoctorSchedules.Constants.DoctorSchedulesOperationClaims;
+using Microsoft.EntityFrameworkCore;
+using Application.Features.Doctors.Constants;
 
 namespace Application.Features.DoctorSchedules.Queries.GetList;
 
@@ -16,7 +18,7 @@ public class GetListDoctorScheduleQuery : IRequest<GetListResponse<GetListDoctor
 {
     public PageRequest PageRequest { get; set; }
 
-    public string[] Roles => [Admin, Read];
+    public string[] Roles => [Admin, Read, DoctorsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey => $"GetListDoctorSchedules({PageRequest.PageIndex},{PageRequest.PageSize})";
@@ -39,7 +41,8 @@ public class GetListDoctorScheduleQuery : IRequest<GetListResponse<GetListDoctor
             IPaginate<DoctorSchedule> doctorSchedules = await _doctorScheduleRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                    include: x => x.Include(x => x.Doctor)
             );
 
             GetListResponse<GetListDoctorScheduleListItemDto> response = _mapper.Map<GetListResponse<GetListDoctorScheduleListItemDto>>(doctorSchedules);

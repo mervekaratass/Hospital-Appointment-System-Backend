@@ -4,5 +4,5 @@ public static class DoctorsBusinessMessages
 {
     public const string SectionName = "Doctor";
 
-    public const string DoctorNotExists = "DoctorNotExists";
+    public const string DoctorNotExists = "Böyle bir doktor bulunamadý";
 }

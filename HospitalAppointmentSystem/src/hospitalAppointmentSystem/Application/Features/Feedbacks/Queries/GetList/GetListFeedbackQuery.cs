@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Feedbacks.Queries.GetList;
 
@@ -39,7 +40,8 @@ public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackList
             IPaginate<Feedback> feedbacks = await _feedbackRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                 include: x => x.Include(x => x.User)
             );
 
             GetListResponse<GetListFeedbackListItemDto> response = _mapper.Map<GetListResponse<GetListFeedbackListItemDto>>(feedbacks);

@@ -13,7 +13,7 @@ public class GetByIdPatientQuery : IRequest<GetByIdPatientResponse>, ISecuredReq
 {
     public Guid Id { get; set; }
 
-    public string[] Roles => [Admin, Read];
+    public string[] Roles => [Admin, Read, PatientsOperationClaims.Update];
 
     public class GetByIdPatientQueryHandler : IRequestHandler<GetByIdPatientQuery, GetByIdPatientResponse>
     {

@@ -6,6 +6,6 @@ public class UpdateManagerCommandValidator : AbstractValidator<UpdateManagerComm
 {
     public UpdateManagerCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id alaný boþ olamaz");
     }
 }

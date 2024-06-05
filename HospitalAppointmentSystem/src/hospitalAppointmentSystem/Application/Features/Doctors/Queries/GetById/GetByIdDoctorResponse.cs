@@ -8,6 +8,7 @@ public class GetByIdDoctorResponse : IResponse
     public string Title { get; set; }
     public string SchoolName { get; set; }
     public int BranchID { get; set; }
+  
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateOnly DateOfBirth { get; set; }

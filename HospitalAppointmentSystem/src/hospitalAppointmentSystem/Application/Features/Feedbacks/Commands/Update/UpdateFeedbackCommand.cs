@@ -9,6 +9,8 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
+using Application.Features.Doctors.Constants;
+using Application.Features.Patients.Constants;
 
 namespace Application.Features.Feedbacks.Commands.Update;
 
@@ -18,7 +20,7 @@ public class UpdateFeedbackCommand : IRequest<UpdatedFeedbackResponse>, ISecured
     public required Guid UserID { get; set; }
     public required string Text { get; set; }
 
-    public string[] Roles => [Admin, Write, FeedbacksOperationClaims.Update];
+    public string[] Roles => [Admin, Write, FeedbacksOperationClaims.Update, PatientsOperationClaims.Update, DoctorsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

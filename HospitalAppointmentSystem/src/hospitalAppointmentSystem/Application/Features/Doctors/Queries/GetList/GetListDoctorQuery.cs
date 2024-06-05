@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Doctors.Queries.GetList;
 
@@ -39,7 +40,9 @@ public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorListItem
             IPaginate<Doctor> doctors = await _doctorRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                      include: x => x.Include(x => x.Branch)
+
             );
 
             GetListResponse<GetListDoctorListItemDto> response = _mapper.Map<GetListResponse<GetListDoctorListItemDto>>(doctors);

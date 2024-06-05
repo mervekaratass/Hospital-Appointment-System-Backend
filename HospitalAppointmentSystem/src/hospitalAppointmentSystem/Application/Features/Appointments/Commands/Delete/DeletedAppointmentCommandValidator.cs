@@ -6,6 +6,6 @@ public class DeleteAppointmentCommandValidator : AbstractValidator<DeleteAppoint
 {
     public DeleteAppointmentCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id alaný boþ býrakýlamaz");
     }
 }

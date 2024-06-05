@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Reports.Constants.ReportsOperationClaims;
+using Application.Features.Doctors.Constants;
 
 namespace Application.Features.Reports.Commands.Create;
 
@@ -17,7 +18,7 @@ public class CreateReportCommand : IRequest<CreatedReportResponse>, ISecuredRequ
     public required int AppointmentID { get; set; }
     public required string Text { get; set; }
 
-    public string[] Roles => [Admin, Write, ReportsOperationClaims.Create];
+    public string[] Roles => [Admin, Write, ReportsOperationClaims.Create,DoctorsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }
