@@ -14,11 +14,10 @@ namespace Application.Features.Patients.Commands.Create;
 
 public class CreatePatientCommand : IRequest<CreatedPatientResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
-
-    public required int Age { get; set; }
-    public required double Height { get; set; }
-    public required double Weight { get; set; }
-    public required string BloodGroup { get; set; }
+    public int Age { get; set; }
+    public double Height { get; set; }
+    public double Weight { get; set; }
+    public string BloodGroup { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateOnly DateOfBirth { get; set; }

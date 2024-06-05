@@ -26,8 +26,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 
         RuleFor(c => c.Password).NotEmpty().WithMessage("Şifre alanı boş olamaz").MinimumLength(8).WithMessage("Şifre en az 8 karakter olmalı")
             .MaximumLength(15).WithMessage("Şifre en az 15 karakter olmalı").Must(StrongPassword).WithMessage(
-                "Şifre en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir."
-            ); 
+                "Şifre en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir.");
 
     }
     private bool StrongPassword(string value)

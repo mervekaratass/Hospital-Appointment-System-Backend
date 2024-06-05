@@ -27,12 +27,17 @@ public class GetListUserListItemDto : IDto
         Password = string.Empty;
     }
 
-    public GetListUserListItemDto(Guid id, string firstName, string lastName, string email, bool status)
+    public GetListUserListItemDto(Guid ýd, string firstName, string lastName, DateOnly dateOfBirth, string nationalIdentity, string phone, string address, string email, string password, bool status)
     {
-        Id = id;
+        Id = ýd;
         FirstName = firstName;
         LastName = lastName;
+        DateOfBirth = dateOfBirth;
+        NationalIdentity = nationalIdentity;
+        Phone = phone;
+        Address = address;
         Email = email;
+        Password = password;
         Status = status;
         DateOfBirth = new DateOnly(); // Varsayýlan tarih 0001-01-01 olacaktýr
         NationalIdentity = string.Empty;

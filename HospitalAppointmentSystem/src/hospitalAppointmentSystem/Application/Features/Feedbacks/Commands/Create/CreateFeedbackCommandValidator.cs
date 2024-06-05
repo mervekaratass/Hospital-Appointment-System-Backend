@@ -10,6 +10,9 @@ public class CreateFeedbackCommandValidator : AbstractValidator<CreateFeedbackCo
         RuleFor(c => c.Text)
          .NotEmpty().WithMessage("Metin alaný boþ olamaz.")
          .Length(5, 500).WithMessage("Metin en az 5, en fazla 500 karakter olmalýdýr.");
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     }
 }

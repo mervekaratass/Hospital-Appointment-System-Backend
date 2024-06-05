@@ -7,16 +7,18 @@ public class UpdateUserFromAuthCommandValidator : AbstractValidator<UpdateUserFr
 {
     public UpdateUserFromAuthCommandValidator()
     {
-        RuleFor(c => c.FirstName).NotEmpty().MinimumLength(2);
-        RuleFor(c => c.LastName).NotEmpty().MinimumLength(2);
-        RuleFor(c => c.Password).NotEmpty().MinimumLength(8);
-        RuleFor(c => c.NewPassword)
-            .NotEmpty()
-            .MinimumLength(8)
-            .Must(StrongPassword)
-            .WithMessage(
-                "Your password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one special character."
-            );
+        RuleFor(c => c.FirstName).NotEmpty().WithMessage("Kullanıcı adı alanı boş olamaz")
+             .MinimumLength(2).WithMessage("Kullanıcı adı en az 2 karakter olmalıdır");
+
+        RuleFor(c => c.LastName).NotEmpty().WithMessage("Kullanıcı soyadı alanı boş olamaz")
+            .MinimumLength(2).WithMessage("Kullanıcı soyadı en az 2 karakter olmalıdır");
+
+        RuleFor(c => c.Password).NotEmpty().WithMessage("Şifre alanı boş olamaz").MinimumLength(8).WithMessage("Şifre en az 8 karakter olmalı");
+
+        RuleFor(c => c.Password).NotEmpty().WithMessage("Şifre alanı boş olamaz").MinimumLength(8).WithMessage("Şifre en az 8 karakter olmalı")
+           .MaximumLength(15).WithMessage("Şifre en az 15 karakter olmalı").Must(StrongPassword).WithMessage(
+               "Şifre en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir."
+           );
     }
 
     private bool StrongPassword(string arg)

@@ -17,6 +17,9 @@ public class CreateNotificationCommandValidator : AbstractValidator<CreateNotifi
 
         RuleFor(c => c.SmsStatus)
             .NotEmpty().WithMessage("SMS durumu alaný boþ olamaz.");
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     }
 }

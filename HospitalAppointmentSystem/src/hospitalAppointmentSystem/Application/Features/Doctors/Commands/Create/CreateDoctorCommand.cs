@@ -14,9 +14,9 @@ namespace Application.Features.Doctors.Commands.Create;
 
 public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
-    public required string Title { get; set; }
-    public required string SchoolName { get; set; }
-    public required int BranchID { get; set; }
+    public string Title { get; set; }
+    public string SchoolName { get; set; }
+    public int BranchID { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateOnly DateOfBirth { get; set; }
@@ -25,7 +25,12 @@ public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ISecuredRequ
     public string Address { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+<<<<<<< Updated upstream
     public string[] Roles => [Admin, Write, DoctorsOperationClaims.Create];
+=======
+
+    public string[] Roles => [Admin, Write];
+>>>>>>> Stashed changes
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }

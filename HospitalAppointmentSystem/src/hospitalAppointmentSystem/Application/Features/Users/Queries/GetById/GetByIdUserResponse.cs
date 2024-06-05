@@ -20,7 +20,7 @@ public class GetByIdUserResponse : IResponse
         FirstName = string.Empty;
         LastName = string.Empty;
         Email = string.Empty;
-        // Diðer alanlar için varsayýlan deðerler burada atanabilir
+
         DateOfBirth = new DateOnly(); // Varsayýlan tarih 0001-01-01 olacaktýr
         NationalIdentity = string.Empty;
         Phone = string.Empty;
@@ -28,12 +28,17 @@ public class GetByIdUserResponse : IResponse
         Password = string.Empty;
     }
 
-    public GetByIdUserResponse(Guid id, string firstName, string lastName, string email, bool status)
+    public GetByIdUserResponse(Guid ýd, string firstName, string lastName, DateOnly dateOfBirth, string nationalIdentity, string phone, string address, string email, string password, bool status)
     {
-        Id = id;
+        Id = ýd;
         FirstName = firstName;
         LastName = lastName;
+        DateOfBirth = dateOfBirth;
+        NationalIdentity = nationalIdentity;
+        Phone = phone;
+        Address = address;
         Email = email;
+        Password = password;
         Status = status;
         // Diðer alanlar için varsayýlan deðerler burada atanabilir
         DateOfBirth = new DateOnly(); // Varsayýlan tarih 0001-01-01 olacaktýr

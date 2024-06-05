@@ -6,6 +6,10 @@ public class DeleteBranchCommandValidator : AbstractValidator<DeleteBranchComman
 {
     public DeleteBranchCommandValidator()
     {
+<<<<<<< Updated upstream
         RuleFor(c => c.Id).NotEmpty().WithMessage("Id boþ olamaz");
+=======
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id alaný boþ olamaz.");
+>>>>>>> Stashed changes
     }
 }

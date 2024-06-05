@@ -16,6 +16,9 @@ public class CreateDoctorScheduleCommandValidator : AbstractValidator<CreateDoct
 
         RuleFor(c => c.EndTime)
             .NotEmpty().WithMessage("Bitiþ saati alaný boþ olamaz.");
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     }
 }
