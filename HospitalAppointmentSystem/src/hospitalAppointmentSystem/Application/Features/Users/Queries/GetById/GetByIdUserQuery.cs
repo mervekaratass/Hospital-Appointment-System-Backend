@@ -1,10 +1,12 @@
 using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
+using Application.Services.Encryptions;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using System.Numerics;
 
 namespace Application.Features.Users.Queries.GetById;
 

@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
+using Application.Services.Encryptions;
 
 namespace Application.Features.Doctors.Commands.Create;
 
@@ -47,6 +48,18 @@ public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ISecuredRequ
         public async Task<CreatedDoctorResponse> Handle(CreateDoctorCommand request, CancellationToken cancellationToken)
         {
             Doctor doctor = _mapper.Map<Doctor>(request);
+
+            //sinem kullanýcý bilgilerini þifreleme. encrypt þifreleme yapýyor.
+
+
+            doctor.FirstName = CryptoHelper.Encrypt(doctor.FirstName);
+            doctor.LastName = CryptoHelper.Encrypt(doctor.LastName);
+            doctor.NationalIdentity = CryptoHelper.Encrypt(doctor.NationalIdentity);
+            doctor.Phone = CryptoHelper.Encrypt(doctor.Phone);
+            doctor.Address = CryptoHelper.Encrypt(doctor.Address);
+
+
+            //yazdýðým burda bitti 
 
             await _doctorRepository.AddAsync(doctor);
 

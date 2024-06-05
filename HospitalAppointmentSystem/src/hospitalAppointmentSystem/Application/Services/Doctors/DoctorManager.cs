@@ -4,6 +4,8 @@ using NArchitecture.Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
+using Application.Services.Encryptions;
+using NArchitecture.Core.Security.Entities;
 
 namespace Application.Services.Doctors;
 
@@ -27,6 +29,7 @@ public class DoctorManager : IDoctorService
     )
     {
         Doctor? doctor = await _doctorRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+
         return doctor;
     }
 
@@ -56,7 +59,12 @@ public class DoctorManager : IDoctorService
 
     public async Task<Doctor> AddAsync(Doctor doctor)
     {
+        
+
         Doctor addedDoctor = await _doctorRepository.AddAsync(doctor);
+
+        
+
 
         return addedDoctor;
     }

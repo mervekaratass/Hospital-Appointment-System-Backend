@@ -10,11 +10,14 @@ public class CreatedUserResponse : IResponse
     public string Email { get; set; }
     public bool Status { get; set; }
 
+    
+
     public CreatedUserResponse()
     {
         FirstName = string.Empty;
         LastName = string.Empty;
         Email = string.Empty;
+
     }
 
     public CreatedUserResponse(Guid id, string firstName, string lastName, string email, bool status)
@@ -24,5 +27,6 @@ public class CreatedUserResponse : IResponse
         LastName = lastName;
         Email = email;
         Status = status;
+       
     }
 }
