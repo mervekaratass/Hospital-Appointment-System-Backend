@@ -12,7 +12,7 @@ public class DoctorRegisterCommandValidator : AbstractValidator<DoctorRegisterCo
 {
     public DoctorRegisterCommandValidator()
     {
-        RuleFor(c => c.DoctorForRegisterDto.Email).NotEmpty().EmailAddress();
+        RuleFor(c => c.DoctorForRegisterDto.Email).NotEmpty().WithMessage("E-posta alanı boş olamaz.");
         RuleFor(c => c.DoctorForRegisterDto.Password)
             .NotEmpty()
             .MinimumLength(6)

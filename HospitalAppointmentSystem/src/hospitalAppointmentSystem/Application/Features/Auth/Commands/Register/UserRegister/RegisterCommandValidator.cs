@@ -7,7 +7,7 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 {
     public RegisterCommandValidator()
     {
-        RuleFor(c => c.UserForRegisterDto.Email).NotEmpty().EmailAddress();
+        RuleFor(c => c.UserForRegisterDto.Email).NotEmpty().WithMessage("E-posta alanı boş olamaz.");
         RuleFor(c => c.UserForRegisterDto.Password)
             .NotEmpty()
             .MinimumLength(6)
