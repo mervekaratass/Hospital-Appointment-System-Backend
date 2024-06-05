@@ -6,6 +6,6 @@ public class DeletePatientCommandValidator : AbstractValidator<DeletePatientComm
 {
     public DeletePatientCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id alaný boþ olamaz");
     }
 }
