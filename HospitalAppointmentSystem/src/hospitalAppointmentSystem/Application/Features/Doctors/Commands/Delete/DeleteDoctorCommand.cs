@@ -1,5 +1,4 @@
 using Application.Features.Doctors.Constants;
-using Application.Features.Doctors.Constants;
 using Application.Features.Doctors.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
