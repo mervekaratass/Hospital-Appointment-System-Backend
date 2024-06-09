@@ -1,5 +1,4 @@
 using Application.Features.Doctors.Constants;
-using Application.Features.Doctors.Constants;
 using Application.Features.Doctors.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
@@ -16,6 +15,9 @@ namespace Application.Features.Doctors.Commands.Delete;
 public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public Guid Id { get; set; }
+
+ 
+
 
     public string[] Roles => [Admin, Write]; // DoctorsOperationClaims.Delete
 
@@ -39,13 +41,24 @@ public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>, ISecuredRequ
 
         public async Task<DeletedDoctorResponse> Handle(DeleteDoctorCommand request, CancellationToken cancellationToken)
         {
-            Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken);
+            Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken,withDeleted:true);
             await _doctorBusinessRules.DoctorShouldExistWhenSelected(doctor);
 
-            await _doctorRepository.DeleteAsync(doctor!);
+            doctor.DeletedDate=DateTime.Now;
+            await _doctorRepository.UpdateAsync(doctor!);
 
             DeletedDoctorResponse response = _mapper.Map<DeletedDoctorResponse>(doctor);
             return response;
+
+
+
+
+            //employee = await _employeeService.DeleteAsync(employee!);
+
+            //DeletedEmployeeResponse response = _mapper.Map<DeletedEmployeeResponse>(employee);
+            //response.IsPermament = request.IsPermament;
+            //response.DeletedDate = request.IsPermament ? DateTime.UtcNow : response.DeletedDate;
+            //return response;
         }
     }
 }
