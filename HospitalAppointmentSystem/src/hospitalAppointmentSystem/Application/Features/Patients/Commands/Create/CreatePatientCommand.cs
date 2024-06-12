@@ -9,6 +9,8 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Patients.Constants.PatientsOperationClaims;
+using NArchitecture.Core.Security.Hashing;
+using System.Numerics;
 using Application.Services.Encryptions;
 using System.Numerics;
 
@@ -52,6 +54,14 @@ public class CreatePatientCommand : IRequest<CreatedPatientResponse>, ISecuredRe
         public async Task<CreatedPatientResponse> Handle(CreatePatientCommand request, CancellationToken cancellationToken)
         {
             Patient patient = _mapper.Map<Patient>(request);
+
+            HashingHelper.CreatePasswordHash(
+               request.Password,
+               passwordHash: out byte[] passwordHash,
+               passwordSalt: out byte[] passwordSalt
+           );
+            patient.PasswordHash = passwordHash;
+            patient.PasswordSalt = passwordSalt;
 
             //sinem kullanýcý bilgilerini þifreleme. encrypt þifreleme yapýyor.
 

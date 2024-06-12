@@ -9,6 +9,8 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
+using NArchitecture.Core.Security.Hashing;
+using NArchitecture.Core.Security.Entities;
 using Application.Services.Encryptions;
 
 namespace Application.Features.Doctors.Commands.Create;
@@ -50,6 +52,14 @@ public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ISecuredRequ
         public async Task<CreatedDoctorResponse> Handle(CreateDoctorCommand request, CancellationToken cancellationToken)
         {
             Doctor doctor = _mapper.Map<Doctor>(request);
+
+            HashingHelper.CreatePasswordHash(
+                request.Password,
+                passwordHash: out byte[] passwordHash,
+                passwordSalt: out byte[] passwordSalt
+            );
+            doctor.PasswordHash = passwordHash;
+            doctor.PasswordSalt = passwordSalt;
 
             //sinem kullanýcý bilgilerini þifreleme. encrypt þifreleme yapýyor.
 
