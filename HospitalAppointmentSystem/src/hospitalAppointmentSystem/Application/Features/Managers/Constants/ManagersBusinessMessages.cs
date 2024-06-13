@@ -4,5 +4,5 @@ public static class ManagersBusinessMessages
 {
     public const string SectionName = "Manager";
 
-    public const string ManagerNotExists = "ManagerNotExists";
+    public const string ManagerNotExists = "Böyle bir yönetici bulunamadý";
 }

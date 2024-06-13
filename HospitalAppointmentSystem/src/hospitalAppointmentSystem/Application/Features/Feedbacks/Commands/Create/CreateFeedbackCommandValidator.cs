@@ -6,7 +6,10 @@ public class CreateFeedbackCommandValidator : AbstractValidator<CreateFeedbackCo
 {
     public CreateFeedbackCommandValidator()
     {
-        RuleFor(c => c.UserID).NotEmpty();
-        RuleFor(c => c.Text).NotEmpty();
+        RuleFor(c => c.UserID).NotEmpty().WithMessage("User Id alaný boþ olamaz");
+        RuleFor(c => c.Text)
+         .NotEmpty().WithMessage("Metin alaný boþ olamaz.")
+         .Length(5, 500).WithMessage("Metin en az 5, en fazla 500 karakter olmalýdýr.");
+
     }
 }

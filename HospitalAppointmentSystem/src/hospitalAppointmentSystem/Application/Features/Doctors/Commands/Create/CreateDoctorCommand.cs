@@ -9,8 +9,11 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
+using NArchitecture.Core.Security.Hashing;
+using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.Doctors.Commands.Create;
+
 
 public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest,ISecuredRequest
 {
@@ -23,6 +26,8 @@ public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ICacheRemove
     public string NationalIdentity { get; set; }
     public string Phone { get; set; }
     public string Address { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
 
     public string[] Roles => [Admin, Write];
 
@@ -47,6 +52,14 @@ public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ICacheRemove
         public async Task<CreatedDoctorResponse> Handle(CreateDoctorCommand request, CancellationToken cancellationToken)
         {
             Doctor doctor = _mapper.Map<Doctor>(request);
+
+            HashingHelper.CreatePasswordHash(
+                request.Password,
+                passwordHash: out byte[] passwordHash,
+                passwordSalt: out byte[] passwordSalt
+            );
+            doctor.PasswordHash = passwordHash;
+            doctor.PasswordSalt = passwordSalt;
 
             await _doctorRepository.AddAsync(doctor);
 

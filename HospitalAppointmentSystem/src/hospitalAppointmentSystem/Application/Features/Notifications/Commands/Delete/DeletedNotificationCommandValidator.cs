@@ -6,6 +6,6 @@ public class DeleteNotificationCommandValidator : AbstractValidator<DeleteNotifi
 {
     public DeleteNotificationCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id alaný boþ olamaz");
     }
 }

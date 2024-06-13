@@ -70,6 +70,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt
                 };
+
             yield return adminUser;
         }
     }

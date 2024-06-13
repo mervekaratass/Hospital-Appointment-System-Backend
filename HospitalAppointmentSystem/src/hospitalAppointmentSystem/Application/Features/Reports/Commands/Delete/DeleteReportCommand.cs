@@ -43,7 +43,10 @@ public class DeleteReportCommand : IRequest<DeletedReportResponse>, ISecuredRequ
             Report? report = await _reportRepository.GetAsync(predicate: r => r.Id == request.Id, cancellationToken: cancellationToken);
             await _reportBusinessRules.ReportShouldExistWhenSelected(report);
 
-            await _reportRepository.DeleteAsync(report!);
+            report.DeletedDate= DateTime.UtcNow;
+         
+            await _reportRepository.UpdateAsync(report!);
+            
 
             DeletedReportResponse response = _mapper.Map<DeletedReportResponse>(report);
             return response;

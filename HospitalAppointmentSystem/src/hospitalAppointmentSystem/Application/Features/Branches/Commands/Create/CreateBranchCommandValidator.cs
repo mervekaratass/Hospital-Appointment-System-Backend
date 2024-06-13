@@ -6,6 +6,7 @@ public class CreateBranchCommandValidator : AbstractValidator<CreateBranchComman
 {
     public CreateBranchCommandValidator()
     {
-        RuleFor(c => c.Name).NotEmpty();
+        RuleFor(c => c.Name).NotEmpty().WithMessage("Ýsim alaný boþ olamaz.");
+        RuleFor(c => c.Name).MinimumLength(5).WithMessage("Ýsim alaný minimum 5 karakter olmalý.");
     }
 }

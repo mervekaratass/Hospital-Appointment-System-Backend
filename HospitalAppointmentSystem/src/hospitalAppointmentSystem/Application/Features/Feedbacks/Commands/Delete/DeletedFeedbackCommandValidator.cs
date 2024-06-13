@@ -6,6 +6,6 @@ public class DeleteFeedbackCommandValidator : AbstractValidator<DeleteFeedbackCo
 {
     public DeleteFeedbackCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id alaný boþ olamaz");
     }
 }

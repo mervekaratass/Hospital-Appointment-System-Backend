@@ -13,6 +13,7 @@ public class DoctorRegisterCommandValidator : AbstractValidator<DoctorRegisterCo
     public DoctorRegisterCommandValidator()
     {
         RuleFor(c => c.DoctorForRegisterDto.Email).NotEmpty().WithMessage("E-posta alanı boş olamaz.");
+
      
 
         RuleFor(c => c.DoctorForRegisterDto.BranchID).NotEmpty().WithMessage("Branş alanı boş olamaz");

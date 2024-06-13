@@ -6,6 +6,6 @@ public class DeleteDoctorScheduleCommandValidator : AbstractValidator<DeleteDoct
 {
     public DeleteDoctorScheduleCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id alaný boþ olamaz");
     }
 }

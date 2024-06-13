@@ -4,5 +4,5 @@ public static class ReportsBusinessMessages
 {
     public const string SectionName = "Report";
 
-    public const string ReportNotExists = "ReportNotExists";
+    public const string ReportNotExists = "Böyle bir rapor bulunamadý";
 }

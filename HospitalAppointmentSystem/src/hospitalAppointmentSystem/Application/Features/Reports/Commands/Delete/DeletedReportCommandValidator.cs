@@ -6,6 +6,6 @@ public class DeleteReportCommandValidator : AbstractValidator<DeleteReportComman
 {
     public DeleteReportCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
+        RuleFor(c => c.Id).NotEmpty().WithMessage("Id alaný boþ olamaz");
     }
 }

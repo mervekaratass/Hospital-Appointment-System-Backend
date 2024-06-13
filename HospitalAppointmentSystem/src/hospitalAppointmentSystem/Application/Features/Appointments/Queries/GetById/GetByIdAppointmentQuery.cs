@@ -9,7 +9,7 @@ using static Application.Features.Appointments.Constants.AppointmentsOperationCl
 
 namespace Application.Features.Appointments.Queries.GetById;
 
-public class GetByIdAppointmentQuery : IRequest<GetByIdAppointmentResponse>, ISecuredRequest
+public class GetByIdAppointmentQuery : IRequest<GetByIdAppointmentResponse>
 {
     public int Id { get; set; }
 
