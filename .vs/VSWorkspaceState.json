@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\HospitalAppointmentSystem",
+    "\\HospitalAppointmentSystem\\tests\\HospitalAppointmentSystem.Application.Tests",
+    "\\HospitalAppointmentSystem\\tests\\HospitalAppointmentSystem.Application.Tests\\Features",
+    "\\HospitalAppointmentSystem\\tests\\HospitalAppointmentSystem.Application.Tests\\Features\\Users",
+    "\\HospitalAppointmentSystem\\tests\\HospitalAppointmentSystem.Application.Tests\\Features\\Users\\Commands",
+    "\\HospitalAppointmentSystem\\tests\\HospitalAppointmentSystem.Application.Tests\\Mocks",
+    "\\HospitalAppointmentSystem\\tests\\HospitalAppointmentSystem.Application.Tests\\Mocks\\Configurations",
+    "\\HospitalAppointmentSystem\\tests\\HospitalAppointmentSystem.Application.Tests\\Mocks\\FakeDatas",
+    "\\HospitalAppointmentSystem\\tests\\HospitalAppointmentSystem.Application.Tests\\Mocks\\Repositories"
+  ],
+  "SelectedNode": "\\HospitalAppointmentSystem\\src\\hospitalAppointmentSystem\\WebAPI",
+  "PreviewInSolutionExplorer": false
+}

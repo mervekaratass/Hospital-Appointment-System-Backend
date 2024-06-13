@@ -39,7 +39,7 @@ public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>, ICacheRemove
 
         public async Task<DeletedDoctorResponse> Handle(DeleteDoctorCommand request, CancellationToken cancellationToken)
         {
-            Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken);
+            Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken, withDeleted: true);
             await _doctorBusinessRules.DoctorShouldExistWhenSelected(doctor);
 
             await _doctorRepository.DeleteAsync(doctor!);
