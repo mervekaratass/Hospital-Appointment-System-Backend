@@ -9,6 +9,7 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
     public void Configure(EntityTypeBuilder<Doctor> builder)
     {
         builder.ToTable("Doctors");
+        builder.HasIndex(u => u.Email).IsUnique();
 
         builder.Property(d => d.Id).HasColumnName("Id").IsRequired();
         builder.Property(d => d.Title).HasColumnName("Title").IsRequired();
