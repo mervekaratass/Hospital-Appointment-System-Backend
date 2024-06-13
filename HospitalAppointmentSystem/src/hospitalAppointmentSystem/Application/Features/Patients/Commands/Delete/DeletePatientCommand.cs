@@ -42,7 +42,8 @@ public class DeletePatientCommand : IRequest<DeletedPatientResponse>, ISecuredRe
             Patient? patient = await _patientRepository.GetAsync(predicate: p => p.Id == request.Id, cancellationToken: cancellationToken);
             await _patientBusinessRules.PatientShouldExistWhenSelected(patient);
 
-            await _patientRepository.DeleteAsync(patient!);
+            patient.DeletedDate = DateTime.Now;
+            await _patientRepository.UpdateAsync(patient!);
 
             DeletedPatientResponse response = _mapper.Map<DeletedPatientResponse>(patient);
             return response;

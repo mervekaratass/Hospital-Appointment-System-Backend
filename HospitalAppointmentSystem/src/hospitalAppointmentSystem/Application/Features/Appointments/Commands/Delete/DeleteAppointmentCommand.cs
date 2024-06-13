@@ -44,6 +44,7 @@ public class DeleteAppointmentCommand : IRequest<DeletedAppointmentResponse>, IS
             Appointment? appointment = await _appointmentRepository.GetAsync(predicate: a => a.Id == request.Id, cancellationToken: cancellationToken);
             await _appointmentBusinessRules.AppointmentShouldExistWhenSelected(appointment);
 
+         
             await _appointmentRepository.DeleteAsync(appointment!);
 
             DeletedAppointmentResponse response = _mapper.Map<DeletedAppointmentResponse>(appointment);
