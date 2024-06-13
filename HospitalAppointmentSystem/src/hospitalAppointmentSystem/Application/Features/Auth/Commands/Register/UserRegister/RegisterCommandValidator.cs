@@ -15,7 +15,7 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
             .WithMessage(
                 "Şifre en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir."
             );
-        RuleFor(c => c.PatientForRegisterDto.Email).EmailAddress().WithMessage("Geçerli bir email adresi giriniz.");
+        RuleFor(c => c.UserForRegisterDto.Email).EmailAddress().WithMessage("Geçerli bir email adresi giriniz.");
 
         RuleFor(c => c.UserForRegisterDto.FirstName).NotEmpty().WithMessage("İsim alanı boş geçilemez");
 
