@@ -1,6 +1,7 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NArchitecture.Core.Security.Hashing;
 
 namespace Persistence.EntityConfigurations;
 
@@ -17,4 +18,7 @@ public class BranchConfiguration : IEntityTypeConfiguration<Branch>
         builder.Property(d => d.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(d => d.DeletedDate).HasColumnName("DeletedDate");
     }
+
+
+
 }
