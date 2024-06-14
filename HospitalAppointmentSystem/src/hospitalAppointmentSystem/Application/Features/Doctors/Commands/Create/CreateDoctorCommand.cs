@@ -15,7 +15,7 @@ using Application.Services.Encryptions;
 
 namespace Application.Features.Doctors.Commands.Create;
 
-public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>,/* ISecuredRequest,*/ ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public required string Title { get; set; }
     public required string SchoolName { get; set; }
