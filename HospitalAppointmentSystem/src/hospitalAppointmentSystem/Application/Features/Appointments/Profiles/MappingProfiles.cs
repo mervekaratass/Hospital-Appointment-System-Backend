@@ -8,6 +8,7 @@ using NArchitecture.Core.Application.Responses;
 using Domain.Entities;
 using NArchitecture.Core.Persistence.Paging;
 using Application.Features.Appointments.Queries.GetByPatientId;
+using Application.Features.Appointments.Queries.GetListByDoctor;
 
 namespace Application.Features.Appointments.Profiles;
 
@@ -31,6 +32,9 @@ public class MappingProfiles : Profile
 
         CreateMap<Appointment, GetListByPatientDto>();
         CreateMap<IPaginate<Appointment>, GetListResponse<GetListByPatientDto>>();
+
+        CreateMap<Appointment, GetListByDoctorDto>();
+        CreateMap<IPaginate<Appointment>, GetListResponse<GetListByDoctorDto>>();
 
 
 

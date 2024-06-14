@@ -14,7 +14,7 @@ using Application.Features.Patients.Constants;
 
 namespace Application.Features.Appointments.Queries.GetList;
 
-public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointmentListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointmentListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 

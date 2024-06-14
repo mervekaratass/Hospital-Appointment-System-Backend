@@ -11,7 +11,7 @@ using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.Doctors.Queries.GetById;
 
-public class GetByIdDoctorQuery : IRequest<GetByIdDoctorResponse>/*, ISecuredRequest*/
+public class GetByIdDoctorQuery : IRequest<GetByIdDoctorResponse>
 {
     public Guid Id { get; set; }
 

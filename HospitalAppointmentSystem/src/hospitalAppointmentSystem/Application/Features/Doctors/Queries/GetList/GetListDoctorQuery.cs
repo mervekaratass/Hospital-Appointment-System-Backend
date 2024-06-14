@@ -15,7 +15,7 @@ using System.Numerics;
 
 namespace Application.Features.Doctors.Queries.GetList;
 
-public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorListItemDto>>, /*ISecuredRequest,*/ ICachableRequest
+public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 

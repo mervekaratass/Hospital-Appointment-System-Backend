@@ -9,7 +9,7 @@ public class PatientConfiguration : IEntityTypeConfiguration<Patient>
     public void Configure(EntityTypeBuilder<Patient> builder)
     {
         builder.ToTable("Patients");
-
+        builder.HasIndex(u => u.Email).IsUnique();
         builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
         builder.Property(p => p.Age).HasColumnName("Age");
         builder.Property(p => p.Height).HasColumnName("Height");
