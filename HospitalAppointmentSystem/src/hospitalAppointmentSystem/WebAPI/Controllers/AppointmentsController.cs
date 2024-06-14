@@ -7,8 +7,6 @@ using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Application.Features.Appointments.Queries.GetByPatientId;
-using Application.Features.Appointments.Queries.GetListByDoctor;
-using Application.Features.Appointments.Queries.GetListByDoctorId;
 using Domain.Entities;
 using Application.Features.Patients.Queries.GetById;
 using Nest;
