@@ -7,6 +7,12 @@ using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Application.Features.Appointments.Queries.GetByPatientId;
+using Application.Features.Appointments.Queries.GetListByDoctor;
+using Application.Features.Appointments.Queries.GetListByDoctorId;
+using Domain.Entities;
+using Application.Features.Patients.Queries.GetById;
+using Nest;
+using Application.Features.Reports.Queries.GetById;
 
 namespace WebAPI.Controllers;
 
@@ -68,5 +74,53 @@ public class AppointmentsController : BaseController
         GetListByPatientQuery getListByInstructorBootcampQuery = new() { PageRequest = pageRequest, PatientId = patientId };
         GetListResponse<GetListByPatientDto> response = await Mediator.Send(getListByInstructorBootcampQuery);
         return Ok(response);
+    }
+
+    [HttpGet("getPatiensByDoctorId")]
+    public async Task<IActionResult> GetListPatiensByIDoctor([FromQuery] PageRequest pageRequest, [FromQuery] Guid doctorId)
+    {
+        GetListByDoctorQuery doctorsQuery = new() { PageRequest = pageRequest, DoctorId = doctorId };
+        GetListResponse<GetListByDoctorDto> doctors = await Mediator.Send(doctorsQuery);
+        
+
+        GetListResponse<Patient> patients = new GetListResponse<Patient>();
+        foreach (var doctorPatiens in doctors.Items)
+        {
+            try
+            {
+                GetByIdPatientQuery query = new() { Id = doctorPatiens.PatientID };
+                GetByIdPatientResponse patient = await Mediator.Send(query);
+
+                GetByIdAppointmentQuery appQuery = new() { Id = doctorPatiens.Id };
+                GetByIdAppointmentResponse appResponse = await Mediator.Send(appQuery);
+
+                patients.Items.Add(new Patient
+                {
+                    FirstName = doctorPatiens.PatientFirstName,
+                    LastName = doctorPatiens.PatientLastName,
+                    DateOfBirth = patient.DateOfBirth,
+                    Age = patient.Age,
+                    NationalIdentity = patient.NationalIdentity,
+                    Appointments = new List<Appointment>()
+                    {
+                       new Appointment
+                       {
+                           Date = appResponse.Date,
+                           Time = appResponse.Time
+                       }
+                    }
+
+                });
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        //GetListByPatientQuery patiensQuery = new() { PageRequest = pageRequest, PatientId = patientId };
+        //GetListResponse<GetListByPatientDto> response = await Mediator.Send(patiensQuery);
+
+        return Ok(patients);
     }
 }
