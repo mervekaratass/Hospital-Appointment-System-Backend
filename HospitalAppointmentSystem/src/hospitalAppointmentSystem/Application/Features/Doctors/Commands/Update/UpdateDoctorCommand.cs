@@ -12,7 +12,7 @@ using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
 
 namespace Application.Features.Doctors.Commands.Update;
 
-public class UpdateDoctorCommand : IRequest<UpdatedDoctorResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class UpdateDoctorCommand : IRequest<UpdatedDoctorResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public Guid Id { get; set; }
     public required string Title { get; set; }
@@ -25,7 +25,6 @@ public class UpdateDoctorCommand : IRequest<UpdatedDoctorResponse>, ISecuredRequ
     public string Phone { get; set; }
     public string Address { get; set; }
     public string Email { get; set; }
-    public string Password { get; set; }
 
     public string[] Roles => [Admin, Write, DoctorsOperationClaims.Update];
 
