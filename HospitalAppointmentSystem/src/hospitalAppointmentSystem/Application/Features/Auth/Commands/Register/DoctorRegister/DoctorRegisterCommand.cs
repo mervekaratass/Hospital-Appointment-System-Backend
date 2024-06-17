@@ -21,7 +21,7 @@ using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
 
 namespace Application.Features.Auth.Commands.Register.DoctorRegister;
 
-public class DoctorRegisterCommand : IRequest<DoctorRegisteredResponse>,ISecuredRequest
+public class DoctorRegisterCommand : IRequest<DoctorRegisteredResponse>
 {
     public DoctorForRegisterDto DoctorForRegisterDto { get; set; }
     public string IpAddress { get; set; }

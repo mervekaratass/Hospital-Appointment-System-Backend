@@ -6,8 +6,7 @@ using Domain.Entities;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
-using Application.Services.Encryptions;
-using NArchitecture.Core.Security.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Doctors.Queries.GetById;
 
@@ -32,19 +31,8 @@ public class GetByIdDoctorQuery : IRequest<GetByIdDoctorResponse>
 
         public async Task<GetByIdDoctorResponse> Handle(GetByIdDoctorQuery request, CancellationToken cancellationToken)
         {
-            Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken);
+            Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken, include: x => x.Include(x => x.Branch));
             await _doctorBusinessRules.DoctorShouldExistWhenSelected(doctor);
-
-
-            //sinem encryptions þifrelenmiþ veriyi okuma. decrypt þifreyi çözer
-
-            doctor.FirstName = CryptoHelper.Decrypt(doctor.FirstName);
-            doctor.LastName = CryptoHelper.Decrypt(doctor.LastName);
-            doctor.NationalIdentity = CryptoHelper.Decrypt(doctor.NationalIdentity);
-            doctor.Phone = CryptoHelper.Decrypt(doctor.Phone);
-            doctor.Address = CryptoHelper.Decrypt(doctor.Address);
-
-            // yazdýðým yer bitti
 
             GetByIdDoctorResponse response = _mapper.Map<GetByIdDoctorResponse>(doctor);
 
