@@ -6,6 +6,7 @@ using Domain.Entities;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
 using static Application.Features.Reports.Constants.ReportsOperationClaims;
+using Application.Features.Doctors.Constants;
 
 namespace Application.Features.Reports.Queries.GetById;
 
@@ -13,7 +14,7 @@ public class GetByIdReportQuery : IRequest<GetByIdReportResponse>, ISecuredReque
 {
     public int Id { get; set; }
 
-    public string[] Roles => [Admin, Read];
+    public string[] Roles => [Admin, Read,DoctorsOperationClaims.Update];
 
     public class GetByIdReportQueryHandler : IRequestHandler<GetByIdReportQuery, GetByIdReportResponse>
     {
@@ -32,6 +33,8 @@ public class GetByIdReportQuery : IRequest<GetByIdReportResponse>, ISecuredReque
         {
             Report? report = await _reportRepository.GetAsync(predicate: r => r.Id == request.Id, cancellationToken: cancellationToken);
             await _reportBusinessRules.ReportShouldExistWhenSelected(report);
+
+
 
             GetByIdReportResponse response = _mapper.Map<GetByIdReportResponse>(report);
             return response;
