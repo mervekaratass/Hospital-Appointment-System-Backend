@@ -14,9 +14,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using NArchitecture.Core.Application.Pipelines.Authorization;
 
 namespace Application.Features.Reports.Queries.GetListByDoctor;
-public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>>, ICachableRequest
+public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>>, ICachableRequest,ISecuredRequest
 
 {
     public PageRequest PageRequest { get; set; }
@@ -45,7 +46,7 @@ public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>
             CancellationToken cancellationToken
         )
         {
-            IPaginate<Report> appointments = await _reportRepository.GetListAsync(
+            IPaginate<Report> reports = await _reportRepository.GetListAsync(
                index: request.PageRequest.PageIndex,
                size: request.PageRequest.PageSize,
                cancellationToken: cancellationToken,
@@ -54,7 +55,7 @@ public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>
                   predicate: x => x.Appointment.DoctorID == request.DoctorId
            );
 
-            GetListResponse<GetListByDoctorDto> response = _mapper.Map<GetListResponse<GetListByDoctorDto>>(appointments);
+            GetListResponse<GetListByDoctorDto> response = _mapper.Map<GetListResponse<GetListByDoctorDto>>(reports);
             return response;
 
         }
