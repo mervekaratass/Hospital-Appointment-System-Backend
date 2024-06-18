@@ -24,7 +24,17 @@ public class MappingProfiles : Profile
         CreateMap<DeleteReportCommand, Report>();
         CreateMap<Report, DeletedReportResponse>();
 
-        CreateMap<Report, GetByIdReportResponse>();
+        CreateMap<Report, GetByIdReportResponse>().ForMember(x => x.DoctorFirstName, opt => opt.MapFrom(dto => dto.Appointment.Doctor.FirstName))
+            .ForMember(x => x.DoctorLastName, opt => opt.MapFrom(dto => dto.Appointment.Doctor.LastName))
+            .ForMember(x => x.DoctorID, opt => opt.MapFrom(dto => dto.Appointment.Doctor.Id))
+             .ForMember(x => x.DoctorTitle, opt => opt.MapFrom(dto => dto.Appointment.Doctor.Title))
+            .ForMember(x => x.PatientFirstName, opt => opt.MapFrom(dto => dto.Appointment.Patient.FirstName))
+            .ForMember(x => x.PatientLastName, opt => opt.MapFrom(dto => dto.Appointment.Patient.LastName))
+            .ForMember(x => x.AppointmentDate, opt => opt.MapFrom(dto => dto.Appointment.Date))
+            .ForMember(x => x.AppointmentTime, opt => opt.MapFrom(dto => dto.Appointment.Time))
+            .ForMember(x => x.ReportDate, opt => opt.MapFrom(dto => dto.CreatedDate))
+            .ForMember(x => x.PatientIdentity, opt => opt.MapFrom(dto => dto.Appointment.Patient.NationalIdentity))
+            .ForMember(x => x.PatientID, opt => opt.MapFrom(dto => dto.Appointment.Patient.Id)); ;
 
         CreateMap<Report, GetListReportListItemDto>();
         CreateMap<IPaginate<Report>, GetListResponse<GetListReportListItemDto>>();
