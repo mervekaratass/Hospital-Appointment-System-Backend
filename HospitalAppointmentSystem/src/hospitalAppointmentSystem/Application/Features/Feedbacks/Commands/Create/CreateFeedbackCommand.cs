@@ -14,7 +14,7 @@ using Application.Features.Doctors.Constants;
 
 namespace Application.Features.Feedbacks.Commands.Create;
 
-public class CreateFeedbackCommand : IRequest<CreatedFeedbackResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateFeedbackCommand : IRequest<CreatedFeedbackResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public required Guid UserID { get; set; }
     public required string Text { get; set; }

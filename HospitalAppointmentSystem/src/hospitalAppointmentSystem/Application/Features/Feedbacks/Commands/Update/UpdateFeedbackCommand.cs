@@ -14,7 +14,7 @@ using Application.Features.Patients.Constants;
 
 namespace Application.Features.Feedbacks.Commands.Update;
 
-public class UpdateFeedbackCommand : IRequest<UpdatedFeedbackResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class UpdateFeedbackCommand : IRequest<UpdatedFeedbackResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public int Id { get; set; }
     public required Guid UserID { get; set; }

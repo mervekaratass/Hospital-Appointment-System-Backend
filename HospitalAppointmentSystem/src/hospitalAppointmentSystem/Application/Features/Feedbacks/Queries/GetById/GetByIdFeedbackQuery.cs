@@ -6,10 +6,11 @@ using Domain.Entities;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
 using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Feedbacks.Queries.GetById;
 
-public class GetByIdFeedbackQuery : IRequest<GetByIdFeedbackResponse>, ISecuredRequest
+public class GetByIdFeedbackQuery : IRequest<GetByIdFeedbackResponse>
 {
     public int Id { get; set; }
 
@@ -30,7 +31,7 @@ public class GetByIdFeedbackQuery : IRequest<GetByIdFeedbackResponse>, ISecuredR
 
         public async Task<GetByIdFeedbackResponse> Handle(GetByIdFeedbackQuery request, CancellationToken cancellationToken)
         {
-            Feedback? feedback = await _feedbackRepository.GetAsync(predicate: f => f.Id == request.Id, cancellationToken: cancellationToken);
+            Feedback? feedback = await _feedbackRepository.GetAsync(predicate: f => f.Id == request.Id, cancellationToken: cancellationToken, include: x => x.Include(x => x.User));
             await _feedbackBusinessRules.FeedbackShouldExistWhenSelected(feedback);
 
             GetByIdFeedbackResponse response = _mapper.Map<GetByIdFeedbackResponse>(feedback);
