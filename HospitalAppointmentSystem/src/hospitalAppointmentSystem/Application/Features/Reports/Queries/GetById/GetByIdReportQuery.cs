@@ -32,7 +32,7 @@ public class GetByIdReportQuery : IRequest<GetByIdReportResponse>, ISecuredReque
 
         public async Task<GetByIdReportResponse> Handle(GetByIdReportQuery request, CancellationToken cancellationToken)
         {
-            Report? report = await _reportRepository.GetAsync(predicate: r => r.Id == request.Id, include:x=>x.Include(x=>x.Appointment).Include(x=>x.Appointment.Patient).Include(x=>x.Appointment.Doctor),
+            Report? report = await _reportRepository.GetAsync(predicate: r => r.Id == request.Id &&r.DeletedDate==null , include:x=>x.Include(x=>x.Appointment).Include(x=>x.Appointment.Patient).Include(x=>x.Appointment.Doctor),
                 cancellationToken: cancellationToken);
             await _reportBusinessRules.ReportShouldExistWhenSelected(report);
 

@@ -51,8 +51,9 @@ public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>
                size: request.PageRequest.PageSize,
                cancellationToken: cancellationToken,
                   orderBy: x => x.OrderByDescending(y => y.CreatedDate),
-               include: x => x.Include(x=>x.Appointment).Include(x => x.Appointment.Doctor).Include(x=>x.Appointment.Patient),
-                  predicate: x => x.Appointment.DoctorID == request.DoctorId
+               include: x => x.Include(x => x.Appointment).Include(x => x.Appointment.Doctor).Include(x => x.Appointment.Patient),
+                  predicate: x => x.Appointment.DoctorID == request.DoctorId  &&  x.DeletedDate==null
+
            );
 
             GetListResponse<GetListByDoctorDto> response = _mapper.Map<GetListResponse<GetListByDoctorDto>>(reports);

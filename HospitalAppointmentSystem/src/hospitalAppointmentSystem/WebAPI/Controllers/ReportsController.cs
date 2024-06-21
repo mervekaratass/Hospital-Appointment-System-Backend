@@ -8,6 +8,7 @@ using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Application.Features.Appointments.Queries.GetByPatientId;
 using Application.Features.Reports.Queries.GetListByDoctor;
+using Application.Features.Reports.Queries.GetByAppointmentId;
 
 namespace WebAPI.Controllers;
 
@@ -47,6 +48,16 @@ public class ReportsController : BaseController
         GetByIdReportQuery query = new() { Id = id };
 
         GetByIdReportResponse response = await Mediator.Send(query);
+
+        return Ok(response);
+    }
+
+    [HttpGet("appointmentid")]
+    public async Task<ActionResult<GetByAppointmentIdResponse>> GetByAppointmentId([FromQuery] int appointmentid)
+    {
+        GetByAppointmentIdQuery query = new() { Id = appointmentid };
+
+        GetByAppointmentIdResponse response = await Mediator.Send(query);
 
         return Ok(response);
     }

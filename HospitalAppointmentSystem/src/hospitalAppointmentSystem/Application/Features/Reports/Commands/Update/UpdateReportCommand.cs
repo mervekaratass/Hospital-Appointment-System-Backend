@@ -41,7 +41,7 @@ public class UpdateReportCommand : IRequest<UpdatedReportResponse>, ISecuredRequ
 
         public async Task<UpdatedReportResponse> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
         {
-            Report? report = await _reportRepository.GetAsync(predicate: r => r.Id == request.Id, cancellationToken: cancellationToken);
+            Report? report = await _reportRepository.GetAsync(predicate: r => r.Id == request.Id && r.DeletedDate==null, cancellationToken: cancellationToken);
             await _reportBusinessRules.ReportShouldExistWhenSelected(report);
             report = _mapper.Map(request, report);
 
