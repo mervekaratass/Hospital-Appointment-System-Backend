@@ -8,6 +8,7 @@ using NArchitecture.Core.Application.Responses;
 using Domain.Entities;
 using NArchitecture.Core.Persistence.Paging;
 using Application.Features.Reports.Queries.GetListByDoctor;
+using Application.Features.Reports.Queries.GetByAppointmentId;
 
 namespace Application.Features.Reports.Profiles;
 
@@ -34,9 +35,23 @@ public class MappingProfiles : Profile
             .ForMember(x => x.AppointmentTime, opt => opt.MapFrom(dto => dto.Appointment.Time))
             .ForMember(x => x.ReportDate, opt => opt.MapFrom(dto => dto.CreatedDate))
             .ForMember(x => x.PatientIdentity, opt => opt.MapFrom(dto => dto.Appointment.Patient.NationalIdentity))
-            .ForMember(x => x.PatientID, opt => opt.MapFrom(dto => dto.Appointment.Patient.Id)); ;
+            .ForMember(x => x.PatientID, opt => opt.MapFrom(dto => dto.Appointment.Patient.Id))
+          .ForMember(x => x.ReportDate, opt => opt.MapFrom(dto => dto.CreatedDate));
 
-        CreateMap<Report, GetListReportListItemDto>();
+        CreateMap<Report, GetListReportListItemDto>()
+         .ForMember(x => x.DoctorFirstName, opt => opt.MapFrom(dto => dto.Appointment.Doctor.FirstName))
+         .ForMember(x => x.DoctorLastName, opt => opt.MapFrom(dto => dto.Appointment.Doctor.LastName))
+         .ForMember(x => x.DoctorID, opt => opt.MapFrom(dto => dto.Appointment.Doctor.Id))
+         .ForMember(x => x.DoctorTitle, opt => opt.MapFrom(dto => dto.Appointment.Doctor.Title))
+         .ForMember(x => x.PatientID, opt => opt.MapFrom(dto => dto.Appointment.Patient.Id))
+         .ForMember(x => x.PatientIdentity, opt => opt.MapFrom(dto => dto.Appointment.Patient.NationalIdentity))
+         .ForMember(x => x.PatientFirstName, opt => opt.MapFrom(dto => dto.Appointment.Patient.FirstName))
+         .ForMember(x => x.PatientLastName, opt => opt.MapFrom(dto => dto.Appointment.Patient.LastName))
+         .ForMember(x => x.AppointmentDate, opt => opt.MapFrom(dto => dto.Appointment.Date))
+         .ForMember(x => x.AppointmentTime, opt => opt.MapFrom(dto => dto.Appointment.Time))
+         .ForMember(x => x.ReportDate, opt => opt.MapFrom(dto => dto.CreatedDate))
+         .ForMember(x => x.DoctorBranch, opt => opt.MapFrom(dto => dto.Appointment.Doctor.Branch.Name));
+
         CreateMap<IPaginate<Report>, GetListResponse<GetListReportListItemDto>>();
 
         //.ForMember(i=>i.UnitPrice, opt => opt.MapFrom(dto => dto.Price));
@@ -52,7 +67,15 @@ public class MappingProfiles : Profile
             .ForMember(x => x.ReportDate, opt => opt.MapFrom(dto => dto.CreatedDate))
             .ForMember(x => x.PatientIdentity, opt => opt.MapFrom(dto => dto.Appointment.Patient.NationalIdentity))
             .ForMember(x => x.PatientID, opt => opt.MapFrom(dto => dto.Appointment.Patient.Id));
+           
 
         CreateMap<IPaginate<Report>, GetListResponse<GetListByDoctorDto>>();
+
+
+        CreateMap<Report, GetByAppointmentIdResponse>().ForMember(x => x.Id, opt => opt.MapFrom(dto => dto.Id))
+            .ForMember(x => x.AppointmentID, opt => opt.MapFrom(dto => dto.AppointmentID))
+            .ForMember(x => x.Text, opt => opt.MapFrom(dto => dto.Text));
+
+
     }
 }
