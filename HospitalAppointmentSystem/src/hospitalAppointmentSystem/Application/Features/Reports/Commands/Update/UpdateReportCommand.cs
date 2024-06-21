@@ -16,7 +16,7 @@ namespace Application.Features.Reports.Commands.Update;
 public class UpdateReportCommand : IRequest<UpdatedReportResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public int Id { get; set; }
-    public required int AppointmentID { get; set; }
+   // public required int AppointmentID { get; set; }
     public required string Text { get; set; }
 
     public string[] Roles => [Admin, Write, ReportsOperationClaims.Update,DoctorsOperationClaims.Update];
