@@ -16,7 +16,7 @@ using System.Numerics;
 
 namespace Application.Features.Patients.Commands.Create;
 
-public class CreatePatientCommand : IRequest<CreatedPatientResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreatePatientCommand : IRequest<CreatedPatientResponse>/*, ISecuredRequest*/, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public int Age { get; set; }
     public double Height { get; set; }
