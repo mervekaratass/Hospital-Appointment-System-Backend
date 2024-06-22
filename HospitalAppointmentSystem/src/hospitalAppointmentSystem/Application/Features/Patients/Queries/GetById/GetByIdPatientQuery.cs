@@ -9,7 +9,7 @@ using static Application.Features.Patients.Constants.PatientsOperationClaims;
 
 namespace Application.Features.Patients.Queries.GetById;
 
-public class GetByIdPatientQuery : IRequest<GetByIdPatientResponse>, ISecuredRequest
+public class GetByIdPatientQuery : IRequest<GetByIdPatientResponse>
 {
     public Guid Id { get; set; }
 
