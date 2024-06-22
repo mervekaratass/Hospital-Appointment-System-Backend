@@ -23,7 +23,7 @@ public class MappingProfiles : Profile
         CreateMap<DeleteDoctorCommand, Doctor>();
         CreateMap<Doctor, DeletedDoctorResponse>();
 
-        CreateMap<Doctor, GetByIdDoctorResponse>();
+        CreateMap<Doctor, GetByIdDoctorResponse>().ForMember(x => x.BranchName, opt => opt.MapFrom(dto => dto.Branch.Name));
 
         CreateMap<Doctor, GetListDoctorListItemDto>();
         CreateMap<IPaginate<Doctor>, GetListResponse<GetListDoctorListItemDto>>();

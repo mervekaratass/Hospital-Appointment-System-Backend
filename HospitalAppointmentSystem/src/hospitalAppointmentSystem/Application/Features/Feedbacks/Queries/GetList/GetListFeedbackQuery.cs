@@ -10,10 +10,11 @@ using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Application.Features.Feedbacks.Queries.GetList;
 
-public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 
@@ -37,11 +38,14 @@ public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackList
 
         public async Task<GetListResponse<GetListFeedbackListItemDto>> Handle(GetListFeedbackQuery request, CancellationToken cancellationToken)
         {
+            // deletedDate null olan geri bildirimleri filtrelemek için bir lambda ifadesi tanýmlýyoruz
+            Expression<Func<Feedback, bool>> filter = feedback => feedback.DeletedDate == null;
             IPaginate<Feedback> feedbacks = await _feedbackRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
                 cancellationToken: cancellationToken,
-                 include: x => x.Include(x => x.User)
+                 include: x => x.Include(x => x.User),
+                 predicate: filter
             );
 
             GetListResponse<GetListFeedbackListItemDto> response = _mapper.Map<GetListResponse<GetListFeedbackListItemDto>>(feedbacks);

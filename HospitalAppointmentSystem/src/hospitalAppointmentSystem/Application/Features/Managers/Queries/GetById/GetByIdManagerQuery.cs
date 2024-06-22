@@ -11,7 +11,7 @@ using static Nest.JoinField;
 
 namespace Application.Features.Managers.Queries.GetById;
 
-public class GetByIdManagerQuery : IRequest<GetByIdManagerResponse>, ISecuredRequest
+public class GetByIdManagerQuery : IRequest<GetByIdManagerResponse>
 {
     public Guid Id { get; set; }
 
