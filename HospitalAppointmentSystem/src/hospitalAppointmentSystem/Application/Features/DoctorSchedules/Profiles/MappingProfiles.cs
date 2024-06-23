@@ -7,6 +7,7 @@ using AutoMapper;
 using NArchitecture.Core.Application.Responses;
 using Domain.Entities;
 using NArchitecture.Core.Persistence.Paging;
+using Application.Features.DoctorSchedules.Queries.GetListByDoctorId;
 
 namespace Application.Features.DoctorSchedules.Profiles;
 
@@ -27,5 +28,8 @@ public class MappingProfiles : Profile
 
         CreateMap<DoctorSchedule, GetListDoctorScheduleListItemDto>();
         CreateMap<IPaginate<DoctorSchedule>, GetListResponse<GetListDoctorScheduleListItemDto>>();
+
+        CreateMap<DoctorSchedule, GetListByDoctorIdDto>();
+        CreateMap<IPaginate<DoctorSchedule>, GetListResponse<GetListByDoctorIdDto>>();
     }
 }

@@ -15,5 +15,6 @@ public class GetListPatientListItemDto : IDto
     public string NationalIdentity { get; set; }
     public string Phone { get; set; }
     public string Address { get; set; }
+    public string Email { get; set; }
 
 }

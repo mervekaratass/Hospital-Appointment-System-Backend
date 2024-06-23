@@ -141,7 +141,8 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorID");
+                    b.HasIndex("DoctorID", "Date")
+                        .IsUnique();
 
                     b.ToTable("DoctorSchedules", (string)null);
                 });
@@ -930,7 +931,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Email");
 
                     b.Property<string>("FirstName")
@@ -969,6 +970,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users", (string)null);
 
                     b.UseTptMappingStrategy();
@@ -976,7 +980,7 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("98d841a2-b19a-4731-ae26-b3fcda255db9"),
+                            Id = new Guid("2fc0dc45-cf58-4ec3-bdf5-58eed393d7f1"),
                             Address = "Tekirdağ",
                             AuthenticatorType = 0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -985,8 +989,8 @@ namespace Persistence.Migrations
                             FirstName = "Fatma",
                             LastName = "Birel",
                             NationalIdentity = "12345678901",
-                            PasswordHash = new byte[] { 110, 53, 170, 95, 113, 28, 156, 199, 103, 198, 36, 186, 155, 123, 101, 195, 249, 37, 211, 212, 106, 212, 177, 125, 35, 248, 21, 139, 116, 84, 40, 12, 210, 252, 199, 48, 166, 174, 93, 251, 0, 103, 211, 101, 101, 200, 119, 173, 28, 184, 36, 130, 99, 159, 69, 110, 97, 245, 247, 217, 88, 74, 59, 17 },
-                            PasswordSalt = new byte[] { 114, 116, 243, 223, 95, 14, 52, 246, 74, 101, 126, 138, 242, 220, 10, 134, 195, 168, 0, 120, 13, 3, 6, 154, 229, 30, 183, 22, 228, 37, 83, 88, 218, 234, 9, 18, 8, 84, 83, 239, 88, 36, 183, 146, 117, 53, 196, 173, 118, 175, 134, 50, 229, 48, 32, 93, 80, 156, 56, 115, 226, 11, 192, 8, 96, 184, 221, 110, 234, 125, 85, 21, 68, 153, 251, 136, 122, 99, 71, 33, 215, 218, 163, 22, 154, 88, 5, 253, 183, 178, 95, 154, 152, 66, 236, 207, 100, 42, 102, 42, 89, 133, 141, 191, 124, 103, 37, 76, 167, 144, 59, 94, 218, 15, 30, 101, 154, 216, 165, 159, 63, 189, 177, 142, 189, 12, 205, 65 },
+                            PasswordHash = new byte[] { 113, 42, 44, 90, 95, 213, 211, 196, 157, 218, 104, 149, 184, 3, 196, 164, 154, 201, 176, 10, 182, 55, 45, 39, 123, 173, 140, 148, 128, 135, 106, 29, 18, 69, 214, 130, 67, 53, 42, 216, 81, 59, 20, 253, 187, 139, 17, 178, 7, 86, 49, 33, 25, 227, 219, 127, 79, 20, 112, 75, 245, 242, 145, 28 },
+                            PasswordSalt = new byte[] { 153, 72, 169, 113, 127, 70, 16, 130, 145, 126, 182, 57, 53, 163, 142, 19, 152, 175, 61, 73, 176, 255, 194, 247, 56, 191, 64, 186, 10, 117, 204, 252, 218, 126, 101, 252, 152, 218, 55, 164, 201, 223, 102, 60, 55, 202, 245, 38, 118, 157, 140, 82, 251, 32, 29, 172, 14, 246, 24, 112, 123, 53, 182, 166, 151, 205, 186, 47, 182, 156, 77, 53, 152, 186, 233, 144, 165, 239, 65, 154, 57, 150, 54, 87, 221, 28, 110, 69, 223, 212, 100, 93, 53, 192, 37, 215, 150, 163, 222, 116, 133, 195, 166, 210, 57, 184, 73, 197, 255, 5, 49, 154, 94, 170, 61, 12, 141, 198, 30, 85, 87, 38, 196, 99, 37, 76, 141, 105 },
                             Phone = "05279563492"
                         });
                 });
@@ -1029,10 +1033,10 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("de075674-5259-4dd2-b414-9b86f4505e19"),
+                            Id = new Guid("df879465-c232-4214-bb19-ea3c17508f04"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OperationClaimId = 1,
-                            UserId = new Guid("98d841a2-b19a-4731-ae26-b3fcda255db9")
+                            UserId = new Guid("2fc0dc45-cf58-4ec3-bdf5-58eed393d7f1")
                         });
                 });
 

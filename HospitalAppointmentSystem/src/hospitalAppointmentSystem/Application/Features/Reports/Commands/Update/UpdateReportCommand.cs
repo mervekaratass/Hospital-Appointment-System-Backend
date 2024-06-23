@@ -16,7 +16,7 @@ namespace Application.Features.Reports.Commands.Update;
 public class UpdateReportCommand : IRequest<UpdatedReportResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public int Id { get; set; }
-    public required int AppointmentID { get; set; }
+   // public required int AppointmentID { get; set; }
     public required string Text { get; set; }
 
     public string[] Roles => [Admin, Write, ReportsOperationClaims.Update,DoctorsOperationClaims.Update];
@@ -41,7 +41,7 @@ public class UpdateReportCommand : IRequest<UpdatedReportResponse>, ISecuredRequ
 
         public async Task<UpdatedReportResponse> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
         {
-            Report? report = await _reportRepository.GetAsync(predicate: r => r.Id == request.Id, cancellationToken: cancellationToken);
+            Report? report = await _reportRepository.GetAsync(predicate: r => r.Id == request.Id && r.DeletedDate==null, cancellationToken: cancellationToken);
             await _reportBusinessRules.ReportShouldExistWhenSelected(report);
             report = _mapper.Map(request, report);
 

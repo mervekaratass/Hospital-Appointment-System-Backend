@@ -39,9 +39,12 @@ public class GetListReportQuery : IRequest<GetListResponse<GetListReportListItem
         {
             IPaginate<Report> reports = await _reportRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
+                size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                 include: x => x.Include(x => x.Appointment)
+                include: x => x.Include(x => x.Appointment).Include(x => x.Appointment.Patient).Include(x => x.Appointment.Doctor).Include(x => x.Appointment.Doctor.Branch),
+                predicate:x=>x.DeletedDate==null
+            
+
             );
 
             GetListResponse<GetListReportListItemDto> response = _mapper.Map<GetListResponse<GetListReportListItemDto>>(reports);

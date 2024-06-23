@@ -5,4 +5,5 @@ namespace Application.Services.Repositories;
 
 public interface IAppointmentRepository : IAsyncRepository<Appointment, int>, IRepository<Appointment, int>
 {
+    //Task<int> GetTotalAppointmentsByDoctor(string doctorId);
 }

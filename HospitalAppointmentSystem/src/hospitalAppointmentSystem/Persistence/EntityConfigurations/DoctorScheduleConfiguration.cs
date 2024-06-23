@@ -1,6 +1,7 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace Persistence.EntityConfigurations;
 
@@ -10,6 +11,8 @@ public class DoctorScheduleConfiguration : IEntityTypeConfiguration<DoctorSchedu
     {
 
         builder.ToTable("DoctorSchedules");
+
+        builder.HasIndex(ds => new { ds.DoctorID, ds.Date }).IsUnique();
 
         builder.Property(d => d.Id).HasColumnName("Id").IsRequired();
         builder.Property(d => d.Date).HasColumnName("Date").IsRequired();

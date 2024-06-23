@@ -6,10 +6,11 @@ using Domain.Entities;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Doctors.Queries.GetById;
 
-public class GetByIdDoctorQuery : IRequest<GetByIdDoctorResponse>, ISecuredRequest
+public class GetByIdDoctorQuery : IRequest<GetByIdDoctorResponse>
 {
     public Guid Id { get; set; }
 
@@ -30,7 +31,7 @@ public class GetByIdDoctorQuery : IRequest<GetByIdDoctorResponse>, ISecuredReque
 
         public async Task<GetByIdDoctorResponse> Handle(GetByIdDoctorQuery request, CancellationToken cancellationToken)
         {
-            Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken);
+            Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken, include: x => x.Include(x => x.Branch));
             await _doctorBusinessRules.DoctorShouldExistWhenSelected(doctor);
 
             GetByIdDoctorResponse response = _mapper.Map<GetByIdDoctorResponse>(doctor);

@@ -21,7 +21,6 @@ public class Feedback : Entity<int>
 
     public Guid UserID { get; set; }
     public string Text { get; set; }
-
     public virtual User? User { get; set; }
 }
 

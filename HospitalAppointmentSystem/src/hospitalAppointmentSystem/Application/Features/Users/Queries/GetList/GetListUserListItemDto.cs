@@ -14,7 +14,6 @@ public class GetListUserListItemDto : IDto
     {
         FirstName = string.Empty;
         LastName = string.Empty;
-        Email = string.Empty;
     }
 
     public GetListUserListItemDto(Guid id, string firstName, string lastName, string email, bool status)

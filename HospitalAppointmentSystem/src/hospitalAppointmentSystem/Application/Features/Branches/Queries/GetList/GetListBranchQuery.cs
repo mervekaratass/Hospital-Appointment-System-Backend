@@ -12,7 +12,7 @@ using static Application.Features.Branches.Constants.BranchesOperationClaims;
 
 namespace Application.Features.Branches.Queries.GetList;
 
-public class GetListBranchQuery : IRequest<GetListResponse<GetListBranchListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListBranchQuery : IRequest<GetListResponse<GetListBranchListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 
@@ -39,7 +39,8 @@ public class GetListBranchQuery : IRequest<GetListResponse<GetListBranchListItem
             IPaginate<Branch> branches = await _branchRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                predicate: x => x.DeletedDate == null
             );
 
             GetListResponse<GetListBranchListItemDto> response = _mapper.Map<GetListResponse<GetListBranchListItemDto>>(branches);

@@ -42,7 +42,8 @@ public class GetListDoctorScheduleQuery : IRequest<GetListResponse<GetListDoctor
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
                 cancellationToken: cancellationToken,
-                    include: x => x.Include(x => x.Doctor)
+                    include: x => x.Include(x => x.Doctor),
+                    predicate:x=>x.DeletedDate==null
             );
 
             GetListResponse<GetListDoctorScheduleListItemDto> response = _mapper.Map<GetListResponse<GetListDoctorScheduleListItemDto>>(doctorSchedules);
