@@ -1,6 +1,6 @@
 using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
-using Application.Services.Encryptions;
+//using Application.Services.Encryptions;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -40,11 +40,11 @@ public class GetByIdUserQuery : IRequest<GetByIdUserResponse>, ISecuredRequest
 
 
             //sinem encryptions þifrelenmiþ veriyi okuma. decrypt þifreyi çözer
-            user.FirstName = CryptoHelper.Decrypt(user.FirstName);
-            user.LastName = CryptoHelper.Decrypt(user.LastName);
-            user.NationalIdentity = CryptoHelper.Decrypt(user.NationalIdentity);
-            user.Phone = CryptoHelper.Decrypt(user.Phone);
-            user.Address = CryptoHelper.Decrypt(user.Address);
+            //user.FirstName = CryptoHelper.Decrypt(user.FirstName);
+            //user.LastName = CryptoHelper.Decrypt(user.LastName);
+            //user.NationalIdentity = CryptoHelper.Decrypt(user.NationalIdentity);
+            //user.Phone = CryptoHelper.Decrypt(user.Phone);
+            //user.Address = CryptoHelper.Decrypt(user.Address);
 
             // yazdýðým yer bitti
 

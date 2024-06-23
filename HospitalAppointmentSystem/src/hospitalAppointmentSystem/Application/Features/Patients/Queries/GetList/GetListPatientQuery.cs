@@ -9,7 +9,7 @@ using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using static Application.Features.Patients.Constants.PatientsOperationClaims;
-using Application.Services.Encryptions;
+//using Application.Services.Encryptions;
 
 namespace Application.Features.Patients.Queries.GetList;
 
@@ -47,14 +47,14 @@ public class GetListPatientQuery : IRequest<GetListResponse<GetListPatientListIt
 
             // SÝNEM Foreach ile döndurunce  Ipaginat ekleme iþlemine izin vermiyor ,hata veriyor .
 
-            for (int i = 0; i < patients.Items.Count; i++)
-            {
-                patients.Items[i].FirstName = CryptoHelper.Decrypt(patients.Items[i].FirstName);
-                patients.Items[i].LastName = CryptoHelper.Decrypt(patients.Items[i].LastName);
-                patients.Items[i].NationalIdentity = CryptoHelper.Decrypt(patients.Items[i].NationalIdentity);
-                patients.Items[i].Phone = CryptoHelper.Decrypt(patients.Items[i].Phone);
-                patients.Items[i].Address = CryptoHelper.Decrypt(patients.Items[i].Address);
-            }
+            //for (int i = 0; i < patients.Items.Count; i++)
+            //{
+            //    patients.Items[i].FirstName = CryptoHelper.Decrypt(patients.Items[i].FirstName);
+            //    patients.Items[i].LastName = CryptoHelper.Decrypt(patients.Items[i].LastName);
+            //    patients.Items[i].NationalIdentity = CryptoHelper.Decrypt(patients.Items[i].NationalIdentity);
+            //    patients.Items[i].Phone = CryptoHelper.Decrypt(patients.Items[i].Phone);
+            //    patients.Items[i].Address = CryptoHelper.Decrypt(patients.Items[i].Address);
+            //}
 
 
 

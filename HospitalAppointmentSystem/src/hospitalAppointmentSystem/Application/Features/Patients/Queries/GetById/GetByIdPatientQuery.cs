@@ -6,7 +6,7 @@ using Domain.Entities;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
 using static Application.Features.Patients.Constants.PatientsOperationClaims;
-using Application.Services.Encryptions;
+//using Application.Services.Encryptions;
 using System.Numerics;
 
 namespace Application.Features.Patients.Queries.GetById;
@@ -36,11 +36,11 @@ public class GetByIdPatientQuery : IRequest<GetByIdPatientResponse>
             await _patientBusinessRules.PatientShouldExistWhenSelected(patient);
 
             //sinem encryptions þifrelenmiþ veriyi okuma. decrypt þifreyi çözer
-            patient.FirstName = CryptoHelper.Decrypt(patient.FirstName);
-            patient.LastName = CryptoHelper.Decrypt(patient.LastName);
-            patient.NationalIdentity = CryptoHelper.Decrypt(patient.NationalIdentity);
-            patient.Phone = CryptoHelper.Decrypt(patient.Phone);
-            patient.Address = CryptoHelper.Decrypt(patient.Address);
+            //patient.FirstName = CryptoHelper.Decrypt(patient.FirstName);
+            //patient.LastName = CryptoHelper.Decrypt(patient.LastName);
+            //patient.NationalIdentity = CryptoHelper.Decrypt(patient.NationalIdentity);
+            //patient.Phone = CryptoHelper.Decrypt(patient.Phone);
+            //patient.Address = CryptoHelper.Decrypt(patient.Address);
 
             // yazdýðým yer bitti
 

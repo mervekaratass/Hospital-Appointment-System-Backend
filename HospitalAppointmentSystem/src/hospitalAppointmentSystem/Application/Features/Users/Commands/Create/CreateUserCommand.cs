@@ -1,6 +1,5 @@
 using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
-using Application.Services.Encryptions;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -12,7 +11,7 @@ using static Application.Features.Users.Constants.UsersOperationClaims;
 
 namespace Application.Features.Users.Commands.Create;
 
-public class CreateUserCommand : IRequest<CreatedUserResponse>  //,  ISecuredRequest
+public class CreateUserCommand : IRequest<CreatedUserResponse>  ,  ISecuredRequest
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

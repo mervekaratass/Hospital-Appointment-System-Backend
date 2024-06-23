@@ -10,7 +10,7 @@ using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
 using Microsoft.EntityFrameworkCore;
-using Application.Services.Encryptions;
+//using Application.Services.Encryptions;
 using System.Numerics;
 
 namespace Application.Features.Doctors.Queries.GetList;
@@ -48,14 +48,14 @@ public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorListItem
 
             // SÝNEM Foreach ile döndurunce  Ipaginat ekleme iþlemine izin vermiyor ,hata veriyor .
 
-            for (int i = 0; i < doctors.Items.Count; i++)
-            {
-                doctors.Items[i].FirstName = CryptoHelper.Decrypt(doctors.Items[i].FirstName);
-                doctors.Items[i].LastName = CryptoHelper.Decrypt(doctors.Items[i].LastName);
-                doctors.Items[i].NationalIdentity = CryptoHelper.Decrypt(doctors.Items[i].NationalIdentity);
-                doctors.Items[i].Phone = CryptoHelper.Decrypt(doctors.Items[i].Phone);
-                doctors.Items[i].Address = CryptoHelper.Decrypt(doctors.Items[i].Address);
-            }
+            //for (int i = 0; i < doctors.Items.Count; i++)
+            //{
+            //    doctors.Items[i].FirstName = CryptoHelper.Decrypt(doctors.Items[i].FirstName);
+            //    doctors.Items[i].LastName = CryptoHelper.Decrypt(doctors.Items[i].LastName);
+            //    doctors.Items[i].NationalIdentity = CryptoHelper.Decrypt(doctors.Items[i].NationalIdentity);
+            //    doctors.Items[i].Phone = CryptoHelper.Decrypt(doctors.Items[i].Phone);
+            //    doctors.Items[i].Address = CryptoHelper.Decrypt(doctors.Items[i].Address);
+            //}
 
             
 

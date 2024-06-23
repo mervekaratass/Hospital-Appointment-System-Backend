@@ -16,6 +16,6 @@ public class GetListPatientListItemDto : IDto
     public string Phone { get; set; }
     public string Email  { get; set; } // sinem
     public string Address { get; set; }
-    public string Email { get; set; }
+    
 
 }

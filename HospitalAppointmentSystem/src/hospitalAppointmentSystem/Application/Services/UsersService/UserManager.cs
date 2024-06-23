@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using Application.Features.Users.Rules;
-using Application.Services.Encryptions;
 using Application.Services.Repositories;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;

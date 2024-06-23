@@ -4,7 +4,6 @@ using NArchitecture.Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
-using Application.Services.Encryptions;
 using NArchitecture.Core.Security.Entities;
 
 namespace Application.Services.Doctors;

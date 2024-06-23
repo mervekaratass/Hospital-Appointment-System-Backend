@@ -21,7 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Application.Features.Appointments.Queries.GetListByDoctor;
 using Application.Features.Appointments.Queries.GetByPatientId;
 using Application.Features.Doctors.Constants;
-using Application.Services.Encryptions;
+//using Application.Services.Encryptions;
 
 namespace Application.Features.Appointments.Queries.GetListByDoctorId;
 
@@ -61,27 +61,46 @@ public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>
                   orderBy: x => x.OrderByDescending(y => y.Date),
                include: x => x.Include(x => x.Doctor).Include(x => x.Patient).Include(x => x.Doctor.Branch),
                   predicate: x => x.DoctorID == request.DoctorId
+                  
            );
 
             // SİNEM Foreach ile döndurunce  Ipaginat ekleme işlemine izin vermiyor ,hata veriyor .
 
-            for (int i = 0; i < appointments.Items.Count; i++)
+            //for (int i = 0; i < appointments.Items.Count; i++)
+            //{
+            //    appointments.Items[i].Patient.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Patient.FirstName);
+            //    appointments.Items[i].Patient.LastName = CryptoHelper.Decrypt(appointments.Items[i].Patient.LastName);
+            //    appointments.Items[i].Patient.NationalIdentity = CryptoHelper.Decrypt(appointments.Items[i].Patient.NationalIdentity);
+            //    appointments.Items[i].Patient.Phone = CryptoHelper.Decrypt(appointments.Items[i].Patient.Phone);
+            //    appointments.Items[i].Patient.Address = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
+            //}
+          // yaptığım bitti
+
+
+
+            GetListResponse<GetListByDoctorDto> patiens = _mapper.Map<GetListResponse<GetListByDoctorDto>>(appointments);
+
+            //SİNEM doktorun hastalarını yazdırıken, bir sefer hastayı yazdırması için
+
+            GetListResponse<GetListByDoctorDto> patiensDistinct = new GetListResponse<GetListByDoctorDto>  
             {
-                appointments.Items[i].Patient.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Patient.FirstName);
-                appointments.Items[i].Patient.LastName = CryptoHelper.Decrypt(appointments.Items[i].Patient.LastName);
-                appointments.Items[i].Patient.NationalIdentity = CryptoHelper.Decrypt(appointments.Items[i].Patient.NationalIdentity);
-                appointments.Items[i].Patient.Phone = CryptoHelper.Decrypt(appointments.Items[i].Patient.Phone);
-                appointments.Items[i].Patient.Address = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
+                Count = patiens.Count,
+                HasNext = patiens.HasNext,
+                HasPrevious = patiens.HasPrevious,
+                Index = patiens.Index,
+                Pages = patiens.Pages,
+                Size = patiens.Size,
+                Items=new List<GetListByDoctorDto>()
+            };
+
+            foreach (var item in patiens.Items)
+            {
+                if (!patiensDistinct.Items.Any(x=>x.PatientID == item.PatientID))
+                {
+                    patiensDistinct.Items.Add(item);
+                }
             }
-
-
-
-            // ustte ve alttada değişiklik yaptım
-
-
-
-            GetListResponse<GetListByDoctorDto> response = _mapper.Map<GetListResponse<GetListByDoctorDto>>(appointments);
-            return response;
+            return patiensDistinct;
 
         }
     }

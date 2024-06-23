@@ -11,7 +11,7 @@ using MediatR;
 using static Application.Features.Appointments.Constants.AppointmentsOperationClaims;
 using Microsoft.EntityFrameworkCore;
 using Application.Features.Patients.Constants;
-using Application.Services.Encryptions;
+//using Application.Services.Encryptions;
 using System.Numerics;
 
 namespace Application.Features.Appointments.Queries.GetList;
@@ -49,19 +49,20 @@ public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointme
                 include: x => x.Include(x => x.Doctor).Include(x => x.Patient).Include(x => x.Doctor.Branch)
             );
 
-            for (int i = 0; i < appointments.Items.Count; i++)
-            {
-                appointments.Items[i].Patient.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Patient.FirstName);
-                appointments.Items[i].Patient.LastName = CryptoHelper.Decrypt(appointments.Items[i].Patient.LastName);
-                appointments.Items[i].Patient.NationalIdentity = CryptoHelper.Decrypt(appointments.Items[i].Patient.NationalIdentity);
-                appointments.Items[i].Patient.Phone = CryptoHelper.Decrypt(appointments.Items[i].Patient.Phone);
-                appointments.Items[i].Patient.Address = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-                appointments.Items[i].Doctor.FirstName= CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-                appointments.Items[i].Doctor.LastName = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-                appointments.Items[i].Doctor.NationalIdentity= CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-                appointments.Items[i].Doctor.Phone = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-                appointments.Items[i].Doctor.Address = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-            }
+            //SÝNEM
+            //for (int i = 0; i < appointments.Items.Count; i++)
+            //{
+            //    appointments.Items[i].Patient.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Patient.FirstName);
+            //    appointments.Items[i].Patient.LastName = CryptoHelper.Decrypt(appointments.Items[i].Patient.LastName);
+            //    appointments.Items[i].Patient.NationalIdentity = CryptoHelper.Decrypt(appointments.Items[i].Patient.NationalIdentity);
+            //    appointments.Items[i].Patient.Phone = CryptoHelper.Decrypt(appointments.Items[i].Patient.Phone);
+            //    appointments.Items[i].Patient.Address = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
+            //    appointments.Items[i].Doctor.FirstName= CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
+            //    appointments.Items[i].Doctor.LastName = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
+            //    appointments.Items[i].Doctor.NationalIdentity= CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
+            //    appointments.Items[i].Doctor.Phone = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
+            //    appointments.Items[i].Doctor.Address = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
+            //}
 
 
 
