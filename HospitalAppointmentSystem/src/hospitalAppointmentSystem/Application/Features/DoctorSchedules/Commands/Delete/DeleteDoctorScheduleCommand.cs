@@ -40,8 +40,9 @@ public class DeleteDoctorScheduleCommand : IRequest<DeletedDoctorScheduleRespons
 
         public async Task<DeletedDoctorScheduleResponse> Handle(DeleteDoctorScheduleCommand request, CancellationToken cancellationToken)
         {
-            DoctorSchedule? doctorSchedule = await _doctorScheduleRepository.GetAsync(predicate: ds => ds.Id == request.Id, cancellationToken: cancellationToken);
+            DoctorSchedule? doctorSchedule = await _doctorScheduleRepository.GetAsync(predicate: ds => ds.Id == request.Id && ds.DeletedDate==null, cancellationToken: cancellationToken);
             await _doctorScheduleBusinessRules.DoctorScheduleShouldExistWhenSelected(doctorSchedule);
+            await _doctorScheduleBusinessRules.DoctorScheduleShouldNotBeDeletedIfAppointmentsExist(request.Id, cancellationToken);
 
             await _doctorScheduleRepository.DeleteAsync(doctorSchedule!);
 

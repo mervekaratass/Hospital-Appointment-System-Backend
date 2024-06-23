@@ -43,14 +43,18 @@ public class UpdateDoctorScheduleCommand : IRequest<UpdatedDoctorScheduleRespons
 
         public async Task<UpdatedDoctorScheduleResponse> Handle(UpdateDoctorScheduleCommand request, CancellationToken cancellationToken)
         {
-            DoctorSchedule? doctorSchedule = await _doctorScheduleRepository.GetAsync(predicate: ds => ds.Id == request.Id, cancellationToken: cancellationToken);
-            await _doctorScheduleBusinessRules.DoctorScheduleShouldExistWhenSelected(doctorSchedule);
-            doctorSchedule = _mapper.Map(request, doctorSchedule);
 
-            await _doctorScheduleRepository.UpdateAsync(doctorSchedule!);
+            await _doctorScheduleBusinessRules.DoctorScheduleShouldNotBeUpdatedIfSoftDeleted(request.Id, cancellationToken);
+            await _doctorScheduleBusinessRules.CheckIfDoctorScheduleDateIsUniqueForDoctorOnUpdate(request.Id, request.DoctorID, request.Date, cancellationToken);
+
+            DoctorSchedule doctorSchedule = await _doctorScheduleRepository.GetAsync(predicate: ds => ds.Id == request.Id, cancellationToken: cancellationToken);
+            _mapper.Map(request, doctorSchedule);
+
+            await _doctorScheduleRepository.UpdateAsync(doctorSchedule);
 
             UpdatedDoctorScheduleResponse response = _mapper.Map<UpdatedDoctorScheduleResponse>(doctorSchedule);
             return response;
         }
+
     }
 }
