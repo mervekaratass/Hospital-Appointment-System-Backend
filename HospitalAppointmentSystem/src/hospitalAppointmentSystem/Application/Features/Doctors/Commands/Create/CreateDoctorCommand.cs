@@ -14,6 +14,7 @@ using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.Doctors.Commands.Create;
 
+
 public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public required string Title { get; set; }

@@ -39,7 +39,8 @@ public class GetListBranchQuery : IRequest<GetListResponse<GetListBranchListItem
             IPaginate<Branch> branches = await _branchRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                predicate: x => x.DeletedDate == null
             );
 
             GetListResponse<GetListBranchListItemDto> response = _mapper.Map<GetListResponse<GetListBranchListItemDto>>(branches);

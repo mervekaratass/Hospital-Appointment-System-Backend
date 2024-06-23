@@ -12,7 +12,7 @@ using static Application.Features.Patients.Constants.PatientsOperationClaims;
 
 namespace Application.Features.Patients.Queries.GetList;
 
-public class GetListPatientQuery : IRequest<GetListResponse<GetListPatientListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListPatientQuery : IRequest<GetListResponse<GetListPatientListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 

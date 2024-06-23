@@ -12,7 +12,7 @@ using static Application.Features.Managers.Constants.ManagersOperationClaims;
 
 namespace Application.Features.Managers.Queries.GetList;
 
-public class GetListManagerQuery : IRequest<GetListResponse<GetListManagerListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListManagerQuery : IRequest<GetListResponse<GetListManagerListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 
