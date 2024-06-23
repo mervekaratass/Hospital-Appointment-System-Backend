@@ -69,4 +69,16 @@ public class AppointmentsController : BaseController
         GetListResponse<GetListByPatientDto> response = await Mediator.Send(getListByInstructorBootcampQuery);
         return Ok(response);
     }
+
+    [HttpGet("getAll")]
+    public async Task<ActionResult<GetListAppointmentQuery>> GetList([FromQuery] PageRequest pageRequest, [FromQuery] bool? includeDeleted)
+    {
+        GetListAppointmentQuery query = new() { PageRequest = pageRequest};
+
+        GetListResponse<GetListAppointmentListItemDto> response = await Mediator.Send(query);
+
+        return Ok(response);
+    }
+
+
 }

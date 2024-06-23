@@ -14,7 +14,7 @@ using Application.Features.Doctors.Constants;
 
 namespace Application.Features.DoctorSchedules.Queries.GetList;
 
-public class GetListDoctorScheduleQuery : IRequest<GetListResponse<GetListDoctorScheduleListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListDoctorScheduleQuery : IRequest<GetListResponse<GetListDoctorScheduleListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 

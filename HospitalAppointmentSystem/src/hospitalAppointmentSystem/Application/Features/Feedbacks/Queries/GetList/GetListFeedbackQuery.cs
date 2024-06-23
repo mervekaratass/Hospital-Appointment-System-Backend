@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Feedbacks.Queries.GetList;
 
-public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 
