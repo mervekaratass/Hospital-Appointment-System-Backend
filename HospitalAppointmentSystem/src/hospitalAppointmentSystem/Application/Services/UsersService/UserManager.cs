@@ -26,7 +26,9 @@ public class UserManager : IUserService
         CancellationToken cancellationToken = default
     )
     {
+        
         User? user = await _userRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+       
         return user;
     }
 
@@ -58,7 +60,10 @@ public class UserManager : IUserService
     {
         await _userBusinessRules.UserEmailShouldNotExistsWhenInsert(user.Email);
 
-        User addedUser = await _userRepository.AddAsync(user);
+    
+
+
+        User addedUser = await _userRepository.AddAsync(user); 
 
         return addedUser;
     }

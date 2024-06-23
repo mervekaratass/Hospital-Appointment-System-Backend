@@ -11,6 +11,7 @@ using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
 using NArchitecture.Core.Security.Hashing;
 using NArchitecture.Core.Security.Entities;
+//using Application.Services.Encryptions;
 
 namespace Application.Features.Doctors.Commands.Create;
 
@@ -60,6 +61,18 @@ public class CreateDoctorCommand : IRequest<CreatedDoctorResponse>, ICacheRemove
             );
             doctor.PasswordHash = passwordHash;
             doctor.PasswordSalt = passwordSalt;
+
+            //sinem kullanýcý bilgilerini þifreleme. encrypt þifreleme yapýyor.
+
+
+            //doctor.FirstName = CryptoHelper.Encrypt(doctor.FirstName);
+            //doctor.LastName = CryptoHelper.Encrypt(doctor.LastName);
+            //doctor.NationalIdentity = CryptoHelper.Encrypt(doctor.NationalIdentity);
+            //doctor.Phone = CryptoHelper.Encrypt(doctor.Phone);
+            //doctor.Address = CryptoHelper.Encrypt(doctor.Address);
+
+
+            //yazdýðým burda bitti 
 
             await _doctorRepository.AddAsync(doctor);
 

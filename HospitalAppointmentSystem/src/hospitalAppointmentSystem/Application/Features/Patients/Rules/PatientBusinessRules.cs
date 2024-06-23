@@ -4,6 +4,7 @@ using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
 using Domain.Entities;
+using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Features.Patients.Rules;
 
@@ -27,6 +28,12 @@ public class PatientBusinessRules : BaseBusinessRules
     public async Task PatientShouldExistWhenSelected(Patient? patient)
     {
         if (patient == null)
+            await throwBusinessException(PatientsBusinessMessages.PatientNotExists);
+    }
+
+    public async Task PatientShouldExistWhenSelected(IPaginate<Patient> patients)
+    {
+        if (patients == null && patients.Count == 0)
             await throwBusinessException(PatientsBusinessMessages.PatientNotExists);
     }
 

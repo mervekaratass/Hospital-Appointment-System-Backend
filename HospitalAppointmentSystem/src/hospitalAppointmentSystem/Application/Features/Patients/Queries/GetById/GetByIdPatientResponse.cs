@@ -14,5 +14,7 @@ public class GetByIdPatientResponse : IResponse
     public DateOnly DateOfBirth { get; set; }
     public string NationalIdentity { get; set; }
     public string Phone { get; set; }
+    public string Email { get; set; }
     public string Address { get; set; }
+    //public string PasswordSalt { get; set; } //sinem
 }

@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Application.Features.Appointments.Queries.GetByPatientId;
 using Application.Features.Appointments.Queries.GetListByDoctor;
 using Application.Features.Appointments.Queries.GetListByDoctorId;
+using Domain.Entities;
+using Application.Features.Patients.Queries.GetById;
+using Nest;
+using Application.Features.Reports.Queries.GetById;
 
 namespace WebAPI.Controllers;
 

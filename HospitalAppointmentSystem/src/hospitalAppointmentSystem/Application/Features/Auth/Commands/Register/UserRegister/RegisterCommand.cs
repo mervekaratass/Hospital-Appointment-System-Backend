@@ -58,6 +58,10 @@ public class RegisterCommand : IRequest<RegisteredResponse>
                     Email = request.UserForRegisterDto.Email,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
+
+
+
+
                 };
             User createdUser = await _userService.AddAsync(newUser);
 
