@@ -6,6 +6,7 @@ using Application.Features.DoctorSchedules.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Application.Features.DoctorSchedules.Queries.GetListByDoctorId;
 
 namespace WebAPI.Controllers;
 
@@ -56,6 +57,16 @@ public class DoctorSchedulesController : BaseController
 
         GetListResponse<GetListDoctorScheduleListItemDto> response = await Mediator.Send(query);
 
+        return Ok(response);
+    }
+
+
+
+    [HttpGet("getByDoctorId")]
+    public async Task<IActionResult> GetListByIdDoctor([FromQuery] PageRequest pageRequest, [FromQuery] Guid doctorId)
+    {
+        GetListByDoctorIdQuery query = new() { PageRequest = pageRequest, DoctorId = doctorId };
+        GetListResponse<GetListByDoctorIdDto> response = await Mediator.Send(query);
         return Ok(response);
     }
 }

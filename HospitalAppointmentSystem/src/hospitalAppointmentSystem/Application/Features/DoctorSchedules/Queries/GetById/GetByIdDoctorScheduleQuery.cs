@@ -31,7 +31,7 @@ public class GetByIdDoctorScheduleQuery : IRequest<GetByIdDoctorScheduleResponse
 
         public async Task<GetByIdDoctorScheduleResponse> Handle(GetByIdDoctorScheduleQuery request, CancellationToken cancellationToken)
         {
-            DoctorSchedule? doctorSchedule = await _doctorScheduleRepository.GetAsync(predicate: ds => ds.Id == request.Id, cancellationToken: cancellationToken);
+            DoctorSchedule? doctorSchedule = await _doctorScheduleRepository.GetAsync(predicate: ds => ds.Id == request.Id && ds.DeletedDate==null, cancellationToken: cancellationToken);
             await _doctorScheduleBusinessRules.DoctorScheduleShouldExistWhenSelected(doctorSchedule);
 
             GetByIdDoctorScheduleResponse response = _mapper.Map<GetByIdDoctorScheduleResponse>(doctorSchedule);
