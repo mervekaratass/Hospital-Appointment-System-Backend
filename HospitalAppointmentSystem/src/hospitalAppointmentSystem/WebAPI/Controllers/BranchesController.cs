@@ -6,6 +6,8 @@ using Application.Features.Branches.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Application.Features.Branches.Queries.GetByName;
+using Nest;
 
 namespace WebAPI.Controllers;
 
@@ -16,6 +18,15 @@ public class BranchesController : BaseController
     [HttpPost]
     public async Task<ActionResult<CreatedBranchResponse>> Add([FromBody] CreateBranchCommand command)
     {
+        GetByNameBranchQuery getByNameQuery = new() { Name = command.Name };
+
+        GetByNameBranchResponse getByNameResponse = await Mediator.Send(getByNameQuery);
+
+        if (getByNameResponse!=null)
+        {
+            return BadRequest("Bu isimde branþ zaten mevcut");
+        }
+
         CreatedBranchResponse response = await Mediator.Send(command);
 
         return CreatedAtAction(nameof(GetById), new { response.Id }, response);
@@ -60,8 +71,13 @@ public class BranchesController : BaseController
     }
 
 
+    [HttpGet("{name}")]
+    public async Task<ActionResult<GetByNameBranchResponse>> GetByName([FromRoute] string name)
+    {
+        GetByNameBranchQuery query = new() { Name = name };
 
-    
+        GetByNameBranchResponse response = await Mediator.Send(query);
 
-
+        return Ok(response);
+    }
 }
