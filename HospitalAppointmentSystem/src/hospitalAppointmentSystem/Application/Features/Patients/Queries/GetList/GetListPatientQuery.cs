@@ -13,7 +13,7 @@ using Application.Services.Encryptions;
 
 namespace Application.Features.Patients.Queries.GetList;
 
-public class GetListPatientQuery : IRequest<GetListResponse<GetListPatientListItemDto>>,/* ISecuredRequest,*/ ICachableRequest
+public class GetListPatientQuery : IRequest<GetListResponse<GetListPatientListItemDto>>, ICachableRequest, ISecuredRequest
 {
     public PageRequest PageRequest { get; set; }
 

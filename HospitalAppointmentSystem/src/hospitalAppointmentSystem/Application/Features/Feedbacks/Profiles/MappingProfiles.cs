@@ -7,6 +7,7 @@ using AutoMapper;
 using NArchitecture.Core.Application.Responses;
 using Domain.Entities;
 using NArchitecture.Core.Persistence.Paging;
+using Application.Features.Feedbacks.Queries.GetListByUser;
 
 namespace Application.Features.Feedbacks.Profiles;
 
@@ -27,5 +28,8 @@ public class MappingProfiles : Profile
 
         CreateMap<Feedback, GetListFeedbackListItemDto>();
         CreateMap<IPaginate<Feedback>, GetListResponse<GetListFeedbackListItemDto>>();
+
+        CreateMap<Feedback, GetListByUserDto>();
+        CreateMap<IPaginate<Feedback>, GetListResponse<GetListByUserDto>>();
     }
 }

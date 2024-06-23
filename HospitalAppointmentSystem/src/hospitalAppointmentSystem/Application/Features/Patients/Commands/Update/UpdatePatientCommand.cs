@@ -12,7 +12,7 @@ using static Application.Features.Patients.Constants.PatientsOperationClaims;
 
 namespace Application.Features.Patients.Commands.Update;
 
-public class UpdatePatientCommand : IRequest<UpdatedPatientResponse>,/* ISecuredRequest,*/ ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class UpdatePatientCommand : IRequest<UpdatedPatientResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public Guid Id { get; set; }
     public required int Age { get; set; }

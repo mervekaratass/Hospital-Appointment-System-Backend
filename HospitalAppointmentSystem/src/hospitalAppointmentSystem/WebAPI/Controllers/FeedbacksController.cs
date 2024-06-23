@@ -6,6 +6,8 @@ using Application.Features.Feedbacks.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Application.Features.Appointments.Queries.GetByPatientId;
+using Application.Features.Feedbacks.Queries.GetListByUser;
 
 namespace WebAPI.Controllers;
 
@@ -56,6 +58,15 @@ public class FeedbacksController : BaseController
 
         GetListResponse<GetListFeedbackListItemDto> response = await Mediator.Send(query);
 
+        return Ok(response);
+    }
+
+
+    [HttpGet("getByUserId")]
+    public async Task<ActionResult<GetListResponse<GetListByUserDto>>> GetListByUserId([FromQuery] PageRequest pageRequest, [FromQuery] Guid userId)
+    {
+        GetListByUserQuery query = new GetListByUserQuery { PageRequest = pageRequest, UserId = userId };
+        GetListResponse<GetListByUserDto> response = await Mediator.Send(query);
         return Ok(response);
     }
 }

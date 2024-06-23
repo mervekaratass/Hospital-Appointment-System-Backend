@@ -42,12 +42,32 @@ public class CreateDoctorScheduleCommand : IRequest<CreatedDoctorScheduleRespons
 
         public async Task<CreatedDoctorScheduleResponse> Handle(CreateDoctorScheduleCommand request, CancellationToken cancellationToken)
         {
-            DoctorSchedule doctorSchedule = _mapper.Map<DoctorSchedule>(request);
+            CreatedDoctorScheduleResponse response;
 
-            await _doctorScheduleRepository.AddAsync(doctorSchedule);
+            var softDeletedSchedule = await _doctorScheduleBusinessRules.CheckAndRetrieveSoftDeletedSchedule(request.DoctorID, request.Date);
 
-            CreatedDoctorScheduleResponse response = _mapper.Map<CreatedDoctorScheduleResponse>(doctorSchedule);
+            if (softDeletedSchedule != null)
+            {
+                softDeletedSchedule.DeletedDate = null; // Soft delete tarihini kaldýrarak kaydý aktif hale getiriyoruz.
+                softDeletedSchedule.StartTime = request.StartTime;
+                softDeletedSchedule.EndTime = request.EndTime;
+
+                await _doctorScheduleRepository.UpdateAsync(softDeletedSchedule);
+
+                response = _mapper.Map<CreatedDoctorScheduleResponse>(softDeletedSchedule);
+            }
+            else
+            {
+                await _doctorScheduleBusinessRules.CheckIfDoctorScheduleDateIsUniqueForDoctor(request.DoctorID, request.Date);
+
+                DoctorSchedule doctorSchedule = _mapper.Map<DoctorSchedule>(request);
+                await _doctorScheduleRepository.AddAsync(doctorSchedule);
+
+                response = _mapper.Map<CreatedDoctorScheduleResponse>(doctorSchedule);
+            }
+
             return response;
         }
+
     }
 }

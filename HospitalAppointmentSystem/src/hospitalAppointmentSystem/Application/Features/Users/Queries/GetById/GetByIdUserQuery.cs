@@ -10,7 +10,7 @@ using System.Numerics;
 
 namespace Application.Features.Users.Queries.GetById;
 
-public class GetByIdUserQuery : IRequest<GetByIdUserResponse>
+public class GetByIdUserQuery : IRequest<GetByIdUserResponse>, ISecuredRequest
 {
     public Guid Id { get; set; }
 

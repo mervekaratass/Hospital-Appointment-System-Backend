@@ -84,51 +84,15 @@ public class AppointmentsController : BaseController
         return Ok(response);
     }
 
-    //[HttpGet("getPatiensByDoctorId")]
-    //public async Task<IActionResult> GetListPatiensByIDoctor([FromQuery] PageRequest pageRequest, [FromQuery] Guid doctorId)
-    //{
-    //    GetListByDoctorQuery doctorsQuery = new() { PageRequest = pageRequest, DoctorId = doctorId };
-    //    GetListResponse<GetListByDoctorDto> doctors = await Mediator.Send(doctorsQuery);
-        
+    [HttpGet("getAll")]
+    public async Task<ActionResult<GetListAppointmentQuery>> GetList([FromQuery] PageRequest pageRequest, [FromQuery] bool? includeDeleted)
+    {
+        GetListAppointmentQuery query = new() { PageRequest = pageRequest};
 
-    //    GetListResponse<Patient> patients = new GetListResponse<Patient>();
-    //    foreach (var doctorPatiens in doctors.Items)
-    //    {
-    //        try
-    //        {
-    //            GetByIdPatientQuery query = new() { Id = doctorPatiens.PatientID };
-    //            GetByIdPatientResponse patient = await Mediator.Send(query);
+        GetListResponse<GetListAppointmentListItemDto> response = await Mediator.Send(query);
 
-    //            GetByIdAppointmentQuery appQuery = new() { Id = doctorPatiens.Id };
-    //            GetByIdAppointmentResponse appResponse = await Mediator.Send(appQuery);
+        return Ok(response);
+    }
 
-    //            patients.Items.Add(new Patient
-    //            {
-    //                FirstName = doctorPatiens.PatientFirstName,
-    //                LastName = doctorPatiens.PatientLastName,
-    //                DateOfBirth = patient.DateOfBirth,
-    //                Age = patient.Age,
-    //                NationalIdentity = patient.NationalIdentity,
-    //                Appointments = new List<Appointment>()
-    //                {
-    //                   new Appointment
-    //                   {
-    //                       Date = appResponse.Date,
-    //                       Time = appResponse.Time
-    //                   }
-    //                }
 
-    //            });
-    //        }
-    //        catch (Exception ex)
-    //        {
-
-    //            throw;
-    //        }
-    //    }
-    //    //GetListByPatientQuery patiensQuery = new() { PageRequest = pageRequest, PatientId = patientId };
-    //    //GetListResponse<GetListByPatientDto> response = await Mediator.Send(patiensQuery);
-
-    //    return Ok(patients);
-    //}
 }
