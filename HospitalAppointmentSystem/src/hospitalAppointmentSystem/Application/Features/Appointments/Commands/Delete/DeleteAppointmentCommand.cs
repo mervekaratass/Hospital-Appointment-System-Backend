@@ -1,5 +1,4 @@
 using Application.Features.Appointments.Constants;
-using Application.Features.Appointments.Constants;
 using Application.Features.Appointments.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
