@@ -8,7 +8,7 @@ using NArchitecture.Core.Security.Hashing;
 
 namespace Application.Features.Users.Commands.UpdateFromAuth;
 
-public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
+public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>, ISecuredRequest
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }

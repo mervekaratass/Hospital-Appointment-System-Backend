@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Doctors.Queries.GetById;
 
-public class GetByIdDoctorQuery : IRequest<GetByIdDoctorResponse>
+public class GetByIdDoctorQuery : IRequest<GetByIdDoctorResponse>, ISecuredRequest
 {
     public Guid Id { get; set; }
 
