@@ -37,6 +37,15 @@ public class BranchesController : BaseController
     [HttpPut]
     public async Task<ActionResult<UpdatedBranchResponse>> Update([FromBody] UpdateBranchCommand command)
     {
+        GetByNameBranchWithoutControlQuery getByNameQuery = new() { Name = command.Name };
+
+        GetByNameBranchResponse getByNameResponse = await Mediator.Send(getByNameQuery);
+
+        if (getByNameResponse != null && getByNameResponse.Name == command.Name)
+        {
+            return BadRequest("Bu isimde branþ zaten mevcut");
+        }
+
         UpdatedBranchResponse response = await Mediator.Send(command);
 
         return Ok(response);

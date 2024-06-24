@@ -7,6 +7,7 @@ using AutoMapper;
 using NArchitecture.Core.Application.Responses;
 using Domain.Entities;
 using NArchitecture.Core.Persistence.Paging;
+using Application.Features.Branches.Queries.GetByName;
 
 namespace Application.Features.Branches.Profiles;
 
@@ -24,6 +25,7 @@ public class MappingProfiles : Profile
         CreateMap<Branch, DeletedBranchResponse>();
 
         CreateMap<Branch, GetByIdBranchResponse>();
+        CreateMap<Branch, GetByNameBranchResponse>();
 
         CreateMap<Branch, GetListBranchListItemDto>();
         CreateMap<IPaginate<Branch>, GetListResponse<GetListBranchListItemDto>>();
