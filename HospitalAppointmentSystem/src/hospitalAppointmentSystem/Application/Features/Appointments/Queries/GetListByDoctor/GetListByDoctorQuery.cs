@@ -25,7 +25,7 @@ using Application.Features.Doctors.Constants;
 
 namespace Application.Features.Appointments.Queries.GetListByDoctorId;
 
-public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>>
+public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>>,ISecuredRequest
 
 {
     public PageRequest PageRequest { get; set; }
