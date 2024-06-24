@@ -18,18 +18,20 @@ public class BranchesController : BaseController
     [HttpPost]
     public async Task<ActionResult<CreatedBranchResponse>> Add([FromBody] CreateBranchCommand command)
     {
-        GetByNameBranchQuery getByNameQuery = new() { Name = command.Name };
+        GetByNameBranchWithoutControlQuery getByNameQuery = new() { Name = command.Name };
 
         GetByNameBranchResponse getByNameResponse = await Mediator.Send(getByNameQuery);
 
-        if (getByNameResponse!=null)
+        if (getByNameResponse != null && getByNameResponse.Name == command.Name)
         {
             return BadRequest("Bu isimde branþ zaten mevcut");
         }
 
+
         CreatedBranchResponse response = await Mediator.Send(command);
 
         return CreatedAtAction(nameof(GetById), new { response.Id }, response);
+        
     }
 
     [HttpPut]
