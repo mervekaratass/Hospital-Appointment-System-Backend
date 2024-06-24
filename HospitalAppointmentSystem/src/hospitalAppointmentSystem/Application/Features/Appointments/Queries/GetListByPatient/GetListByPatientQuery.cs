@@ -21,7 +21,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Appointments.Queries.GetByPatientId;
 
-public class GetListByPatientQuery:IRequest<GetListResponse<GetListByPatientDto>>, ICachableRequest
+public class GetListByPatientQuery:IRequest<GetListResponse<GetListByPatientDto>>,ISecuredRequest
 
 {
     public PageRequest PageRequest { get; set; }
