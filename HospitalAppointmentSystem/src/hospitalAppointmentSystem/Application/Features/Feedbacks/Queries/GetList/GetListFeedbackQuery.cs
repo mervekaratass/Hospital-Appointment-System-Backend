@@ -14,7 +14,7 @@ using System.Linq.Expressions;
 
 namespace Application.Features.Feedbacks.Queries.GetList;
 
-public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackListItemDto>>, ICachableRequest, ISecuredRequest
+public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackListItemDto>>,  ISecuredRequest
 {
     public PageRequest PageRequest { get; set; }
 

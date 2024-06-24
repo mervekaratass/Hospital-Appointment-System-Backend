@@ -13,7 +13,7 @@ using Application.Features.Patients.Constants;
 
 namespace Application.Features.Appointments.Commands.Create;
 
-public class CreateAppointmentCommand : IRequest<CreatedAppointmentResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateAppointmentCommand : IRequest<CreatedAppointmentResponse>, ILoggableRequest, ITransactionalRequest
 {
     public required DateOnly Date { get; set; }
     public required TimeOnly Time { get; set; }

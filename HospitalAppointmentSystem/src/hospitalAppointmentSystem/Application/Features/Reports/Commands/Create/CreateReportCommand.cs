@@ -13,7 +13,7 @@ using Application.Features.Doctors.Constants;
 
 namespace Application.Features.Reports.Commands.Create;
 
-public class CreateReportCommand : IRequest<CreatedReportResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateReportCommand : IRequest<CreatedReportResponse>, ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public required int AppointmentID { get; set; }
     public required string Text { get; set; }

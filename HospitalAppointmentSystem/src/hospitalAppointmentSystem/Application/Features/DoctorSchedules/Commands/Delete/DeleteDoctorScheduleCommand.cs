@@ -14,7 +14,7 @@ using Application.Features.Doctors.Constants;
 
 namespace Application.Features.DoctorSchedules.Commands.Delete;
 
-public class DeleteDoctorScheduleCommand : IRequest<DeletedDoctorScheduleResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class DeleteDoctorScheduleCommand : IRequest<DeletedDoctorScheduleResponse>, ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public int Id { get; set; }
 

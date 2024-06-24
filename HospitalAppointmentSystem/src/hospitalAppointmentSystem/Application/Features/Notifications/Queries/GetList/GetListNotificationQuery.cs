@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Notifications.Queries.GetList;
 
-public class GetListNotificationQuery : IRequest<GetListResponse<GetListNotificationListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListNotificationQuery : IRequest<GetListResponse<GetListNotificationListItemDto>>, ISecuredRequest
 {
     public PageRequest PageRequest { get; set; }
 

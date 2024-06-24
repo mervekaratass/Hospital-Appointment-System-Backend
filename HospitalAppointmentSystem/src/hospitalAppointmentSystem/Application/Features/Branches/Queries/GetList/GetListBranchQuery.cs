@@ -12,7 +12,7 @@ using static Application.Features.Branches.Constants.BranchesOperationClaims;
 
 namespace Application.Features.Branches.Queries.GetList;
 
-public class GetListBranchQuery : IRequest<GetListResponse<GetListBranchListItemDto>>, ICachableRequest
+public class GetListBranchQuery : IRequest<GetListResponse<GetListBranchListItemDto>>
 {
     public PageRequest PageRequest { get; set; }
 

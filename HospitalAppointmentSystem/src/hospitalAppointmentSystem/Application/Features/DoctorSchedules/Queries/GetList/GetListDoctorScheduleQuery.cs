@@ -14,7 +14,7 @@ using Application.Features.Doctors.Constants;
 
 namespace Application.Features.DoctorSchedules.Queries.GetList;
 
-public class GetListDoctorScheduleQuery : IRequest<GetListResponse<GetListDoctorScheduleListItemDto>>, ICachableRequest
+public class GetListDoctorScheduleQuery : IRequest<GetListResponse<GetListDoctorScheduleListItemDto>>
 {
     public PageRequest PageRequest { get; set; }
 
@@ -42,7 +42,7 @@ public class GetListDoctorScheduleQuery : IRequest<GetListResponse<GetListDoctor
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
                 cancellationToken: cancellationToken,
-                    include: x => x.Include(x => x.Doctor),
+                   include: x => x.Include(x => x.Doctor),
                     predicate:x=>x.DeletedDate==null
             );
 

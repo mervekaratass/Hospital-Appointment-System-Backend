@@ -1,5 +1,5 @@
 using Application.Features.Branches.Constants;
-using Application.Features.Branches.Constants;
+
 using Application.Features.Branches.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
@@ -13,7 +13,7 @@ using static Application.Features.Branches.Constants.BranchesOperationClaims;
 
 namespace Application.Features.Branches.Commands.Delete;
 
-public class DeleteBranchCommand : IRequest<DeletedBranchResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest,ISecuredRequest
+public class DeleteBranchCommand : IRequest<DeletedBranchResponse>, ILoggableRequest, ITransactionalRequest,ISecuredRequest
 {
     public int Id { get; set; }
 

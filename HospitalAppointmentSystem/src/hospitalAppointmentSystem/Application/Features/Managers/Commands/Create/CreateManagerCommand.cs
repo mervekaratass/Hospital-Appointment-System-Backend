@@ -14,7 +14,7 @@ using static Nest.JoinField;
 
 namespace Application.Features.Managers.Commands.Create;
 
-public class CreateManagerCommand : IRequest<CreatedManagerResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateManagerCommand : IRequest<CreatedManagerResponse>, ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

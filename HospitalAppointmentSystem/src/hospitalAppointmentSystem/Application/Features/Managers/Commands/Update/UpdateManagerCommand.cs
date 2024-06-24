@@ -12,7 +12,7 @@ using static Application.Features.Managers.Constants.ManagersOperationClaims;
 
 namespace Application.Features.Managers.Commands.Update;
 
-public class UpdateManagerCommand : IRequest<UpdatedManagerResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class UpdateManagerCommand : IRequest<UpdatedManagerResponse>, ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
