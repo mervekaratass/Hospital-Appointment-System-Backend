@@ -16,7 +16,7 @@ using System.Numerics;
 
 namespace Application.Features.Appointments.Queries.GetList;
 
-public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointmentListItemDto>>, ICachableRequest, ISecuredRequest
+public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointmentListItemDto>>, ISecuredRequest
 {
     public PageRequest PageRequest { get; set; }
     public bool? IncludeDeleted { get; set; } = false;

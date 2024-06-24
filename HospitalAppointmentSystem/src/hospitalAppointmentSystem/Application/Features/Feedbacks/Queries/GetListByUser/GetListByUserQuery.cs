@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace Application.Features.Feedbacks.Queries.GetListByUser
 {
     // Kullanıcıya ait geri bildirimleri listeleyen sorgu
-    public class GetListByUserQuery : IRequest<GetListResponse<GetListByUserDto>>, ICachableRequest
+    public class GetListByUserQuery : IRequest<GetListResponse<GetListByUserDto>>
     {
         public PageRequest PageRequest { get; set; }
         public Guid UserId { get; set; }

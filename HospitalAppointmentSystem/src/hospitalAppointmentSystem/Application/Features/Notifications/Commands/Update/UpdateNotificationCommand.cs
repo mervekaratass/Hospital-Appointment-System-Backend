@@ -12,7 +12,7 @@ using static Application.Features.Notifications.Constants.NotificationsOperation
 
 namespace Application.Features.Notifications.Commands.Update;
 
-public class UpdateNotificationCommand : IRequest<UpdatedNotificationResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class UpdateNotificationCommand : IRequest<UpdatedNotificationResponse>, ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public int Id { get; set; }
     public required int AppointmentID { get; set; }

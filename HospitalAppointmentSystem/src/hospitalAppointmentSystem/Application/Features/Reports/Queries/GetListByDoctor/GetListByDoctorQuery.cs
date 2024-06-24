@@ -17,7 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 
 namespace Application.Features.Reports.Queries.GetListByDoctor;
-public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>>, ICachableRequest,ISecuredRequest
+public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>>, ISecuredRequest
 
 {
     public PageRequest PageRequest { get; set; }

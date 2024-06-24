@@ -12,7 +12,7 @@ using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
 
 namespace Application.Features.Doctors.Commands.Delete;
 
-public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest, ISecuredRequest
+public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>,  ILoggableRequest, ITransactionalRequest, ISecuredRequest
 {
     public Guid Id { get; set; }
 
