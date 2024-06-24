@@ -73,7 +73,7 @@ public class BranchesController : BaseController
     }
 
 
-    [HttpGet("{name}")]
+    [HttpGet("GetByName/{name}")]
     public async Task<ActionResult<GetByNameBranchResponse>> GetByName([FromRoute] string name)
     {
         GetByNameBranchQuery query = new() { Name = name };
