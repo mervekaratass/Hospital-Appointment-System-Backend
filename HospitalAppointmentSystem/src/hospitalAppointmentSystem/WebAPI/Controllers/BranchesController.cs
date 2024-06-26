@@ -8,6 +8,7 @@ using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Application.Features.Branches.Queries.GetByName;
 using Nest;
+using Application.Features.Doctors.Queries.GetList;
 
 namespace WebAPI.Controllers;
 
@@ -54,6 +55,21 @@ public class BranchesController : BaseController
     [HttpDelete("{id}")]
     public async Task<ActionResult<DeletedBranchResponse>> Delete([FromRoute] int id)
     {
+        //GetListDoctorQuery DoctorIdQuery = new() { PageRequest = pageRequest };
+
+        //GetListResponse<GetListDoctorListItemDto> DoctorIdResponse = await Mediator.Send(DoctorIdQuery);
+
+        //foreach (var doctor in DoctorIdResponse.Items)
+        //{
+
+        //    if (doctor.BranchID == id)
+        //    {
+        //        return BadRequest("Bu branþý silemezsiniz");
+        //    }
+        //}
+
+
+
         DeleteBranchCommand command = new() { Id = id };
 
         DeletedBranchResponse response = await Mediator.Send(command);
