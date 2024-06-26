@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Application.Features.Patients.Constants;
 
 namespace Application.Features.Reports.Queries.GetListByPatient;
 public class GetListByPatientQuery : IRequest<GetListResponse<GetListByPatientDto>>, ISecuredRequest
@@ -21,7 +22,7 @@ public class GetListByPatientQuery : IRequest<GetListResponse<GetListByPatientDt
     public PageRequest PageRequest { get; set; }
     public Guid PatientId { get; set; }
 
-    public string[] Roles => [Admin, Read, DoctorsOperationClaims.Update];
+    public string[] Roles => [Admin, Read, PatientsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey => $"GetListReports({PageRequest.PageIndex},{PageRequest.PageSize})";
@@ -49,7 +50,7 @@ public class GetListByPatientQuery : IRequest<GetListResponse<GetListByPatientDt
                size: request.PageRequest.PageSize,
                cancellationToken: cancellationToken,
                orderBy: x => x.OrderByDescending(y => y.CreatedDate),
-               include: x => x.Include(x => x.Appointment).Include(x => x.Appointment.Doctor).Include(x => x.Appointment.Patient),
+               include: x => x.Include(x => x.Appointment).Include(x => x.Appointment.Doctor).Include(x => x.Appointment.Doctor.Branch).Include(x => x.Appointment.Patient),
                predicate: x => x.Appointment.PatientID == request.PatientId && x.DeletedDate == null
 
            );

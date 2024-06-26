@@ -15,6 +15,7 @@ public class GetListByPatientDto
     public string DoctorFirstName { get; set; }
     public string DoctorLastName { get; set; }
     public string DoctorTitle { get; set; }
+    public string DoctorBranch { get; set; }
     public Guid PatientID { get; set; }
     public string PatientFirstName { get; set; }
     public string PatientLastName { get; set; }
