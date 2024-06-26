@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.WebApi.Extensions;
+using NArchitecture.Core.CrossCuttingConcerns.Exception.WebApi.Middleware;
 using NArchitecture.Core.CrossCuttingConcerns.Logging.Configurations;
 using NArchitecture.Core.ElasticSearch.Models;
 using NArchitecture.Core.Localization.WebApi;
@@ -103,6 +104,7 @@ app.UseDbMigrationApplier();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 
 const string webApiConfigurationSection = "WebAPIConfiguration";
