@@ -53,12 +53,6 @@ public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>,  ILoggableRe
 
 
 
-            //employee = await _employeeService.DeleteAsync(employee!);
-
-            //DeletedEmployeeResponse response = _mapper.Map<DeletedEmployeeResponse>(employee);
-            //response.IsPermament = request.IsPermament;
-            //response.DeletedDate = request.IsPermament ? DateTime.UtcNow : response.DeletedDate;
-            //return response;
         }
     }
 }
