@@ -9,10 +9,12 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Managers.Constants.ManagersOperationClaims;
+//using Application.Services.Encryptions;
+using static Nest.JoinField;
 
 namespace Application.Features.Managers.Commands.Create;
 
-public class CreateManagerCommand : IRequest<CreatedManagerResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateManagerCommand : IRequest<CreatedManagerResponse>, ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -43,6 +45,16 @@ public class CreateManagerCommand : IRequest<CreatedManagerResponse>, ISecuredRe
         public async Task<CreatedManagerResponse> Handle(CreateManagerCommand request, CancellationToken cancellationToken)
         {
             Manager manager = _mapper.Map<Manager>(request);
+
+            //sinem kullanýcý bilgilerini þifreleme. encrypt þifreleme yapýyor.
+
+            //manager.FirstName = CryptoHelper.Encrypt(manager.FirstName);
+            //manager.LastName = CryptoHelper.Encrypt(manager.LastName);
+            //manager.NationalIdentity = CryptoHelper.Encrypt(manager.NationalIdentity);
+            //manager.Phone = CryptoHelper.Encrypt(manager.Phone);
+            //manager.Address = CryptoHelper.Encrypt(manager.Address);
+
+            //yazdýðým burda bitti
 
             await _managerRepository.AddAsync(manager);
 

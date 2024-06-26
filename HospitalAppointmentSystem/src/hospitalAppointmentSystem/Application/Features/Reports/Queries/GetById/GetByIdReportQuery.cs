@@ -8,6 +8,7 @@ using MediatR;
 using static Application.Features.Reports.Constants.ReportsOperationClaims;
 using Application.Features.Doctors.Constants;
 using Microsoft.EntityFrameworkCore;
+using Application.Features.Patients.Constants;
 
 namespace Application.Features.Reports.Queries.GetById;
 
@@ -15,7 +16,7 @@ public class GetByIdReportQuery : IRequest<GetByIdReportResponse>, ISecuredReque
 {
     public int Id { get; set; }
 
-    public string[] Roles => [Admin, Read, DoctorsOperationClaims.Update];
+    public string[] Roles => [Admin, Read, DoctorsOperationClaims.Update, PatientsOperationClaims.Update];
 
     public class GetByIdReportQueryHandler : IRequestHandler<GetByIdReportQuery, GetByIdReportResponse>
     {

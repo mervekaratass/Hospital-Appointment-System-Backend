@@ -6,6 +6,8 @@ using Application.Features.Branches.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Application.Features.Branches.Queries.GetByName;
+using Nest;
 
 namespace WebAPI.Controllers;
 
@@ -16,14 +18,34 @@ public class BranchesController : BaseController
     [HttpPost]
     public async Task<ActionResult<CreatedBranchResponse>> Add([FromBody] CreateBranchCommand command)
     {
+        GetByNameBranchWithoutControlQuery getByNameQuery = new() { Name = command.Name };
+
+        GetByNameBranchResponse getByNameResponse = await Mediator.Send(getByNameQuery);
+
+        if (getByNameResponse != null && getByNameResponse.Name == command.Name)
+        {
+            return BadRequest("Bu isimde branþ zaten mevcut");
+        }
+
+
         CreatedBranchResponse response = await Mediator.Send(command);
 
         return CreatedAtAction(nameof(GetById), new { response.Id }, response);
+        
     }
 
     [HttpPut]
     public async Task<ActionResult<UpdatedBranchResponse>> Update([FromBody] UpdateBranchCommand command)
     {
+        GetByNameBranchWithoutControlQuery getByNameQuery = new() { Name = command.Name };
+
+        GetByNameBranchResponse getByNameResponse = await Mediator.Send(getByNameQuery);
+
+        if (getByNameResponse != null && getByNameResponse.Name == command.Name)
+        {
+            return BadRequest("Bu isimde branþ zaten mevcut");
+        }
+
         UpdatedBranchResponse response = await Mediator.Send(command);
 
         return Ok(response);
@@ -55,6 +77,17 @@ public class BranchesController : BaseController
         GetListBranchQuery query = new() { PageRequest = pageRequest };
 
         GetListResponse<GetListBranchListItemDto> response = await Mediator.Send(query);
+
+        return Ok(response);
+    }
+
+
+    [HttpGet("GetByName/{name}")]
+    public async Task<ActionResult<GetByNameBranchResponse>> GetByName([FromRoute] string name)
+    {
+        GetByNameBranchQuery query = new() { Name = name };
+
+        GetByNameBranchResponse response = await Mediator.Send(query);
 
         return Ok(response);
     }

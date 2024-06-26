@@ -14,7 +14,7 @@ using Application.Features.Doctors.Constants;
 
 namespace Application.Features.Reports.Commands.Delete;
 
-public class DeleteReportCommand : IRequest<DeletedReportResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class DeleteReportCommand : IRequest<DeletedReportResponse>, ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public int Id { get; set; }
 

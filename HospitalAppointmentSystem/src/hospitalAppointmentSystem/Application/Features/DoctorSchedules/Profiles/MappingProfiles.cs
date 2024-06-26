@@ -29,7 +29,15 @@ public class MappingProfiles : Profile
         CreateMap<DoctorSchedule, GetListDoctorScheduleListItemDto>();
         CreateMap<IPaginate<DoctorSchedule>, GetListResponse<GetListDoctorScheduleListItemDto>>();
 
-        CreateMap<DoctorSchedule, GetListByDoctorIdDto>();
+        CreateMap<DoctorSchedule, GetListByDoctorIdDto>().ForMember(x=>x.DoctorID , opt => opt.MapFrom(dto => dto.Doctor.Id))
+            .ForMember(x => x.DoctorFirstName, opt => opt.MapFrom(dto => dto.Doctor.FirstName))
+            .ForMember(x => x.DoctorLastName, opt => opt.MapFrom(dto => dto.Doctor.LastName))
+            .ForMember(x => x.Date, opt => opt.MapFrom(dto => dto.Date))
+            .ForMember(x => x.StartTime, opt => opt.MapFrom(dto => dto.StartTime))
+            .ForMember(x => x.EndTime, opt => opt.MapFrom(dto => dto.EndTime));
+
+
         CreateMap<IPaginate<DoctorSchedule>, GetListResponse<GetListByDoctorIdDto>>();
+  
     }
 }

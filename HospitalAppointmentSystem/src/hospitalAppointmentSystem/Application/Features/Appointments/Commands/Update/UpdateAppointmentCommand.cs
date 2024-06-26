@@ -12,7 +12,7 @@ using static Application.Features.Appointments.Constants.AppointmentsOperationCl
 
 namespace Application.Features.Appointments.Commands.Update;
 
-public class UpdateAppointmentCommand : IRequest<UpdatedAppointmentResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class UpdateAppointmentCommand : IRequest<UpdatedAppointmentResponse>, ISecuredRequest, ILoggableRequest, ITransactionalRequest
 {
     public int Id { get; set; }
     public required DateOnly Date { get; set; }

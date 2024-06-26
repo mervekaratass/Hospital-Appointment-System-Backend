@@ -13,7 +13,7 @@ using Application.Features.Doctors.Constants;
 
 namespace Application.Features.Reports.Commands.Update;
 
-public class UpdateReportCommand : IRequest<UpdatedReportResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class UpdateReportCommand : IRequest<UpdatedReportResponse>, ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public int Id { get; set; }
    // public required int AppointmentID { get; set; }

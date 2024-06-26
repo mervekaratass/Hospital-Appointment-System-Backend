@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.DoctorSchedules.Queries.GetListByDoctorId;
-public class GetListByDoctorIdQuery : IRequest<GetListResponse<GetListByDoctorIdDto>>, ISecuredRequest, ICachableRequest
+public class GetListByDoctorIdQuery : IRequest<GetListResponse<GetListByDoctorIdDto>>, ISecuredRequest
 {   
     public Guid DoctorId { get; set; }
     public PageRequest PageRequest { get; set; }

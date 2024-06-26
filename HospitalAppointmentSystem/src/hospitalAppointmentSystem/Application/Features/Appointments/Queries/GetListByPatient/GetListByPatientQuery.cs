@@ -21,7 +21,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Appointments.Queries.GetByPatientId;
 
-public class GetListByPatientQuery:IRequest<GetListResponse<GetListByPatientDto>>, ICachableRequest
+public class GetListByPatientQuery:IRequest<GetListResponse<GetListByPatientDto>>,ISecuredRequest
 
 {
     public PageRequest PageRequest { get; set; }
@@ -56,7 +56,7 @@ public class GetListByPatientQuery:IRequest<GetListResponse<GetListByPatientDto>
                cancellationToken: cancellationToken,
                   orderBy: x => x.OrderByDescending(y => y.Date),
                include: x => x.Include(x => x.Doctor).Include(x => x.Patient).Include(x => x.Doctor.Branch),
-                  predicate: x => x.PatientID == request.PatientId
+                  predicate: x => x.PatientID == request.PatientId && x.DeletedDate == null
            );
 
             GetListResponse<GetListByPatientDto> response = _mapper.Map<GetListResponse<GetListByPatientDto>>(appointments);

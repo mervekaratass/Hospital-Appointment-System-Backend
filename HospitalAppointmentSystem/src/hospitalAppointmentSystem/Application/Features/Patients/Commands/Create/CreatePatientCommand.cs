@@ -11,10 +11,12 @@ using MediatR;
 using static Application.Features.Patients.Constants.PatientsOperationClaims;
 using NArchitecture.Core.Security.Hashing;
 using System.Numerics;
+//using Application.Services.Encryptions;
+using System.Numerics;
 
 namespace Application.Features.Patients.Commands.Create;
 
-public class CreatePatientCommand : IRequest<CreatedPatientResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest, ISecuredRequest
+public class CreatePatientCommand : IRequest<CreatedPatientResponse>,  ILoggableRequest, ITransactionalRequest, ISecuredRequest
 {
     public int Age { get; set; }
     public double Height { get; set; }
@@ -60,6 +62,16 @@ public class CreatePatientCommand : IRequest<CreatedPatientResponse>, ICacheRemo
            );
             patient.PasswordHash = passwordHash;
             patient.PasswordSalt = passwordSalt;
+
+            //sinem kullanýcý bilgilerini þifreleme. encrypt þifreleme yapýyor.
+
+            //patient.FirstName = CryptoHelper.Encrypt(patient.FirstName);
+            //patient.LastName = CryptoHelper.Encrypt(patient.LastName);
+            //patient.NationalIdentity = CryptoHelper.Encrypt(patient.NationalIdentity);
+            //patient.Phone = CryptoHelper.Encrypt(patient.Phone);
+            //patient.Address = CryptoHelper.Encrypt(patient.Address);
+
+            //yazdýðým burda bitti
 
             await _patientRepository.AddAsync(patient);
 

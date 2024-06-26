@@ -1,3 +1,4 @@
+using Application.Features.Patients.Constants;
 using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
@@ -10,7 +11,7 @@ using static Application.Features.Users.Constants.UsersOperationClaims;
 
 namespace Application.Features.Users.Commands.Update;
 
-public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
+public class UpdateUserCommand : IRequest<UpdatedUserResponse> , ISecuredRequest
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
@@ -46,8 +47,8 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
         Email = email;
         Password = password;
     }
-
-    public string[] Roles => new[] { Admin, Write, UsersOperationClaims.Update };
+    //doktoru eklersiniz gerekirse
+    public string[] Roles => new[] { Admin, Write, UsersOperationClaims.Update,PatientsOperationClaims.Update};
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserResponse>
     {

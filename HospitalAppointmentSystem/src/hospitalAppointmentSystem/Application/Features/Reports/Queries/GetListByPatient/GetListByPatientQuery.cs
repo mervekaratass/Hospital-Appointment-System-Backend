@@ -3,7 +3,7 @@ using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using NArchitecture.Core.Application.Pipelines.Caching;
+using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
@@ -14,35 +14,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using NArchitecture.Core.Application.Pipelines.Authorization;
+using Application.Features.Patients.Constants;
 
-namespace Application.Features.Reports.Queries.GetListByDoctor;
-public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>>, ISecuredRequest
-
+namespace Application.Features.Reports.Queries.GetListByPatient;
+public class GetListByPatientQuery : IRequest<GetListResponse<GetListByPatientDto>>, ISecuredRequest
 {
     public PageRequest PageRequest { get; set; }
-    public Guid DoctorId { get; set; }
+    public Guid PatientId { get; set; }
 
-    public string[] Roles => [Admin, Read, DoctorsOperationClaims.Update];
+    public string[] Roles => [Admin, Read, PatientsOperationClaims.Update];
 
     public bool BypassCache { get; }
     public string? CacheKey => $"GetListReports({PageRequest.PageIndex},{PageRequest.PageSize})";
     public string? CacheGroupKey => "GetReports";
     public TimeSpan? SlidingExpiration { get; }
 
-    public class GetListByDoctorQueryHandler : IRequestHandler<GetListByDoctorQuery, GetListResponse<GetListByDoctorDto>>
+    public class GetListByPatientQueryHandler : IRequestHandler<GetListByPatientQuery, GetListResponse<GetListByPatientDto>>
     {
         private readonly IReportRepository _reportRepository;
         private readonly IMapper _mapper;
 
-        public GetListByDoctorQueryHandler(IReportRepository reportRepository, IMapper mapper)
+        public GetListByPatientQueryHandler(IReportRepository reportRepository, IMapper mapper)
         {
             _reportRepository = reportRepository;
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListByDoctorDto>> Handle(
-            GetListByDoctorQuery request,
+        public async Task<GetListResponse<GetListByPatientDto>> Handle(
+            GetListByPatientQuery request,
             CancellationToken cancellationToken
         )
         {
@@ -50,13 +49,13 @@ public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>
                index: request.PageRequest.PageIndex,
                size: request.PageRequest.PageSize,
                cancellationToken: cancellationToken,
-                  orderBy: x => x.OrderByDescending(y => y.CreatedDate),
-               include: x => x.Include(x => x.Appointment).Include(x => x.Appointment.Doctor).Include(x => x.Appointment.Patient),
-                  predicate: x => x.Appointment.DoctorID == request.DoctorId  &&  x.DeletedDate==null
+               orderBy: x => x.OrderByDescending(y => y.CreatedDate),
+               include: x => x.Include(x => x.Appointment).Include(x => x.Appointment.Doctor).Include(x => x.Appointment.Doctor.Branch).Include(x => x.Appointment.Patient),
+               predicate: x => x.Appointment.PatientID == request.PatientId && x.DeletedDate == null
 
            );
 
-            GetListResponse<GetListByDoctorDto> response = _mapper.Map<GetListResponse<GetListByDoctorDto>>(reports);
+            GetListResponse<GetListByPatientDto> response = _mapper.Map<GetListResponse<GetListByPatientDto>>(reports);
             return response;
 
         }

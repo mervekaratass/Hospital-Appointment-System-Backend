@@ -12,7 +12,7 @@ using static Application.Features.Notifications.Constants.NotificationsOperation
 
 namespace Application.Features.Notifications.Commands.Create;
 
-public class CreateNotificationCommand : IRequest<CreatedNotificationResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateNotificationCommand : IRequest<CreatedNotificationResponse>, ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public required int AppointmentID { get; set; }
     public required string Message { get; set; }

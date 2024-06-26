@@ -13,7 +13,7 @@ using Application.Features.Doctors.Constants;
 
 namespace Application.Features.DoctorSchedules.Commands.Create;
 
-public class CreateDoctorScheduleCommand : IRequest<CreatedDoctorScheduleResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateDoctorScheduleCommand : IRequest<CreatedDoctorScheduleResponse>,ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public required Guid DoctorID { get; set; }
     public required DateOnly Date { get; set; }

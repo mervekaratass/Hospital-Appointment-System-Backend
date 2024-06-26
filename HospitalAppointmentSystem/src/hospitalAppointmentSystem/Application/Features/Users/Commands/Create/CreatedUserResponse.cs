@@ -15,6 +15,8 @@ public class CreatedUserResponse : IResponse
     public string Password { get; set; }
     public bool Status { get; set; }
 
+    
+
     public CreatedUserResponse()
     {
         FirstName = string.Empty;
@@ -40,5 +42,6 @@ public class CreatedUserResponse : IResponse
         Email = email;
         Password = password;
         Status = status;
+       
     }
 }

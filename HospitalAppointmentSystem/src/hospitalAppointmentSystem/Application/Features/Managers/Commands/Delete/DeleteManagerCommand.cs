@@ -13,7 +13,7 @@ using static Application.Features.Managers.Constants.ManagersOperationClaims;
 
 namespace Application.Features.Managers.Commands.Delete;
 
-public class DeleteManagerCommand : IRequest<DeletedManagerResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class DeleteManagerCommand : IRequest<DeletedManagerResponse>, ISecuredRequest,  ILoggableRequest, ITransactionalRequest
 {
     public Guid Id { get; set; }
 

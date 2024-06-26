@@ -38,10 +38,10 @@ public class UpdatePatientCommandValidator : AbstractValidator<UpdatePatientComm
 
         RuleFor(c => c.Address).NotEmpty().WithMessage("Adres alaný boþ olamaz").MinimumLength(3).WithMessage("Adres en az 3 karakter olmalýdýr");
 
-        RuleFor(c => c.Password).NotEmpty().WithMessage("Þifre alaný boþ olamaz").MinimumLength(8).WithMessage("Þifre en az 8 karakter olmalý")
-            .MaximumLength(15).WithMessage("Þifre en az 15 karakter olmalý").Must(StrongPassword).WithMessage(
-                "Þifre en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir."
-            );
+        //RuleFor(c => c.Password).NotEmpty().WithMessage("Þifre alaný boþ olamaz").MinimumLength(8).WithMessage("Þifre en az 8 karakter olmalý")
+        //    .MaximumLength(15).WithMessage("Þifre en az 15 karakter olmalý").Must(StrongPassword).WithMessage(
+        //        "Þifre en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir."
+        //    );
     }
     private bool StrongPassword(string value)
     {

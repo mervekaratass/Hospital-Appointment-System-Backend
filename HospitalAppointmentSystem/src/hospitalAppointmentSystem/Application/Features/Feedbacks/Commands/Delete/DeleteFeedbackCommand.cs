@@ -15,7 +15,7 @@ using Application.Features.Patients.Constants;
 
 namespace Application.Features.Feedbacks.Commands.Delete;
 
-public class DeleteFeedbackCommand : IRequest<DeletedFeedbackResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class DeleteFeedbackCommand : IRequest<DeletedFeedbackResponse>,  ILoggableRequest, ITransactionalRequest
 {
     public int Id { get; set; }
 

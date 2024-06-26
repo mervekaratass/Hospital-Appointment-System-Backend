@@ -12,7 +12,7 @@ using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
 
 namespace Application.Features.Doctors.Commands.Delete;
 
-public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest, ISecuredRequest
+public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>,  ILoggableRequest, ITransactionalRequest, ISecuredRequest
 {
     public Guid Id { get; set; }
 
@@ -53,12 +53,6 @@ public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>, ICacheRemove
 
 
 
-            //employee = await _employeeService.DeleteAsync(employee!);
-
-            //DeletedEmployeeResponse response = _mapper.Map<DeletedEmployeeResponse>(employee);
-            //response.IsPermament = request.IsPermament;
-            //response.DeletedDate = request.IsPermament ? DateTime.UtcNow : response.DeletedDate;
-            //return response;
         }
     }
 }

@@ -8,20 +8,23 @@ using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
+using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
 using System;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Features.Doctors.Constants;
+using Application.Features.Patients.Constants;
 
 namespace Application.Features.Feedbacks.Queries.GetListByUser
 {
     // Kullanıcıya ait geri bildirimleri listeleyen sorgu
-    public class GetListByUserQuery : IRequest<GetListResponse<GetListByUserDto>>, ICachableRequest
+    public class GetListByUserQuery : IRequest<GetListResponse<GetListByUserDto>>
     {
         public PageRequest PageRequest { get; set; }
         public Guid UserId { get; set; }
 
-        public string[] Roles => new string[] { "Admin", "Read" };
+        public string[] Roles => [Admin, Read,DoctorsOperationClaims.Update,PatientsOperationClaims.Update];
 
         public bool BypassCache { get; set; }
         public string? CacheKey => $"GetListFeedbacks({PageRequest.PageIndex},{PageRequest.PageSize})";

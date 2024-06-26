@@ -10,10 +10,12 @@ using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
 using Microsoft.EntityFrameworkCore;
+//using Application.Services.Encryptions;
+using System.Numerics;
 
 namespace Application.Features.Doctors.Queries.GetList;
 
-public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorListItemDto>>, ICachableRequest
+public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorListItemDto>>
 {
     public PageRequest PageRequest { get; set; }
 
@@ -41,11 +43,25 @@ public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorListItem
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
                 cancellationToken: cancellationToken,
-                      include: x => x.Include(x => x.Branch)
-
+            include: x => x.Include(x => x.Branch)
             );
 
-            GetListResponse<GetListDoctorListItemDto> response = _mapper.Map<GetListResponse<GetListDoctorListItemDto>>(doctors);
+            // SÝNEM Foreach ile döndurunce  Ipaginat ekleme iþlemine izin vermiyor ,hata veriyor .
+
+            //for (int i = 0; i < doctors.Items.Count; i++)
+            //{
+            //    doctors.Items[i].FirstName = CryptoHelper.Decrypt(doctors.Items[i].FirstName);
+            //    doctors.Items[i].LastName = CryptoHelper.Decrypt(doctors.Items[i].LastName);
+            //    doctors.Items[i].NationalIdentity = CryptoHelper.Decrypt(doctors.Items[i].NationalIdentity);
+            //    doctors.Items[i].Phone = CryptoHelper.Decrypt(doctors.Items[i].Phone);
+            //    doctors.Items[i].Address = CryptoHelper.Decrypt(doctors.Items[i].Address);
+            //}
+
+            
+
+            // ustte ve alttada deðiþiklik yaptým
+
+            GetListResponse<GetListDoctorListItemDto> response = _mapper.Map<GetListResponse<GetListDoctorListItemDto>>(doctors); 
             return response;
         }
     }
