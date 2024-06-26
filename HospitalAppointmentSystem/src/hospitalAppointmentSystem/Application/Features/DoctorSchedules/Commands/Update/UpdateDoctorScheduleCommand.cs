@@ -57,7 +57,7 @@ namespace Application.Features.DoctorSchedules.Commands.Update
                 // Güncellenmek istenen tarih ve doktor ID'si ile silinmiþ bir kayýt var mý diye kontrol edelim
                 var conflictingSchedule = await _doctorScheduleRepository.GetAsync(ds => ds.DoctorID == request.DoctorID && ds.Date == request.Date);
 
-                var appointment=await _appointmentRepository.GetAsync(x=>x.DoctorID==request.DoctorID && x.Date==request.Date &&x.DeletedDate==null);
+                var appointment=await _appointmentRepository.GetAsync(x=>x.DoctorID==existingSchedule.DoctorID && x.Date==existingSchedule.Date &&x.DeletedDate==null);
                 if (appointment != null)
                 {
                     throw new BusinessException("Bu tarihe ait hastalar tarafýnda alýnmýþ randevular bulunmaktadýr.Tarihi güncelleyemezsiniz");
