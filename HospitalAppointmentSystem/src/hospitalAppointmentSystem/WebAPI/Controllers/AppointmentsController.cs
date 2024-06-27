@@ -28,9 +28,13 @@ public class AppointmentsController : BaseController
         return CreatedAtAction(nameof(GetById), new { response.Id }, response);
     }
 
-    [HttpPut]
-    public async Task<ActionResult<UpdatedAppointmentResponse>> Update([FromBody] UpdateAppointmentCommand command)
+    [HttpPut("{id}")]
+    public async Task<ActionResult<UpdatedAppointmentResponse>> Update(int id, [FromBody] UpdateAppointmentCommand command)
     {
+        if (id != command.Id)
+        {
+            return BadRequest();
+        }
         UpdatedAppointmentResponse response = await Mediator.Send(command);
 
         return Ok(response);

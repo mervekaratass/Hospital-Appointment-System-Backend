@@ -36,6 +36,8 @@ public class GetByIdUserQuery : IRequest<GetByIdUserResponse>, ISecuredRequest
                 enableTracking: false,
                 cancellationToken: cancellationToken
             );
+
+            await _userBusinessRules.UserIdShouldBeExistsWhenSelected(request.Id);
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
 
 

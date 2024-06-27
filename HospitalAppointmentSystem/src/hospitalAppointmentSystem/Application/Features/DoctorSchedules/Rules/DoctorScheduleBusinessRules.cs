@@ -46,7 +46,7 @@ public class DoctorScheduleBusinessRules : BaseBusinessRules
     public async Task DoctorScheduleShouldNotBeDeletedIfAppointmentsExist(int doctorScheduleId, CancellationToken cancellationToken)
     {
         DoctorSchedule? doctorSchedule = await _doctorScheduleRepository.GetAsync(
-            predicate: ds => ds.Id == doctorScheduleId,
+            predicate: ds => ds.Id == doctorScheduleId && ds.DeletedDate==null,
             enableTracking: false,
             cancellationToken: cancellationToken
         );

@@ -6,9 +6,9 @@ using Application.Features.Reports.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
-using Application.Features.Appointments.Queries.GetByPatientId;
 using Application.Features.Reports.Queries.GetListByDoctor;
 using Application.Features.Reports.Queries.GetByAppointmentId;
+using Application.Features.Reports.Queries.GetListByPatient;
 
 namespace WebAPI.Controllers;
 
@@ -71,6 +71,14 @@ public class ReportsController : BaseController
         return Ok(response);
     }
 
+
+    [HttpGet("getByPatientId")] 
+    public async Task<IActionResult> GetListByPatientId([FromQuery] PageRequest pageRequest, [FromQuery] Guid patientId)
+    {
+        GetListByPatientQuery query = new() { PageRequest = pageRequest, PatientId = patientId };
+        GetListResponse<GetListByPatientDto> response = await Mediator.Send(query);
+        return Ok(response);
+    }
 
     [HttpGet]
     public async Task<ActionResult<GetListReportQuery>> GetList([FromQuery] PageRequest pageRequest)
