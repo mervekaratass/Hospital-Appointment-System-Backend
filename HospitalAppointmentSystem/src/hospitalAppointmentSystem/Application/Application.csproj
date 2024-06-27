@@ -9,6 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MailKit" Version="4.6.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="NArchitecture.Core.Application" Version="1.0.1" />
     <PackageReference Include="NArchitecture.Core.Mailing" Version="1.0.1" />

@@ -17,7 +17,13 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<CreateAppointmentCommand, Appointment>();
-        CreateMap<Appointment, CreatedAppointmentResponse>();
+        CreateMap<Appointment, CreatedAppointmentResponse>()
+            .ForMember(x => x.PatientFirstName, opt => opt.MapFrom(src => src.Patient.FirstName))
+            .ForMember(x => x.PatientLastName, opt => opt.MapFrom(src => src.Patient.LastName))
+            .ForMember(x => x.DoctorFirstName, opt => opt.MapFrom(src => src.Doctor.FirstName))
+            .ForMember(x => x.DoctorLastName, opt => opt.MapFrom(src => src.Doctor.LastName))
+            .ForMember(x => x.DoctorBranch, opt => opt.MapFrom(src => src.Doctor.Branch))
+            ; 
 
         CreateMap<UpdateAppointmentCommand, Appointment>();
         CreateMap<Appointment, UpdatedAppointmentResponse>();
