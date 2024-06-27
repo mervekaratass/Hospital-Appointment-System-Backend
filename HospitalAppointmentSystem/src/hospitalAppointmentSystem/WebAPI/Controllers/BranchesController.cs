@@ -52,8 +52,23 @@ public class BranchesController : BaseController
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<DeletedBranchResponse>> Delete([FromRoute] int id)
+    public async Task<ActionResult<DeletedBranchResponse>> Delete([FromRoute] int id , PageRequest  pageRequest)
     {
+        GetListDoctorQuery DoctorIdQuery = new() { PageRequest = pageRequest };
+
+        GetListResponse<GetListDoctorListItemDto> DoctorIdResponse = await Mediator.Send(DoctorIdQuery);
+
+        foreach (var doctor in DoctorIdResponse.Items)
+        {
+
+            if (doctor.BranchID == id)
+            {
+                return BadRequest("Bu branþý silemezsiniz");
+            }
+        }
+
+
+
         DeleteBranchCommand command = new() { Id = id };
 
         DeletedBranchResponse response = await Mediator.Send(command);
