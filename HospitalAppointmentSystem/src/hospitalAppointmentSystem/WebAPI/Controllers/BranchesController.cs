@@ -94,6 +94,7 @@ public class BranchesController : BaseController
 
         GetListResponse<GetListBranchListItemDto> response = await Mediator.Send(query);
 
+
         return Ok(response);
     }
 
