@@ -13,6 +13,7 @@ using Domain.Entities;
 using Application.Features.Patients.Queries.GetById;
 using Nest;
 using Application.Features.Reports.Queries.GetById;
+using Application.Features.Appointments.Queries.GetListByDoctorDate;
 
 namespace WebAPI.Controllers;
 
@@ -98,5 +99,14 @@ public class AppointmentsController : BaseController
         return Ok(response);
     }
 
+
+
+    [HttpGet("getByDoctorDate")]
+    public async Task<IActionResult> GetListByDoctorDate([FromQuery] PageRequest pageRequest, [FromQuery] Guid doctorId, [FromQuery] DateOnly date)
+    {
+        GetListByDoctorDateQuery query = new() { PageRequest = pageRequest, DoctorId = doctorId, Date = date };
+        GetListResponse<GetListByDoctorDateDto> response = await Mediator.Send(query);
+        return Ok(response);
+    }
 
 }

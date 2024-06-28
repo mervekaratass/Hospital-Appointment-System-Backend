@@ -7,6 +7,7 @@ using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Application.Features.DoctorSchedules.Queries.GetListByDoctorId;
+using Application.Features.Appointments.Queries.GetListByDoctorDate;
 
 namespace WebAPI.Controllers;
 
@@ -69,4 +70,5 @@ public class DoctorSchedulesController : BaseController
         GetListResponse<GetListByDoctorIdDto> response = await Mediator.Send(query);
         return Ok(response);
     }
+
 }
