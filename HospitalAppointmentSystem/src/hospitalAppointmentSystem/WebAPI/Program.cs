@@ -14,6 +14,7 @@ using NArchitecture.Core.Security.Encryption;
 using NArchitecture.Core.Security.JWT;
 using NArchitecture.Core.Security.WebApi.Swagger.Extensions;
 using Persistence;
+using Quartz;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using WebAPI;
 
@@ -83,6 +84,23 @@ builder.Services.AddSwaggerGen(opt =>
     );
     opt.OperationFilter<BearerSecurityRequirementOperationFilter>();
 });
+// Quartz'u ekleyin
+builder.Services.AddQuartz(q =>
+{
+    q.UseMicrosoftDependencyInjectionJobFactory();
+
+    // Job ve Trigger ekleyin
+    var jobKey = new JobKey("ReminderAppointmentJob");
+    q.AddJob<ReminderAppointmentJob>(opts => opts.WithIdentity(jobKey));
+
+    q.AddTrigger(opts => opts
+        .ForJob(jobKey)
+        .WithIdentity("ReminderAppointmentJob-trigger")
+         .WithCronSchedule("0 0 0 ? * *")); // Her gün 00:00'da çalýþacak þekilde ayarlayýn
+});
+
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+
 
 WebApplication app = builder.Build();
 

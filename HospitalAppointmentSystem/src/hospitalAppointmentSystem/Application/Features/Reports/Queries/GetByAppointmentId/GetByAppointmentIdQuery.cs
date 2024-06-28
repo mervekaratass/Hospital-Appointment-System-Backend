@@ -13,13 +13,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Application.Features.Patients.Constants;
 
 namespace Application.Features.Reports.Queries.GetByAppointmentId;
 public class GetByAppointmentIdQuery : IRequest<GetByAppointmentIdResponse>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => [Admin, Read, DoctorsOperationClaims.Update];
+    public string[] Roles => [Admin, Read, DoctorsOperationClaims.Update, PatientsOperationClaims.Update];
 
     public class GetByAppointmentIdQueryHandler : IRequestHandler<GetByAppointmentIdQuery, GetByAppointmentIdResponse>
     {
