@@ -5,7 +5,9 @@ using Application.Features.Doctors.Queries.GetById;
 using Application.Features.Doctors.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
+using Application.Features.Doctors.Queries.GetListByBranchId;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace WebAPI.Controllers;
 
@@ -56,6 +58,14 @@ public class DoctorsController : BaseController
 
         GetListResponse<GetListDoctorListItemDto> response = await Mediator.Send(query);
 
+        return Ok(response);
+    }
+
+    [HttpGet("getByBranchId")]
+    public async Task<IActionResult> GetListByBranchId([FromQuery] PageRequest pageRequest, [FromQuery] int branchId)
+    {
+        GetListByBranchIdQuery query = new() { PageRequest = pageRequest, BranchId = branchId };
+        GetListResponse<GetListByBranchIdDto> response = await Mediator.Send(query);
         return Ok(response);
     }
 }

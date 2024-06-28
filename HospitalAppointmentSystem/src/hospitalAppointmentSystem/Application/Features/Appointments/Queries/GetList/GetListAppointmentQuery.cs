@@ -45,7 +45,7 @@ public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointme
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                orderBy: x => x.OrderByDescending(y => y.Date),
+                orderBy: x => x.OrderByDescending(y => y.Date), 
                 include: x => x.Include(x => x.Doctor).Include(x => x.Patient).Include(x => x.Doctor.Branch)
             );
 

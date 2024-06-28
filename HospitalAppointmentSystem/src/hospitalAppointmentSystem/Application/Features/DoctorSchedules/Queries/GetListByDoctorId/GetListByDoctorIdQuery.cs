@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Application.Features.Patients.Constants;
 
 namespace Application.Features.DoctorSchedules.Queries.GetListByDoctorId;
 public class GetListByDoctorIdQuery : IRequest<GetListResponse<GetListByDoctorIdDto>>, ISecuredRequest
@@ -23,7 +24,7 @@ public class GetListByDoctorIdQuery : IRequest<GetListResponse<GetListByDoctorId
     public Guid DoctorId { get; set; }
     public PageRequest PageRequest { get; set; }
 
-    public string[] Roles => [Admin, Read, DoctorsOperationClaims.Update];
+    public string[] Roles => [Admin, Read, DoctorsOperationClaims.Update,PatientsOperationClaims.Update]; //hastayı şuan ekledim bakıcam -merve
 
     public bool BypassCache { get; }
     public string? CacheKey => $"GetListDoctorSchedules({PageRequest.PageIndex},{PageRequest.PageSize})";

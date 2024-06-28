@@ -60,7 +60,7 @@ public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>
                cancellationToken: cancellationToken,
                   orderBy: x => x.OrderByDescending(y => y.Date),
                include: x => x.Include(x => x.Doctor).Include(x => x.Patient).Include(x => x.Doctor.Branch),
-                  predicate: x => x.DoctorID == request.DoctorId
+                  predicate: x => x.DoctorID == request.DoctorId &&x.DeletedDate==null
                   
            );
 
