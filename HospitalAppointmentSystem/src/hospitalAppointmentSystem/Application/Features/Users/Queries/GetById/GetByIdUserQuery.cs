@@ -1,4 +1,4 @@
-using Application.Features.Users.Constants;
+ï»¿using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
 //using Application.Services.Encryptions;
 using Application.Services.Repositories;
@@ -36,19 +36,17 @@ public class GetByIdUserQuery : IRequest<GetByIdUserResponse>, ISecuredRequest
                 enableTracking: false,
                 cancellationToken: cancellationToken
             );
-
-            await _userBusinessRules.UserIdShouldBeExistsWhenSelected(request.Id);
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
 
 
-            //sinem encryptions þifrelenmiþ veriyi okuma. decrypt þifreyi çözer
+            //sinem encryptions sifrelenmis veriyi okuma. decrypt sifreyi cozer
             //user.FirstName = CryptoHelper.Decrypt(user.FirstName);
             //user.LastName = CryptoHelper.Decrypt(user.LastName);
             //user.NationalIdentity = CryptoHelper.Decrypt(user.NationalIdentity);
             //user.Phone = CryptoHelper.Decrypt(user.Phone);
             //user.Address = CryptoHelper.Decrypt(user.Address);
 
-            // yazdýðým yer bitti
+            // yazdigim yer bitti
 
 
 
