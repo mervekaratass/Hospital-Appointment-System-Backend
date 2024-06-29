@@ -10,11 +10,11 @@ using Application.Features.Appointments.Constants;
 using Application.Features.Branches.Constants;
 using Application.Features.Doctors.Constants;
 using Application.Features.DoctorSchedules.Constants;
-using Application.Features.Feedbacks.Constants;
 using Application.Features.Managers.Constants;
 using Application.Features.Notifications.Constants;
 using Application.Features.Patients.Constants;
 using Application.Features.Reports.Constants;
+using Application.Features.Feedbacks.Commands.Constants;
 
 
 namespace Persistence.EntityConfigurations;

@@ -1,4 +1,3 @@
-using Application.Features.Feedbacks.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -8,7 +7,7 @@ using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
-using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
+using static Application.Features.Feedbacks.Commands.Constants.FeedbacksOperationClaims;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

@@ -1,5 +1,3 @@
-using Application.Features.Feedbacks.Constants;
-using Application.Features.Feedbacks.Constants;
 using Application.Features.Feedbacks.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
@@ -9,9 +7,10 @@ using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
-using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
+using static Application.Features.Feedbacks.Commands.Constants.FeedbacksOperationClaims;
 using Application.Features.Doctors.Constants;
 using Application.Features.Patients.Constants;
+using Application.Features.Feedbacks.Commands.Constants;
 
 namespace Application.Features.Feedbacks.Commands.Delete;
 

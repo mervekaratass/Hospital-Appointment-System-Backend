@@ -51,7 +51,6 @@ namespace Application.Features.Appointments.Commands.Create
             appointment.Patient = patient;
 
             //Branþ bilgisini al
-
             Branch branch = await _branchRepository.GetAsync(p => p.Id == doctor.BranchID);
             doctor.Branch = branch;
 
@@ -104,7 +103,5 @@ namespace Application.Features.Appointments.Commands.Create
                 smtp.Disconnect(true);
             }
         }
-
-
     }
 }

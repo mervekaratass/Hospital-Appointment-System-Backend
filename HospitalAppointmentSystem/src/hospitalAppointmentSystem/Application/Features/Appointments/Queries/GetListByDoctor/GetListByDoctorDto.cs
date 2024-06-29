@@ -19,5 +19,6 @@ public class GetListByDoctorDto : IDto
     public Guid PatientID { get; set; }
     public string PatientFirstName { get; set; }
     public string PatientLastName { get; set; }
+    public string PatientNationalIdentity { get; set; }
 
 }

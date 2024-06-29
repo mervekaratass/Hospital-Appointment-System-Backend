@@ -1,4 +1,5 @@
-﻿using Application.Features.Users.Commands.Create;
+﻿using Application.Features.Users.Commands.ChangePassword;
+using Application.Features.Users.Commands.Create;
 using Application.Features.Users.Commands.Delete;
 using Application.Features.Users.Commands.Update;
 using Application.Features.Users.Commands.UpdateFromAuth;
@@ -7,6 +8,8 @@ using Application.Features.Users.Queries.GetList;
 using Microsoft.AspNetCore.Mvc;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
+
+
 
 namespace WebAPI.Controllers;
 
@@ -65,4 +68,14 @@ public class UsersController : BaseController
         DeletedUserResponse result = await Mediator.Send(deleteUserCommand);
         return Ok(result);
     }
+
+
+    [HttpPut("ChangePassword")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand changePasswordCommand)
+    {
+        ChangePasswordResponse result = await Mediator.Send(changePasswordCommand);
+        return Ok(result);
+    }
+
+
 }

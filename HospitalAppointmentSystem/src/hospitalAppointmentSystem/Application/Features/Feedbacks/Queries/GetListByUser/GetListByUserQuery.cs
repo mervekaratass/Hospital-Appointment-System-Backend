@@ -8,7 +8,7 @@ using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
+using static Application.Features.Feedbacks.Commands.Constants.FeedbacksOperationClaims;
 using System;
 using System.Linq.Expressions;
 using System.Threading;
