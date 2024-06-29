@@ -19,6 +19,7 @@ public class GetListAppointmentListItemDto : IDto
     public Guid PatientID { get; set; }
     public string PatientFirstName { get; set; } //burda gerekli konfigürasyonu yap
     public string PatientLastName { get; set; }
+    public string PatientNationalIdentity { get; set; }
 
     
 
