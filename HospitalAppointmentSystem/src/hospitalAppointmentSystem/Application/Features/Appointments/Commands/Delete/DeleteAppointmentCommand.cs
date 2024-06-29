@@ -57,7 +57,7 @@ public class DeleteAppointmentCommand : IRequest<DeletedAppointmentResponse>, IS
         {
             Appointment? appointment = await _appointmentRepository.GetAsync(predicate: a => a.Id == request.Id, include: a => a
             .Include(a => a.Doctor)
-                .ThenInclude(d => d.Branch)
+            .ThenInclude(d => d.Branch)
             .Include(a => a.Patient), cancellationToken: cancellationToken);
             await _appointmentBusinessRules.AppointmentShouldExistWhenSelected(appointment);
             await _appointmentRepository.DeleteAsync(appointment!);

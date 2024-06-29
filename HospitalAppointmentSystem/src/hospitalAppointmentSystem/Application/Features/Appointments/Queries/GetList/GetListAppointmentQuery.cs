@@ -19,7 +19,7 @@ namespace Application.Features.Appointments.Queries.GetList;
 public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointmentListItemDto>>, ISecuredRequest
 {
     public PageRequest PageRequest { get; set; }
-    public bool? IncludeDeleted { get; set; } = false;
+
     public string[] Roles => [Admin, Read];
 
     public bool BypassCache { get; }
