@@ -46,7 +46,7 @@ public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorListItem
             include: x => x.Include(x => x.Branch)
             );
 
-            // SÝNEM Foreach ile döndurunce  Ipaginat ekleme iþlemine izin vermiyor ,hata veriyor .
+            // Sï¿½NEM Foreach ile dï¿½ndurunce  Ipaginat ekleme iï¿½lemine izin vermiyor ,hata veriyor .
 
             //for (int i = 0; i < doctors.Items.Count; i++)
             //{
@@ -59,7 +59,7 @@ public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorListItem
 
             
 
-            // ustte ve alttada deðiþiklik yaptým
+            // ustte ve alttada deï¿½iï¿½iklik yaptï¿½m
 
             GetListResponse<GetListDoctorListItemDto> response = _mapper.Map<GetListResponse<GetListDoctorListItemDto>>(doctors); 
             return response;
