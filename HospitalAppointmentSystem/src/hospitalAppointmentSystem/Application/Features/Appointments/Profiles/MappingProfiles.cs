@@ -43,7 +43,7 @@ public class MappingProfiles : Profile
         CreateMap<Appointment, GetListAppointmentListItemDto>();
         CreateMap<IPaginate<Appointment>, GetListResponse<GetListAppointmentListItemDto>>();
 
-        CreateMap<Appointment, GetListByPatientDto>();
+        CreateMap<Appointment, GetListByPatientDto>().ForMember(x=>x.BranchName,opt=>opt.MapFrom(src=>src.Doctor.Branch.Name));
         CreateMap<IPaginate<Appointment>, GetListResponse<GetListByPatientDto>>();
 
         CreateMap<Appointment, GetListByDoctorDto>();

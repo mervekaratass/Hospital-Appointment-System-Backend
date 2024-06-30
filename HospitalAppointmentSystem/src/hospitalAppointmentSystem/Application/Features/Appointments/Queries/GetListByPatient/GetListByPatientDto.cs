@@ -19,6 +19,8 @@ public class GetListByPatientDto:IDto
     public string DoctorLastName { get; set; }
     public string DoctorTitle { get; set; }
 
+    public string BranchName { get; set; }
+
     public Guid PatientID { get; set; }
     public string PatientFirstName { get; set; } //burda gerekli konfigürasyonu yap
     public string PatientLastName { get; set; }
