@@ -5,6 +5,7 @@ using Application.Services.UsersService;
 using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Dtos;
+using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Security.Enums;
 using NArchitecture.Core.Security.JWT;
 
@@ -56,18 +57,11 @@ public class LoginCommand : IRequest<LoggedResponse>
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserPasswordShouldBeMatch(user!, request.UserForLoginDto.Password);
 
-            LoggedResponse loggedResponse = new();
-
-            if (user!.AuthenticatorType is not AuthenticatorType.None)
+            // Email doğrulaması yapılmış mı kontrol et
+            bool isEmailVerified = await _authenticatorService.IsEmailVerified(user!.Id);
+            if (!isEmailVerified)
             {
-                if (request.UserForLoginDto.AuthenticatorCode is null)
-                {
-                    await _authenticatorService.SendAuthenticatorCode(user);
-                    loggedResponse.RequiredAuthenticatorType = user.AuthenticatorType;
-                    return loggedResponse;
-                }
-
-                await _authenticatorService.VerifyAuthenticatorCode(user, request.UserForLoginDto.AuthenticatorCode);
+                throw new BusinessException("E-posta doğrulaması yapılmamış. Lütfen e-posta hesabınızı doğrulayın.");
             }
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
@@ -76,8 +70,12 @@ public class LoginCommand : IRequest<LoggedResponse>
             Domain.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
             await _authService.DeleteOldRefreshTokens(user.Id);
 
-            loggedResponse.AccessToken = createdAccessToken;
-            loggedResponse.RefreshToken = addedRefreshToken;
+            LoggedResponse loggedResponse = new LoggedResponse
+            {
+                AccessToken = createdAccessToken,
+                RefreshToken = addedRefreshToken
+            };
+
             return loggedResponse;
         }
     }

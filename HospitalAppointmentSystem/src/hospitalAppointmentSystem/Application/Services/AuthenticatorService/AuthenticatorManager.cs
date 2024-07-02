@@ -124,4 +124,18 @@ public class AuthenticatorManager : IAuthenticatorService
         if (!result)
             throw new BusinessException("Authenticator code is invalid.");
     }
+
+    public async Task<bool> IsEmailVerified(Guid userId)
+    {
+        var emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(e => e.UserId == userId);
+        if (emailAuthenticator == null)
+        {
+            throw new NotFoundException("Email doğrulaması bulunamadı.");
+        }
+        if (!emailAuthenticator.IsVerified)
+        {
+            throw new BusinessException("Email doğrulaması bulunamadı.Lütfen mail hesabınızı doğrulayınız");
+        }
+        return emailAuthenticator.IsVerified;
+    }
 }

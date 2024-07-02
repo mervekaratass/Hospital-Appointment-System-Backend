@@ -12,9 +12,10 @@ using NArchitecture.Core.Security.JWT;
 using Application.Services.Patients;
 using Application.Services.UserOperationClaims;
 using Application.Services.OperationClaims;
-
+using Application.Features.Auth.Commands.EnableEmailAuthenticator;
 
 namespace Application.Features.Auth.Commands.Register.PatientRegister;
+
 public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
 {
     public PatientForRegisterDto PatientForRegisterDto { get; set; }
@@ -39,13 +40,15 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
         private readonly IUserOperationClaimService _userOperationClaimService;
         private readonly IOperationClaimService _operationClaimService;
         private readonly AuthBusinessRules _authBusinessRules;
+        private readonly IMediator _mediator;
 
         public PatientRegisterCommandHandler(
             IPatientService patientService,
             IAuthService authService,
             AuthBusinessRules authBusinessRules,
             IUserOperationClaimService userOperationClaimService,
-            IOperationClaimService operationClaimService
+            IOperationClaimService operationClaimService,
+            IMediator mediator
         )
         {
             _patientService = patientService;
@@ -53,6 +56,7 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
             _authBusinessRules = authBusinessRules;
             _userOperationClaimService = userOperationClaimService;
             _operationClaimService = operationClaimService;
+            _mediator = mediator;
         }
 
         public async Task<PatientRegisteredResponse> Handle(PatientRegisterCommand request, CancellationToken cancellationToken)
@@ -61,24 +65,23 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
 
             HashingHelper.CreatePasswordHash(
                 request.PatientForRegisterDto.Password,
-                passwordHash: out byte[] passwordHash,
-                passwordSalt: out byte[] passwordSalt
+                out byte[] passwordHash,
+                out byte[] passwordSalt
             );
 
             Patient newPatient =
                 new()
                 {
-                   
                     FirstName = request.PatientForRegisterDto.FirstName,
                     LastName = request.PatientForRegisterDto.LastName,
-                    Phone=request.PatientForRegisterDto.Phone,
+                    Phone = request.PatientForRegisterDto.Phone,
                     Email = request.PatientForRegisterDto.Email,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
                 };
             Patient createdPatient = await _patientService.AddAsync(newPatient);
 
-            ICollection<UserOperationClaim> userOperationClaims = [];
+            ICollection<UserOperationClaim> userOperationClaims = new List<UserOperationClaim>();
 
             var operationClaims = await _operationClaimService.GetListAsync(x => x.Name.Contains("Patients"));
             foreach (var item in operationClaims.Items)
@@ -95,6 +98,13 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
                 request.IpAddress
             );
             Domain.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+
+            // Email doğrulama komutunu tetikleyin
+            var enableEmailAuthenticatorCommand = new EnableEmailAuthenticatorCommand(
+                userId: createdPatient.Id,
+                verifyEmailUrlPrefix: "http://localhost:4200/verify-email"
+            );
+            await _mediator.Send(enableEmailAuthenticatorCommand);
 
             PatientRegisteredResponse registeredResponse =
                 new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };

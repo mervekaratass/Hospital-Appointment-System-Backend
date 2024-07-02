@@ -4,6 +4,8 @@ using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
 using Domain.Entities;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 using MediatR;
 using MimeKit;
 using NArchitecture.Core.Application.Pipelines.Authorization;
@@ -68,17 +70,41 @@ public class EnableEmailAuthenticatorCommand : IRequest, ISecuredRequest
             EmailAuthenticator emailAuthenticator = await _authenticatorService.CreateEmailAuthenticator(user);
             EmailAuthenticator addedEmailAuthenticator = await _emailAuthenticatorRepository.AddAsync(emailAuthenticator);
 
-            var toEmailList = new List<MailboxAddress> { new(name: user.Email, user.Email) };
+            // Mail içeriğini hazırla
+            var mailMessage = new MimeMessage();
+            mailMessage.From.Add(new MailboxAddress("Pair 5 Hastanesi", "fatmabireltr@gmail.com")); // Gönderen bilgisi
+            mailMessage.To.Add(new MailboxAddress("Pair 5 Hastanesi", user.Email)); // Alıcı bilgisi 
+            mailMessage.Subject = "Mail  Doğrulama"; // Mail konusu
 
-            _mailService.SendMail(
-                new Mail
-                {
-                    ToList = toEmailList,
-                    Subject = "Verify Your Email - NArchitecture",
-                    TextBody =
-                        $"Click on the link to verify your email: {request.VerifyEmailUrlPrefix}?ActivationKey={HttpUtility.UrlEncode(addedEmailAuthenticator.ActivationKey)}"
-                }
-            );
+            // HTML ve CSS içeriği oluştur
+            var bodyBuilder = new BodyBuilder();
+            bodyBuilder.HtmlBody = $@"
+       <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; }}
+                .container {{ border: 1px solid red; padding: 10px; }}
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <p>Mail adresinizi doğrulamak için şu linke tıklayın: {request.VerifyEmailUrlPrefix}?ActivationKey={HttpUtility.UrlEncode(addedEmailAuthenticator.ActivationKey)}</p>
+                
+            </div>
+        </body>
+        </html>";
+
+            // MimeKit'e gövdeyi ayarla
+            mailMessage.Body = bodyBuilder.ToMessageBody();
+
+            // SMTP ile bağlantı kur ve maili gönder
+            using (var smtp = new SmtpClient())
+            {
+                smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                smtp.Authenticate("fatmabireltr@gmail.com", "rxuv hpfv wlqq htpa");
+                await smtp.SendAsync(mailMessage);
+                smtp.Disconnect(true);
+            }
         }
     }
 }
