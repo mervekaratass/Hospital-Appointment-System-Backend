@@ -19,7 +19,6 @@ namespace Application.Features.Appointments.Queries.GetList;
 public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointmentListItemDto>>, ISecuredRequest
 {
     public PageRequest PageRequest { get; set; }
-
     public string[] Roles => [Admin, Read];
 
     public bool BypassCache { get; }
@@ -49,7 +48,7 @@ public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointme
                 include: x => x.Include(x => x.Doctor).Include(x => x.Patient).Include(x => x.Doctor.Branch)
             );
 
-            //SÝNEM
+            //Sï¿½NEM
             //for (int i = 0; i < appointments.Items.Count; i++)
             //{
             //    appointments.Items[i].Patient.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Patient.FirstName);
@@ -66,7 +65,7 @@ public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointme
 
 
 
-            // ustte ve alttada deðiþiklik yaptým
+            // ustte ve alttada deï¿½iï¿½iklik yaptï¿½m
 
 
             GetListResponse<GetListAppointmentListItemDto> response = _mapper.Map<GetListResponse<GetListAppointmentListItemDto>>(appointments);
