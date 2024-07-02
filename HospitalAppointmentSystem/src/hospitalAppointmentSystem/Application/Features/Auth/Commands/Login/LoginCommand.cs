@@ -57,11 +57,14 @@ public class LoginCommand : IRequest<LoggedResponse>
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserPasswordShouldBeMatch(user!, request.UserForLoginDto.Password);
 
-            // Email doğrulaması yapılmış mı kontrol et
-            bool isEmailVerified = await _authenticatorService.IsEmailVerified(user!.Id);
-            if (!isEmailVerified)
+            // Kullanıcı Doctor değilse e-posta doğrulaması yapılmış mı kontrol et
+            if (user is not Doctor)
             {
-                throw new BusinessException("E-posta doğrulaması yapılmamış. Lütfen e-posta hesabınızı doğrulayın.");
+                bool isEmailVerified = await _authenticatorService.IsEmailVerified(user!.Id);
+                if (!isEmailVerified)
+                {
+                    throw new BusinessException("E-posta doğrulaması yapılmamış. Lütfen e-posta hesabınızı doğrulayın.");
+                }
             }
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
