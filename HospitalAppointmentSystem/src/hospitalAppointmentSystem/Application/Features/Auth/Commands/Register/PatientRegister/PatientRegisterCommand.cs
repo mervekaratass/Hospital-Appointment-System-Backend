@@ -12,6 +12,9 @@ using NArchitecture.Core.Security.JWT;
 using Application.Services.Patients;
 using Application.Services.UserOperationClaims;
 using Application.Services.OperationClaims;
+using Application.Services.Encryptions;
+using NArchitecture.Core.Security.Entities;
+using System.Numerics;
 
 
 namespace Application.Features.Auth.Commands.Register.PatientRegister;
@@ -71,11 +74,29 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
                    
                     FirstName = request.PatientForRegisterDto.FirstName,
                     LastName = request.PatientForRegisterDto.LastName,
-                    Phone=request.PatientForRegisterDto.Phone,
+                    Age=request.PatientForRegisterDto.Age,
+                    Weight = request.PatientForRegisterDto.Weight,
+                    Height = request.PatientForRegisterDto.Height,
+                    BloodGroup = request.PatientForRegisterDto.BloodGroup,
+                    DateOfBirth = request.PatientForRegisterDto.DateOfBirth,
+                    NationalIdentity = request.PatientForRegisterDto.NationalIdentity,
+                    Address = request.PatientForRegisterDto.Address,
+                    Phone =request.PatientForRegisterDto.Phone,
                     Email = request.PatientForRegisterDto.Email,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
                 };
+
+            //sinem
+            newPatient.FirstName = CryptoHelper.Encrypt(newPatient.FirstName);
+            newPatient.LastName = CryptoHelper.Encrypt(newPatient.LastName);
+            newPatient.NationalIdentity = CryptoHelper.Encrypt(newPatient.NationalIdentity);
+            newPatient.Phone = CryptoHelper.Encrypt(newPatient.Phone);
+            newPatient.Address = CryptoHelper.Encrypt(newPatient.Address);
+            newPatient.Email = CryptoHelper.Encrypt(newPatient.Email);
+
+
+
             Patient createdPatient = await _patientService.AddAsync(newPatient);
 
             ICollection<UserOperationClaim> userOperationClaims = [];
@@ -94,6 +115,7 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
                 createdPatient,
                 request.IpAddress
             );
+
             Domain.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
 
             PatientRegisteredResponse registeredResponse =

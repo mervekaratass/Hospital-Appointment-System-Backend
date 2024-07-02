@@ -7,7 +7,7 @@ using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
 using Microsoft.EntityFrameworkCore;
-//using Application.Services.Encryptions;
+using Application.Services.Encryptions;
 using static Nest.JoinField;
 
 namespace Application.Features.Doctors.Queries.GetById;
@@ -39,11 +39,12 @@ public class GetByIdDoctorQuery : IRequest<GetByIdDoctorResponse>, ISecuredReque
 
 
             //sinem encryptions þifrelenmiþ veriyi okuma. decrypt þifreyi çözer
-            //doctor.FirstName = CryptoHelper.Decrypt(doctor.FirstName);
-            //doctor.LastName = CryptoHelper.Decrypt(doctor.LastName);
-            //doctor.NationalIdentity = CryptoHelper.Decrypt(doctor.NationalIdentity);
-            //doctor.Phone = CryptoHelper.Decrypt(doctor.Phone);
-            //doctor.Address = CryptoHelper.Decrypt(doctor.Address);
+            doctor.FirstName = CryptoHelper.Decrypt(doctor.FirstName);
+            doctor.LastName = CryptoHelper.Decrypt(doctor.LastName);
+            doctor.NationalIdentity = CryptoHelper.Decrypt(doctor.NationalIdentity);
+            doctor.Phone = CryptoHelper.Decrypt(doctor.Phone);
+            doctor.Address = CryptoHelper.Decrypt(doctor.Address);
+            doctor.Email = CryptoHelper.Decrypt(doctor.Email);
 
             // yazdýðým yer bitti
 

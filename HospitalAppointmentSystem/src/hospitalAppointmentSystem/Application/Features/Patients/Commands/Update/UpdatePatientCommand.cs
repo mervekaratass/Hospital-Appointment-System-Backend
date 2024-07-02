@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Patients.Constants.PatientsOperationClaims;
+using Application.Services.Encryptions;
 
 namespace Application.Features.Patients.Commands.Update;
 
@@ -53,6 +54,13 @@ public class UpdatePatientCommand : IRequest<UpdatedPatientResponse>,  ILoggable
             Patient? patient = await _patientRepository.GetAsync(predicate: p => p.Id == request.Id, cancellationToken: cancellationToken);
             await _patientBusinessRules.PatientShouldExistWhenSelected(patient);
             patient = _mapper.Map(request, patient);
+            //sinem
+            patient.FirstName = CryptoHelper.Encrypt(patient.FirstName);
+            patient.LastName = CryptoHelper.Encrypt(patient.LastName);
+            patient.NationalIdentity = CryptoHelper.Encrypt(patient.NationalIdentity);
+            patient.Phone = CryptoHelper.Encrypt(patient.Phone);
+            patient.Address = CryptoHelper.Encrypt(patient.Address);
+            patient.Email = CryptoHelper.Encrypt(patient.Email);
 
             await _patientRepository.UpdateAsync(patient!);
 
