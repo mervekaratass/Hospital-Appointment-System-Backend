@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Application.Features.Patients.Constants;
+using Application.Services.Encryptions;
 
 namespace Application.Features.Reports.Queries.GetListByPatient;
 public class GetListByPatientQuery : IRequest<GetListResponse<GetListByPatientDto>>, ISecuredRequest
@@ -54,6 +55,9 @@ public class GetListByPatientQuery : IRequest<GetListResponse<GetListByPatientDt
                predicate: x => x.Appointment.PatientID == request.PatientId && x.DeletedDate == null
 
            );
+
+
+      
 
             GetListResponse<GetListByPatientDto> response = _mapper.Map<GetListResponse<GetListByPatientDto>>(reports);
             return response;

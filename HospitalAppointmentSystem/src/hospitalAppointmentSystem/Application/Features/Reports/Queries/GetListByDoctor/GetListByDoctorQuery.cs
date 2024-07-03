@@ -15,6 +15,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using Application.Services.Encryptions;
+using System.Numerics;
 
 namespace Application.Features.Reports.Queries.GetListByDoctor;
 public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>>, ISecuredRequest
@@ -55,6 +57,24 @@ public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>
                   predicate: x => x.Appointment.DoctorID == request.DoctorId  &&  x.DeletedDate==null
 
            );
+
+            for (int i = 0; i < reports.Items.Count; i++)
+            {
+                reports.Items[i].Appointment.Doctor.FirstName = CryptoHelper.Decrypt(reports.Items[i].Appointment.Doctor.FirstName);
+                reports.Items[i].Appointment.Doctor.LastName = CryptoHelper.Decrypt(reports.Items[i].Appointment.Doctor.LastName);
+                reports.Items[i].Appointment.Patient.FirstName = CryptoHelper.Decrypt(reports.Items[i].Appointment.Patient.FirstName);
+                reports.Items[i].Appointment.Patient.LastName = CryptoHelper.Decrypt(reports.Items[i].Appointment.Patient.LastName);
+                reports.Items[i].Appointment.Patient.NationalIdentity = CryptoHelper.Decrypt(reports.Items[i].Appointment.Patient.NationalIdentity);
+                reports.Items[i].Appointment.Patient.Email = CryptoHelper.Decrypt(reports.Items[i].Appointment.Patient.Email);
+                reports.Items[i].Appointment.Patient.Phone = CryptoHelper.Decrypt(reports.Items[i].Appointment.Patient.Phone);
+
+                reports.Items[i].Appointment.Doctor.Address = CryptoHelper.Decrypt(reports.Items[i].Appointment.Doctor.Address);
+                reports.Items[i].Appointment.Doctor.Email = CryptoHelper.Decrypt(reports.Items[i].Appointment.Doctor.Email);
+                reports.Items[i].Appointment.Doctor.NationalIdentity = CryptoHelper.Decrypt(reports.Items[i].Appointment.Doctor.NationalIdentity);
+                reports.Items[i].Appointment.Doctor.Phone = CryptoHelper.Decrypt(reports.Items[i].Appointment.Doctor.Phone);
+
+
+            }
 
             GetListResponse<GetListByDoctorDto> response = _mapper.Map<GetListResponse<GetListByDoctorDto>>(reports);
             return response;
