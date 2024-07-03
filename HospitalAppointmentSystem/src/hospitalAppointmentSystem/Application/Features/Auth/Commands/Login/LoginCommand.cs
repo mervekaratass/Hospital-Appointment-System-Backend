@@ -51,20 +51,25 @@ public class LoginCommand : IRequest<LoggedResponse>
 
         public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            string encryptedEmail=CryptoHelper.Encrypt(request.UserForLoginDto.Email);
+            string emailToCheck;
+            if(request.UserForLoginDto.Email == "fatmabireltr@gmail.com") 
+            {
+                emailToCheck = request.UserForLoginDto.Email;
+            }
+            else 
+            {
+                emailToCheck = CryptoHelper.Encrypt(request.UserForLoginDto.Email);
+            }
 
             User? user = await _userService.GetAsync(
-                predicate: u => u.Email == encryptedEmail,
+                predicate: u => u.Email == emailToCheck,
                 cancellationToken: cancellationToken
             );
-
 
             if (user == null)
             {
                 throw new BusinessException("Kullanıcı bulunamadı.");
             }
-
-
 
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserPasswordShouldBeMatch(user!, request.UserForLoginDto.Password);

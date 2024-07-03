@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Features.Appointments.Rules;
+using Application.Services.Encryptions;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -9,6 +10,7 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using MediatR;
 using MimeKit;
+using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.Appointments.Commands.Create
 {
@@ -74,6 +76,12 @@ namespace Application.Features.Appointments.Commands.Create
             // Mail içeriðini hazýrla
             var mailMessage = new MimeMessage();
             mailMessage.From.Add(new MailboxAddress("Pair 5 Hastanesi", "fatmabireltr@gmail.com")); // Gönderen bilgisi
+            appointment.Patient.Email = CryptoHelper.Decrypt(appointment.Patient.Email);
+            appointment.Patient.FirstName = CryptoHelper.Decrypt(appointment.Patient.FirstName);
+            appointment.Patient.LastName = CryptoHelper.Decrypt(appointment.Patient.LastName);
+            appointment.Doctor.FirstName = CryptoHelper.Decrypt(appointment.Doctor.FirstName);
+            appointment.Doctor.LastName = CryptoHelper.Decrypt(appointment.Doctor.LastName);
+
             mailMessage.To.Add(new MailboxAddress("Pair 5 Hastanesi", appointment.Patient.Email)); // Alýcý bilgisi 
             mailMessage.Subject = "Randevu Bilgilendirme"; // Mail konusu
 

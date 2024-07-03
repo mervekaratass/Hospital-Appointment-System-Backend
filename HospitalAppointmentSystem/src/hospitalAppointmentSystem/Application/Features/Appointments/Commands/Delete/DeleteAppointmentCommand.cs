@@ -16,6 +16,7 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using Org.BouncyCastle.Asn1.Ocsp;
 using Microsoft.EntityFrameworkCore;
+using Application.Services.Encryptions;
 
 namespace Application.Features.Appointments.Commands.Delete;
 
@@ -74,6 +75,12 @@ public class DeleteAppointmentCommand : IRequest<DeletedAppointmentResponse>, IS
             // Mail içeriðini hazýrla
             var mailMessage = new MimeMessage();
             mailMessage.From.Add(new MailboxAddress("Pair 5 Hastanesi", "fatmabireltr@gmail.com")); // Gönderen bilgisi
+            appointment.Patient.Email = CryptoHelper.Decrypt(appointment.Patient.Email);
+            appointment.Patient.FirstName = CryptoHelper.Decrypt(appointment.Patient.FirstName);
+            appointment.Patient.LastName = CryptoHelper.Decrypt(appointment.Patient.LastName);
+            appointment.Doctor.FirstName = CryptoHelper.Decrypt(appointment.Doctor.FirstName);
+            appointment.Doctor.LastName = CryptoHelper.Decrypt(appointment.Doctor.LastName);
+
             mailMessage.To.Add(new MailboxAddress("Pair 5 Hastanesi", appointment.Patient.Email)); // Alýcý bilgisi 
             mailMessage.Subject = "Randevu Bilgilendirme"; // Mail konusu
 

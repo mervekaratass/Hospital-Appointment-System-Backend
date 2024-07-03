@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Responses;
 using Application.Features.Appointments.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
+using Application.Services.Encryptions;
 
 public class ReminderAppointmentJob : IJob
 {
@@ -51,6 +52,12 @@ public class ReminderAppointmentJob : IJob
     private async Task MailGonder(Appointment appointment)
     {
         var randevu = _mapper.Map<GetListAppointmentListItemDto>(appointment);
+
+        randevu.DoctorFirstName = CryptoHelper.Decrypt(randevu.DoctorFirstName);
+        randevu.DoctorLastName = CryptoHelper.Decrypt(randevu.DoctorLastName);
+        randevu.PatientFirstName = CryptoHelper.Decrypt(randevu.PatientFirstName);
+        randevu.PatientLastName = CryptoHelper.Decrypt(randevu.PatientLastName);
+
 
         var mailMessage = new MimeMessage();
         mailMessage.From.Add(new MailboxAddress("Pair 5 Hastanesi", "fatmabireltr@gmail.com")); // Gönderen bilgisi

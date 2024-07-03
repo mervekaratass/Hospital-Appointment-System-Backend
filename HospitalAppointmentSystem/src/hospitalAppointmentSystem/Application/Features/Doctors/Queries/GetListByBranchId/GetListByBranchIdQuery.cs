@@ -16,6 +16,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Application.Services.Encryptions;
+using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.Doctors.Queries.GetListByBranchId;
 public class GetListByBranchIdQuery : IRequest<GetListResponse<GetListByBranchIdDto>>, ISecuredRequest
@@ -50,9 +52,17 @@ public class GetListByBranchIdQuery : IRequest<GetListResponse<GetListByBranchId
                 //orderBy: x => x.OrderByDescending(x => x.Date),
                 include: x => x.Include(x => x.Branch),
                 predicate: x => x.BranchID == request.BranchId && x.DeletedDate == null
-
             );
 
+            for (int i = 0; i < doctors.Items.Count; i++)
+            {
+                doctors.Items[i].FirstName = CryptoHelper.Decrypt(doctors.Items[i].FirstName);
+                doctors.Items[i].LastName = CryptoHelper.Decrypt(doctors.Items[i].LastName);
+                doctors.Items[i].NationalIdentity = CryptoHelper.Decrypt(doctors.Items[i].NationalIdentity);
+                doctors.Items[i].Phone = CryptoHelper.Decrypt(doctors.Items[i].Phone);
+                doctors.Items[i].Address = CryptoHelper.Decrypt(doctors.Items[i].Address);
+                doctors.Items[i].Email = CryptoHelper.Decrypt(doctors.Items[i].Email);
+            }
             GetListResponse<GetListByBranchIdDto> response = _mapper.Map<GetListResponse<GetListByBranchIdDto>>(doctors);
             return response;
         }

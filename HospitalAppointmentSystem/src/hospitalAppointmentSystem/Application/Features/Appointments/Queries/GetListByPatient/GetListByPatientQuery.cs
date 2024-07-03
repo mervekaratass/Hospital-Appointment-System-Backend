@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Application.Features.Appointments.Rules;
 using static Application.Features.Appointments.Constants.AppointmentsOperationClaims;
 using Microsoft.EntityFrameworkCore;
+using Application.Services.Encryptions;
 
 namespace Application.Features.Appointments.Queries.GetByPatientId;
 
@@ -59,6 +60,13 @@ public class GetListByPatientQuery:IRequest<GetListResponse<GetListByPatientDto>
                   predicate: x => x.PatientID == request.PatientId && x.DeletedDate==null
 
            );
+            for (int i = 0; i < appointments.Items.Count; i++)
+            {
+                appointments.Items[i].Doctor.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Doctor.FirstName);
+                appointments.Items[i].Doctor.LastName = CryptoHelper.Decrypt(appointments.Items[i].Doctor.LastName);
+                appointments.Items[i].Patient.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Patient.FirstName);
+                appointments.Items[i].Patient.LastName = CryptoHelper.Decrypt(appointments.Items[i].Patient.LastName);
+            }
 
             GetListResponse<GetListByPatientDto> response = _mapper.Map<GetListResponse<GetListByPatientDto>>(appointments);
             return response;
