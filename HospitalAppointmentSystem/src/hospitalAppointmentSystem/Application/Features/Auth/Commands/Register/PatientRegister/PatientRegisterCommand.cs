@@ -74,13 +74,6 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
                    
                     FirstName = request.PatientForRegisterDto.FirstName,
                     LastName = request.PatientForRegisterDto.LastName,
-                    Age=request.PatientForRegisterDto.Age,
-                    Weight = request.PatientForRegisterDto.Weight,
-                    Height = request.PatientForRegisterDto.Height,
-                    BloodGroup = request.PatientForRegisterDto.BloodGroup,
-                    DateOfBirth = request.PatientForRegisterDto.DateOfBirth,
-                    NationalIdentity = request.PatientForRegisterDto.NationalIdentity,
-                    Address = request.PatientForRegisterDto.Address,
                     Phone =request.PatientForRegisterDto.Phone,
                     Email = request.PatientForRegisterDto.Email,
                     PasswordHash = passwordHash,
