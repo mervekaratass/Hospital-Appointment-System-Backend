@@ -21,7 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Application.Features.Appointments.Queries.GetListByDoctor;
 using Application.Features.Appointments.Queries.GetByPatientId;
 using Application.Features.Doctors.Constants;
-//using Application.Services.Encryptions;
+using Application.Services.Encryptions;
 
 namespace Application.Features.Appointments.Queries.GetListByDoctorId;
 
@@ -66,15 +66,16 @@ public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>
 
             // SİNEM Foreach ile döndurunce  Ipaginat ekleme işlemine izin vermiyor ,hata veriyor .
 
-            //for (int i = 0; i < appointments.Items.Count; i++)
-            //{
-            //    appointments.Items[i].Patient.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Patient.FirstName);
-            //    appointments.Items[i].Patient.LastName = CryptoHelper.Decrypt(appointments.Items[i].Patient.LastName);
-            //    appointments.Items[i].Patient.NationalIdentity = CryptoHelper.Decrypt(appointments.Items[i].Patient.NationalIdentity);
-            //    appointments.Items[i].Patient.Phone = CryptoHelper.Decrypt(appointments.Items[i].Patient.Phone);
-            //    appointments.Items[i].Patient.Address = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-            //}
-          // yaptığım bitti
+            for (int i = 0; i < appointments.Items.Count; i++)
+            {
+                appointments.Items[i].Patient.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Patient.FirstName);
+                appointments.Items[i].Patient.LastName = CryptoHelper.Decrypt(appointments.Items[i].Patient.LastName);
+                appointments.Items[i].Patient.NationalIdentity = CryptoHelper.Decrypt(appointments.Items[i].Patient.NationalIdentity);
+                appointments.Items[i].Patient.Phone = CryptoHelper.Decrypt(appointments.Items[i].Patient.Phone);
+                appointments.Items[i].Patient.Address = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
+                appointments.Items[i].Patient.Email = CryptoHelper.Decrypt(appointments.Items[i].Patient.Email);
+            }
+            // yaptığım bitti
 
 
 

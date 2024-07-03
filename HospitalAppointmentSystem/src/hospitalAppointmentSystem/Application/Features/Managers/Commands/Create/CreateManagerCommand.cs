@@ -9,7 +9,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Managers.Constants.ManagersOperationClaims;
-//using Application.Services.Encryptions;
+using Application.Services.Encryptions;
 using static Nest.JoinField;
 
 namespace Application.Features.Managers.Commands.Create;
@@ -48,11 +48,12 @@ public class CreateManagerCommand : IRequest<CreatedManagerResponse>, ISecuredRe
 
             //sinem kullanýcý bilgilerini þifreleme. encrypt þifreleme yapýyor.
 
-            //manager.FirstName = CryptoHelper.Encrypt(manager.FirstName);
-            //manager.LastName = CryptoHelper.Encrypt(manager.LastName);
-            //manager.NationalIdentity = CryptoHelper.Encrypt(manager.NationalIdentity);
-            //manager.Phone = CryptoHelper.Encrypt(manager.Phone);
-            //manager.Address = CryptoHelper.Encrypt(manager.Address);
+            manager.FirstName = CryptoHelper.Encrypt(manager.FirstName);
+            manager.LastName = CryptoHelper.Encrypt(manager.LastName);
+            manager.NationalIdentity = CryptoHelper.Encrypt(manager.NationalIdentity);
+            manager.Phone = CryptoHelper.Encrypt(manager.Phone);
+            manager.Address = CryptoHelper.Encrypt(manager.Address);
+            manager.Email = CryptoHelper.Encrypt(manager.Email);
 
             //yazdýðým burda bitti
 

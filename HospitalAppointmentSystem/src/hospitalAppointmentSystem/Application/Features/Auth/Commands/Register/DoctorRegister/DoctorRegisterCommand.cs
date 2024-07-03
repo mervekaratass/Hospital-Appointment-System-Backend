@@ -2,6 +2,7 @@
 using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
 using Application.Services.Doctors;
+using Application.Services.Encryptions;
 using Application.Services.OperationClaims;
 using Application.Services.Patients;
 using Application.Services.UserOperationClaims;
@@ -89,6 +90,16 @@ public class DoctorRegisterCommand : IRequest<DoctorRegisteredResponse>
                     Address=request.DoctorForRegisterDto.Address,
 
                 };
+
+         //sinem
+            newDoctor.FirstName = CryptoHelper.Encrypt(newDoctor.FirstName);
+            newDoctor.LastName = CryptoHelper.Encrypt(newDoctor.LastName);
+            newDoctor.NationalIdentity = CryptoHelper.Encrypt(newDoctor.NationalIdentity);
+            newDoctor.Phone = CryptoHelper.Encrypt(newDoctor.Phone);
+            newDoctor.Address = CryptoHelper.Encrypt(newDoctor.Address);
+            newDoctor.Email = CryptoHelper.Encrypt(newDoctor.Email);
+            //burda bitti
+
             Doctor createdDoctor = await _doctorService.AddAsync(newDoctor);
 
             ICollection<UserOperationClaim> userOperationClaims = [];
@@ -111,6 +122,9 @@ public class DoctorRegisterCommand : IRequest<DoctorRegisteredResponse>
 
             DoctorRegisteredResponse registeredResponse =
                 new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
+
+
+
             return registeredResponse;
         }
     }

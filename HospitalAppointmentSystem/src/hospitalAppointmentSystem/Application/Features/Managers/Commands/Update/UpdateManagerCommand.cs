@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Managers.Constants.ManagersOperationClaims;
+using Application.Services.Encryptions;
 
 namespace Application.Features.Managers.Commands.Update;
 
@@ -47,6 +48,14 @@ public class UpdateManagerCommand : IRequest<UpdatedManagerResponse>, ISecuredRe
             Manager? manager = await _managerRepository.GetAsync(predicate: m => m.Id == request.Id, cancellationToken: cancellationToken);
             await _managerBusinessRules.ManagerShouldExistWhenSelected(manager);
             manager = _mapper.Map(request, manager);
+            //sinem
+            manager.FirstName = CryptoHelper.Encrypt(manager.FirstName);
+            manager.LastName = CryptoHelper.Encrypt(manager.LastName);
+            manager.NationalIdentity = CryptoHelper.Encrypt(manager.NationalIdentity);
+            manager.Phone = CryptoHelper.Encrypt(manager.Phone);
+            manager.Address = CryptoHelper.Encrypt(manager.Address);
+            manager.Email = CryptoHelper.Encrypt(manager.Email);
+
 
             await _managerRepository.UpdateAsync(manager!);
 

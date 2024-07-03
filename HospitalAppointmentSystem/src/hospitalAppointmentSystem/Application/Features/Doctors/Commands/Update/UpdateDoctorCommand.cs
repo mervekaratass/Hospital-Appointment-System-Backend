@@ -9,6 +9,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
+using Application.Services.Encryptions;
 
 namespace Application.Features.Doctors.Commands.Update;
 
@@ -51,6 +52,14 @@ public class UpdateDoctorCommand : IRequest<UpdatedDoctorResponse>,  ILoggableRe
             Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken);
             await _doctorBusinessRules.DoctorShouldExistWhenSelected(doctor);
             doctor = _mapper.Map(request, doctor);
+            //sinem
+            doctor.FirstName = CryptoHelper.Encrypt(doctor.FirstName);
+            doctor.LastName = CryptoHelper.Encrypt(doctor.LastName);
+            doctor.NationalIdentity = CryptoHelper.Encrypt(doctor.NationalIdentity);
+            doctor.Phone = CryptoHelper.Encrypt(doctor.Phone);
+            doctor.Address = CryptoHelper.Encrypt(doctor.Address);
+            doctor.Email = CryptoHelper.Encrypt(doctor.Email);
+
 
             await _doctorRepository.UpdateAsync(doctor!);
 

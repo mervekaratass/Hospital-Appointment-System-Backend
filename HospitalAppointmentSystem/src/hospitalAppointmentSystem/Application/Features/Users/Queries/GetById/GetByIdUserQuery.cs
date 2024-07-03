@@ -1,6 +1,6 @@
 ﻿using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
-//using Application.Services.Encryptions;
+using Application.Services.Encryptions;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -39,12 +39,14 @@ public class GetByIdUserQuery : IRequest<GetByIdUserResponse>, ISecuredRequest
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
 
 
-            //sinem encryptions ?ifrelenmi? veriyi okuma. decrypt ?ifreyi ��zer
-            //user.FirstName = CryptoHelper.Decrypt(user.FirstName);
-            //user.LastName = CryptoHelper.Decrypt(user.LastName);
-            //user.NationalIdentity = CryptoHelper.Decrypt(user.NationalIdentity);
-            //user.Phone = CryptoHelper.Decrypt(user.Phone);
-            //user.Address = CryptoHelper.Decrypt(user.Address);
+            //sinem encryptions ?ifrelenmi? veriyi okuma.decrypt? ifreyi ��zer
+
+            user.FirstName = CryptoHelper.Decrypt(user.FirstName);
+            user.LastName = CryptoHelper.Decrypt(user.LastName);
+            user.NationalIdentity = CryptoHelper.Decrypt(user.NationalIdentity);
+            user.Phone = CryptoHelper.Decrypt(user.Phone);
+            user.Address = CryptoHelper.Decrypt(user.Address);
+            user.Email = CryptoHelper.Decrypt(user.Email);
 
             // yazd???m yer bitti
 

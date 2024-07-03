@@ -11,7 +11,7 @@ using MediatR;
 using static Application.Features.Patients.Constants.PatientsOperationClaims;
 using NArchitecture.Core.Security.Hashing;
 using System.Numerics;
-//using Application.Services.Encryptions;
+using Application.Services.Encryptions;
 using System.Numerics;
 
 namespace Application.Features.Patients.Commands.Create;
@@ -65,14 +65,14 @@ public class CreatePatientCommand : IRequest<CreatedPatientResponse>,  ILoggable
 
             //sinem kullanýcý bilgilerini þifreleme. encrypt þifreleme yapýyor.
 
-            //patient.FirstName = CryptoHelper.Encrypt(patient.FirstName);
-            //patient.LastName = CryptoHelper.Encrypt(patient.LastName);
-            //patient.NationalIdentity = CryptoHelper.Encrypt(patient.NationalIdentity);
-            //patient.Phone = CryptoHelper.Encrypt(patient.Phone);
-            //patient.Address = CryptoHelper.Encrypt(patient.Address);
+            patient.FirstName = CryptoHelper.Encrypt(patient.FirstName);
+            patient.LastName = CryptoHelper.Encrypt(patient.LastName);
+            patient.NationalIdentity = CryptoHelper.Encrypt(patient.NationalIdentity);
+            patient.Phone = CryptoHelper.Encrypt(patient.Phone);
+            patient.Address = CryptoHelper.Encrypt(patient.Address);
+            patient.Email = CryptoHelper.Encrypt(patient.Email);
 
-            //yazdýðým burda bitti
-
+      
             await _patientRepository.AddAsync(patient);
 
             CreatedPatientResponse response = _mapper.Map<CreatedPatientResponse>(patient);
