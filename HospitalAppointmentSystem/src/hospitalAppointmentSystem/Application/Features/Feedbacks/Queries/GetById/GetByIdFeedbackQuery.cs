@@ -30,7 +30,7 @@ public class GetByIdFeedbackQuery : IRequest<GetByIdFeedbackResponse>
 
         public async Task<GetByIdFeedbackResponse> Handle(GetByIdFeedbackQuery request, CancellationToken cancellationToken)
         {
-            Feedback? feedback = await _feedbackRepository.GetAsync(predicate: f => f.Id == request.Id, cancellationToken: cancellationToken, include: x => x.Include(x => x.User));
+            Feedback? feedback = await _feedbackRepository.GetAsync(predicate: f => f.Id == request.Id && f.DeletedDate==null, cancellationToken: cancellationToken, include: x => x.Include(x => x.User));
             await _feedbackBusinessRules.FeedbackShouldExistWhenSelected(feedback);
 
             GetByIdFeedbackResponse response = _mapper.Map<GetByIdFeedbackResponse>(feedback);

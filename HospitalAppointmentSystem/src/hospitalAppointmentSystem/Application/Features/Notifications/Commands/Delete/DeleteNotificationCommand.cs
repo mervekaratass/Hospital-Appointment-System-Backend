@@ -39,7 +39,7 @@ public class DeleteNotificationCommand : IRequest<DeletedNotificationResponse>, 
 
         public async Task<DeletedNotificationResponse> Handle(DeleteNotificationCommand request, CancellationToken cancellationToken)
         {
-            Notification? notification = await _notificationRepository.GetAsync(predicate: n => n.Id == request.Id, cancellationToken: cancellationToken);
+            Notification? notification = await _notificationRepository.GetAsync(predicate: n => n.Id == request.Id && n.DeletedDate==null, cancellationToken: cancellationToken);
             await _notificationBusinessRules.NotificationShouldExistWhenSelected(notification);
 
             await _notificationRepository.DeleteAsync(notification!);

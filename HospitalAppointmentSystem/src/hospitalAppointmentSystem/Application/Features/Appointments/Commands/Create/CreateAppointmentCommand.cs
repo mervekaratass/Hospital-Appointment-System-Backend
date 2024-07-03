@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +20,6 @@ namespace Application.Features.Appointments.Commands.Create
         public bool Status { get; set; }
         public Guid DoctorID { get; set; }
         public Guid PatientID { get; set; }
-
     }
 
     public class CreateAppointmentCommandHandler : IRequestHandler<CreateAppointmentCommand, CreatedAppointmentResponse>
@@ -43,9 +43,8 @@ namespace Application.Features.Appointments.Commands.Create
 
         public async Task<CreatedAppointmentResponse> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
         {
-            // Hasta ayný doktordan ayný güne ait randevusu olup olmadýðýný kontrol et
-            await _appointmentBusinessRules.PatientCannotHaveMultipleAppointmentsOnSameDayWithSameDoctor(request.PatientID, request.DoctorID, request.Date);
 
+            // Yeni randevu oluþtur
             Appointment appointment = _mapper.Map<Appointment>(request);
 
             // Doctor bilgisini al
@@ -56,17 +55,46 @@ namespace Application.Features.Appointments.Commands.Create
             Patient patient = await _patientRepository.GetAsync(p => p.Id == request.PatientID);
             appointment.Patient = patient;
 
-            //Branþ bilgisini al
+            // Branþ bilgisini al
             Branch branch = await _branchRepository.GetAsync(p => p.Id == doctor.BranchID);
             doctor.Branch = branch;
 
-            await _appointmentRepository.AddAsync(appointment);
+            // Hasta ayný doktordan ayný güne ait randevusu olup olmadýðýný kontrol et
+            await _appointmentBusinessRules.PatientCannotHaveMultipleAppointmentsOnSameDayWithSameDoctor(request.PatientID, request.DoctorID, request.Date);
 
-            // Oluþturulan randevu bilgilerini mail olarak gönder
-            await SendAppointmentConfirmationMail(appointment);
+            // Ayný doktor ve tarihte silinmiþ randevu var mý kontrol et
+            Appointment existingDeletedAppointment = await _appointmentRepository.GetAsync(a =>
+                a.PatientID == request.PatientID &&
+                a.DoctorID == request.DoctorID &&
+                a.Date == request.Date &&
+                a.DeletedDate != null);
 
-            CreatedAppointmentResponse response = _mapper.Map<CreatedAppointmentResponse>(appointment);
-            return response;
+            if (existingDeletedAppointment != null)
+            {
+                // Silinmiþ randevuyu güncelle
+                existingDeletedAppointment.Time = request.Time;
+                existingDeletedAppointment.Status = request.Status;
+                existingDeletedAppointment.DeletedDate = null; // Silinmiþ durumu kaldýr
+                await _appointmentRepository.UpdateAsync(existingDeletedAppointment);
+
+
+
+                await SendAppointmentConfirmationMail(existingDeletedAppointment);
+                CreatedAppointmentResponse response = _mapper.Map<CreatedAppointmentResponse>(existingDeletedAppointment);
+                return response;
+            }
+            else
+            {
+             
+
+                await _appointmentRepository.AddAsync(appointment);
+
+                // Oluþturulan randevu bilgilerini mail olarak gönder
+                await SendAppointmentConfirmationMail(appointment);
+
+                CreatedAppointmentResponse response = _mapper.Map<CreatedAppointmentResponse>(appointment);
+                return response;
+            }
         }
 
         private async Task SendAppointmentConfirmationMail(Appointment appointment)
@@ -91,7 +119,7 @@ namespace Application.Features.Appointments.Commands.Create
             <div class='container'>
                 <p>Sayýn {appointment.Patient.FirstName} {appointment.Patient.LastName},</p>
                 <p>{appointment.Date} tarihinde, saat {appointment.Time} için bir randevu aldýnýz.</p>
-                <p>Doktor:{appointment.Doctor.Title} {appointment.Doctor.FirstName} {appointment.Doctor.LastName}</p>
+                <p>Doktor: {appointment.Doctor.Title} {appointment.Doctor.FirstName} {appointment.Doctor.LastName}</p>
                 <p>Branþ: {appointment.Doctor.Branch.Name}</p>
             </div>
         </body>
