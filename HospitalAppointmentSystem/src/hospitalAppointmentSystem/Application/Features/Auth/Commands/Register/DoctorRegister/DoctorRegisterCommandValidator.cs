@@ -45,7 +45,7 @@ public class DoctorRegisterCommandValidator : AbstractValidator<DoctorRegisterCo
         RuleFor(c => c.DoctorForRegisterDto.Address).NotEmpty().WithMessage("Adres alanı boş olamaz").MinimumLength(3).WithMessage("Adres en az 3 karakter olmalıdır");
 
         RuleFor(c => c.DoctorForRegisterDto.Password).NotEmpty().WithMessage("Şifre alanı boş olamaz").MinimumLength(8).WithMessage("Şifre en az 8 karakter olmalı")
-            .MaximumLength(15).WithMessage("Şifre en az 15 karakter olmalı").Must(StrongPassword).WithMessage(
+            .MaximumLength(15).WithMessage("Şifre en fazla 15 karakter olmalı").Must(StrongPassword).WithMessage(
                 "Şifre en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir."
             );
     }
