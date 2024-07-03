@@ -39,4 +39,14 @@ public class AppointmentBusinessRules : BaseBusinessRules
         );
         await AppointmentShouldExistWhenSelected(appointment);
     }
+
+
+    public async Task PatientCannotHaveMultipleAppointmentsOnSameDayWithSameDoctor(Guid patientId, Guid doctorId, DateOnly date)
+    {
+        bool exists = await _appointmentRepository.AnyAsync(a => a.PatientID == patientId && a.DoctorID == doctorId && a.Date == date);
+        if (exists)
+        {
+            await throwBusinessException("Bu doktor için ayný güne ait randevunuz zaten bulunmaktadýr.");
+        }
+    }
 }
