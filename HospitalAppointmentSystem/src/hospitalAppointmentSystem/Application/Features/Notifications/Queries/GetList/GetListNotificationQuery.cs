@@ -41,6 +41,7 @@ public class GetListNotificationQuery : IRequest<GetListResponse<GetListNotifica
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
                 cancellationToken: cancellationToken,
+                predicate:x=>x.DeletedDate==null,
                  include: x => x.Include(x => x.Appointment).Include(x=>x.Appointment.Doctor).Include(x=>x.Appointment.Patient)
             );
 

@@ -30,7 +30,7 @@ public class GetByIdNotificationQuery : IRequest<GetByIdNotificationResponse>, I
 
         public async Task<GetByIdNotificationResponse> Handle(GetByIdNotificationQuery request, CancellationToken cancellationToken)
         {
-            Notification? notification = await _notificationRepository.GetAsync(predicate: n => n.Id == request.Id, cancellationToken: cancellationToken);
+            Notification? notification = await _notificationRepository.GetAsync(predicate: n => n.Id == request.Id && n.DeletedDate==null, cancellationToken: cancellationToken);
             await _notificationBusinessRules.NotificationShouldExistWhenSelected(notification);
 
             GetByIdNotificationResponse response = _mapper.Map<GetByIdNotificationResponse>(notification);

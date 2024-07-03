@@ -31,7 +31,7 @@ public class GetByIdAppointmentQuery : IRequest<GetByIdAppointmentResponse>
 
         public async Task<GetByIdAppointmentResponse> Handle(GetByIdAppointmentQuery request, CancellationToken cancellationToken)
         {
-            Appointment? appointment = await _appointmentRepository.GetAsync(predicate: a => a.Id == request.Id,include:x=>x.Include(x=>x.Doctor).Include(x=>x.Patient), cancellationToken: cancellationToken);
+            Appointment? appointment = await _appointmentRepository.GetAsync(predicate: a => a.Id == request.Id && a.DeletedDate==null,include:x=>x.Include(x=>x.Doctor).Include(x=>x.Patient), cancellationToken: cancellationToken);
             await _appointmentBusinessRules.AppointmentShouldExistWhenSelected(appointment);
 
             GetByIdAppointmentResponse response = _mapper.Map<GetByIdAppointmentResponse>(appointment);

@@ -56,9 +56,8 @@ public class DeleteAppointmentCommand : IRequest<DeletedAppointmentResponse>, IS
 
         public async Task<DeletedAppointmentResponse> Handle(DeleteAppointmentCommand request, CancellationToken cancellationToken)
         {
-            Appointment? appointment = await _appointmentRepository.GetAsync(predicate: a => a.Id == request.Id, include: a => a
-            .Include(a => a.Doctor)
-            .ThenInclude(d => d.Branch)
+            Appointment? appointment = await _appointmentRepository.GetAsync(predicate: a => a.Id == request.Id &&a.DeletedDate==null,
+             include: a => a .Include(a => a.Doctor) .ThenInclude(d => d.Branch)
             .Include(a => a.Patient), cancellationToken: cancellationToken);
             await _appointmentBusinessRules.AppointmentShouldExistWhenSelected(appointment);
             await _appointmentRepository.DeleteAsync(appointment!);
