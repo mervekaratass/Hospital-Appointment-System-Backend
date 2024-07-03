@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Features.Patients.Constants;
+using Application.Services.Encryptions;
 
 namespace Application.Features.Appointments.Queries.GetListByDoctorDate;
 public class GetListByDoctorDateQuery : IRequest<GetListResponse<GetListByDoctorDateDto>>, ISecuredRequest
@@ -57,6 +58,18 @@ public class GetListByDoctorDateQuery : IRequest<GetListResponse<GetListByDoctor
                //include: x => x.Include(x => x.Doctor),
                   predicate: x => x.DoctorID == request.DoctorId && x.Date ==request.Date &&x.DeletedDate==null
            );
+
+            for (int i = 0; i < appointments.Items.Count; i++)
+            {
+                appointments.Items[i].Doctor.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Doctor.FirstName);
+                appointments.Items[i].Doctor.LastName = CryptoHelper.Decrypt(appointments.Items[i].Doctor.LastName);
+                appointments.Items[i].Doctor.NationalIdentity = CryptoHelper.Decrypt(appointments.Items[i].Doctor.NationalIdentity);
+                appointments.Items[i].Doctor.Phone = CryptoHelper.Decrypt(appointments.Items[i].Doctor.Phone);
+                appointments.Items[i].Doctor.Address = CryptoHelper.Decrypt(appointments.Items[i].Doctor.Address);
+                appointments.Items[i].Doctor.Email = CryptoHelper.Decrypt(appointments.Items[i].Doctor.Email);
+            }
+
+
 
             GetListResponse<GetListByDoctorDateDto> response = _mapper.Map<GetListResponse<GetListByDoctorDateDto>>(appointments);
             return response;

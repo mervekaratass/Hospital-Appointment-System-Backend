@@ -1,4 +1,5 @@
 using Application.Features.Users.Constants;
+using Application.Services.Encryptions;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -48,6 +49,18 @@ public class GetListUserQuery : IRequest<GetListResponse<GetListUserListItemDto>
                 enableTracking: false,
                 cancellationToken: cancellationToken
             );
+
+            for (int i = 0; i < users.Items.Count; i++)
+            {
+                users.Items[i].FirstName = CryptoHelper.Decrypt(users.Items[i].FirstName);
+                users.Items[i].LastName = CryptoHelper.Decrypt(users.Items[i].LastName);
+                users.Items[i].NationalIdentity = CryptoHelper.Decrypt(users.Items[i].NationalIdentity);
+                users.Items[i].Phone = CryptoHelper.Decrypt(users.Items[i].Phone);
+                users.Items[i].Address = CryptoHelper.Decrypt(users.Items[i].Address);
+                users.Items[i].Email = CryptoHelper.Decrypt(users.Items[i].Email);
+            }
+
+
 
             GetListResponse<GetListUserListItemDto> response = _mapper.Map<GetListResponse<GetListUserListItemDto>>(users);
             return response;

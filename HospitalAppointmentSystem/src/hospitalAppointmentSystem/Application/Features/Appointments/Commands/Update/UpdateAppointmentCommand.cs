@@ -47,6 +47,10 @@ public class UpdateAppointmentCommand : IRequest<UpdatedAppointmentResponse>, IS
             await _appointmentBusinessRules.AppointmentShouldExistWhenSelected(appointment);
             appointment = _mapper.Map(request, appointment);
 
+
+
+
+
             await _appointmentRepository.UpdateAsync(appointment!);
 
             UpdatedAppointmentResponse response = _mapper.Map<UpdatedAppointmentResponse>(appointment);

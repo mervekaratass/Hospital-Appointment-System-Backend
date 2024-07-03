@@ -1,6 +1,7 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
+using Application.Services.Encryptions;
 using Application.Services.UsersService;
 using Domain.Entities;
 using MediatR;
@@ -50,10 +51,21 @@ public class LoginCommand : IRequest<LoggedResponse>
 
         public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
+            string encryptedEmail=CryptoHelper.Encrypt(request.UserForLoginDto.Email);
+
             User? user = await _userService.GetAsync(
-                predicate: u => u.Email == request.UserForLoginDto.Email,
+                predicate: u => u.Email == encryptedEmail,
                 cancellationToken: cancellationToken
             );
+
+
+            if (user == null)
+            {
+                throw new BusinessException("Kullanıcı bulunamadı.");
+            }
+
+
+
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserPasswordShouldBeMatch(user!, request.UserForLoginDto.Password);
 

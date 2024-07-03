@@ -100,6 +100,7 @@ public class DoctorRegisterCommand : IRequest<DoctorRegisteredResponse>
             newDoctor.Email = CryptoHelper.Encrypt(newDoctor.Email);
             //burda bitti
 
+
             Doctor createdDoctor = await _doctorService.AddAsync(newDoctor);
 
             ICollection<UserOperationClaim> userOperationClaims = [];
