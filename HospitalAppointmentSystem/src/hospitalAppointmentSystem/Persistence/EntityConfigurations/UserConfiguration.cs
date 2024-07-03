@@ -15,6 +15,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Id).HasColumnName("Id").IsRequired();
 
         builder.HasIndex(u => u.Email).IsUnique();
+        builder.HasIndex(u=>u.NationalIdentity).IsUnique();
 
         builder.Property(u => u.FirstName).HasColumnName("FirstName").IsRequired();
         builder.Property(u => u.LastName).HasColumnName("LastName").IsRequired();

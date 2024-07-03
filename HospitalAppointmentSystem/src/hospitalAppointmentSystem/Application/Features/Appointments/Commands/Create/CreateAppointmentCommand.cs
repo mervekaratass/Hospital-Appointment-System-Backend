@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Features.Appointments.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -28,18 +29,23 @@ namespace Application.Features.Appointments.Commands.Create
         private readonly IDoctorRepository _doctorRepository;
         private readonly IPatientRepository _patientRepository;
         private readonly IBranchRepository _branchRepository;
+        private readonly AppointmentBusinessRules _appointmentBusinessRules;
 
-        public CreateAppointmentCommandHandler(IMapper mapper, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository, IBranchRepository branchRepository)
+        public CreateAppointmentCommandHandler(IMapper mapper, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository, IBranchRepository branchRepository, AppointmentBusinessRules appointmentBusinessRules)
         {
             _mapper = mapper;
             _appointmentRepository = appointmentRepository;
             _doctorRepository = doctorRepository;
             _patientRepository = patientRepository;
             _branchRepository = branchRepository;
+            _appointmentBusinessRules = appointmentBusinessRules;
         }
 
         public async Task<CreatedAppointmentResponse> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
         {
+            // Hasta ayný doktordan ayný güne ait randevusu olup olmadýðýný kontrol et
+            await _appointmentBusinessRules.PatientCannotHaveMultipleAppointmentsOnSameDayWithSameDoctor(request.PatientID, request.DoctorID, request.Date);
+
             Appointment appointment = _mapper.Map<Appointment>(request);
 
             // Doctor bilgisini al
