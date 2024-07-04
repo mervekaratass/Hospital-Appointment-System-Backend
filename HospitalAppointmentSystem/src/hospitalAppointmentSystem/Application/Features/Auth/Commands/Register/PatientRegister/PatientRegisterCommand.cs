@@ -64,7 +64,6 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
 
         public async Task<PatientRegisteredResponse> Handle(PatientRegisterCommand request, CancellationToken cancellationToken)
         {
-            await _authBusinessRules.UserEmailShouldBeNotExists(request.PatientForRegisterDto.Email);
 
             HashingHelper.CreatePasswordHash(
                 request.PatientForRegisterDto.Password,
@@ -88,6 +87,8 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
             newPatient.LastName = CryptoHelper.Encrypt(newPatient.LastName);
             newPatient.Phone = CryptoHelper.Encrypt(newPatient.Phone);
             newPatient.Email = CryptoHelper.Encrypt(newPatient.Email);
+
+            await _authBusinessRules.UserEmailShouldBeNotExists(newPatient.Email);
 
             Patient createdPatient = await _patientService.AddAsync(newPatient);
 
