@@ -10,6 +10,7 @@ using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Patients.Constants.PatientsOperationClaims;
 using Application.Services.Encryptions;
+using Application.Features.Auth.Rules;
 
 namespace Application.Features.Patients.Commands.Update;
 
@@ -62,6 +63,7 @@ public class UpdatePatientCommand : IRequest<UpdatedPatientResponse>,  ILoggable
             patient.Address = CryptoHelper.Encrypt(patient.Address);
             patient.Email = CryptoHelper.Encrypt(patient.Email);
 
+            await _patientBusinessRules.UserNationalIdentityShouldBeNotExists(patient.NationalIdentity);
             await _patientRepository.UpdateAsync(patient!);
 
             UpdatedPatientResponse response = _mapper.Map<UpdatedPatientResponse>(patient);

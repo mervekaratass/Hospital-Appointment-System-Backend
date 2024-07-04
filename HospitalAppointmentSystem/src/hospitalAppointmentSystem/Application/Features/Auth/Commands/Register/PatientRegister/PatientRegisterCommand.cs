@@ -89,6 +89,7 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
             newPatient.Phone = CryptoHelper.Encrypt(newPatient.Phone);
             newPatient.Email = CryptoHelper.Encrypt(newPatient.Email);
 
+
             Patient createdPatient = await _patientService.AddAsync(newPatient);
 
             ICollection<UserOperationClaim> userOperationClaims = new List<UserOperationClaim>();

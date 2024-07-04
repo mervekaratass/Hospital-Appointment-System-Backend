@@ -27,4 +27,6 @@ public interface IAppointmentService
     Task<Appointment> AddAsync(Appointment appointment);
     Task<Appointment> UpdateAsync(Appointment appointment);
     Task<Appointment> DeleteAsync(Appointment appointment, bool permanent = false);
+
+    Task<bool> HasFutureAppointments(Guid doctorId, DateOnly date);
 }

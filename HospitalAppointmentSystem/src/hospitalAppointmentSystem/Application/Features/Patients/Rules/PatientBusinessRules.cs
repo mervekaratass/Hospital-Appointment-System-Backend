@@ -5,6 +5,7 @@ using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
 using Domain.Entities;
 using NArchitecture.Core.Persistence.Paging;
+using Application.Features.Auth.Constants;
 
 namespace Application.Features.Patients.Rules;
 
@@ -45,5 +46,12 @@ public class PatientBusinessRules : BaseBusinessRules
             cancellationToken: cancellationToken
         );
         await PatientShouldExistWhenSelected(patient);
+    }
+
+    public async Task UserNationalIdentityShouldBeNotExists(string identity)
+    {
+        bool doesExists = await _patientRepository.AnyAsync(predicate: u => u.NationalIdentity == identity);
+        if (doesExists)
+            await throwBusinessException(PatientsBusinessMessages.UserIdentityAlreadyExists);
     }
 }

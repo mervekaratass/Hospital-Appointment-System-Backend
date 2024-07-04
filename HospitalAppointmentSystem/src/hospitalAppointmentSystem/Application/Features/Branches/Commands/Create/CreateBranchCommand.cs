@@ -38,12 +38,25 @@ public class CreateBranchCommand : IRequest<CreatedBranchResponse>,ILoggableRequ
 
         public async Task<CreatedBranchResponse> Handle(CreateBranchCommand request, CancellationToken cancellationToken)
         {
-            Branch branch = _mapper.Map<Branch>(request);
+            // Check if a branch with the same name exists and is deleted
+            Branch? existingBranch = await _branchRepository.GetAsync(b => b.Name == request.Name && b.DeletedDate != null);
 
+            if (existingBranch != null)
+            {
+                // Undelete the existing branch
+                existingBranch.DeletedDate = null;
+                await _branchRepository.UpdateAsync(existingBranch);
+
+                CreatedBranchResponse response = _mapper.Map<CreatedBranchResponse>(existingBranch);
+                return response;
+            }
+
+            // Create a new branch
+            Branch branch = _mapper.Map<Branch>(request);
             await _branchRepository.AddAsync(branch);
 
-            CreatedBranchResponse response = _mapper.Map<CreatedBranchResponse>(branch);
-            return response;
+            CreatedBranchResponse newResponse = _mapper.Map<CreatedBranchResponse>(branch);
+            return newResponse;
         }
     }
 }

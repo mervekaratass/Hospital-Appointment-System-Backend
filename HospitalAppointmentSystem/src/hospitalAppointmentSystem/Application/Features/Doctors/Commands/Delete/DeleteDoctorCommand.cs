@@ -9,6 +9,8 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
+using Application.Services.Appointments;
+using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 
 namespace Application.Features.Doctors.Commands.Delete;
 
@@ -30,19 +32,28 @@ public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>,  ILoggableRe
         private readonly IMapper _mapper;
         private readonly IDoctorRepository _doctorRepository;
         private readonly DoctorBusinessRules _doctorBusinessRules;
-
+        private readonly IAppointmentService _appointmentService;
         public DeleteDoctorCommandHandler(IMapper mapper, IDoctorRepository doctorRepository,
-                                         DoctorBusinessRules doctorBusinessRules)
+                                         DoctorBusinessRules doctorBusinessRules,IAppointmentService appointmentService)
         {
             _mapper = mapper;
             _doctorRepository = doctorRepository;
             _doctorBusinessRules = doctorBusinessRules;
+            _appointmentService=appointmentService;
         }
 
         public async Task<DeletedDoctorResponse> Handle(DeleteDoctorCommand request, CancellationToken cancellationToken)
         {
-            Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken,withDeleted:true);
+            Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id &&d.DeletedDate==null, cancellationToken: cancellationToken,withDeleted:true);
             await _doctorBusinessRules.DoctorShouldExistWhenSelected(doctor);
+
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Today);
+            bool hasFutureAppointments = await _appointmentService.HasFutureAppointments(request.Id,currentDate);
+            if (hasFutureAppointments)
+            {
+                throw new BusinessException("Doktorun ileri tarihlerde randevularý bulunduðundan silinemez.");
+            }
+
 
             doctor.DeletedDate=DateTime.Now;
             await _doctorRepository.UpdateAsync(doctor!);

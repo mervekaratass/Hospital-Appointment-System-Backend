@@ -39,7 +39,7 @@ public class DeletePatientCommand : IRequest<DeletedPatientResponse>,  ILoggable
 
         public async Task<DeletedPatientResponse> Handle(DeletePatientCommand request, CancellationToken cancellationToken)
         {
-            Patient? patient = await _patientRepository.GetAsync(predicate: p => p.Id == request.Id, cancellationToken: cancellationToken);
+            Patient? patient = await _patientRepository.GetAsync(predicate: p => p.Id == request.Id && p.DeletedDate==null, cancellationToken: cancellationToken);
             await _patientBusinessRules.PatientShouldExistWhenSelected(patient);
 
             patient.DeletedDate = DateTime.Now;

@@ -10,6 +10,7 @@ using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Branches.Constants.BranchesOperationClaims;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 
 namespace Application.Features.Branches.Commands.Delete;
 
@@ -39,7 +40,7 @@ public class DeleteBranchCommand : IRequest<DeletedBranchResponse>, ILoggableReq
 
         public async Task<DeletedBranchResponse> Handle(DeleteBranchCommand request, CancellationToken cancellationToken)
         {
-            Branch? branch = await _branchRepository.GetAsync(predicate: b => b.Id == request.Id, cancellationToken: cancellationToken);
+            Branch? branch = await _branchRepository.GetAsync(predicate: b => b.Id == request.Id && b.DeletedDate==null, cancellationToken: cancellationToken);
             await _branchBusinessRules.BranchShouldExistWhenSelected(branch);
 
             await _branchRepository.DeleteAsync(branch!);

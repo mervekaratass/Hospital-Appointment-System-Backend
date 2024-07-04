@@ -10,6 +10,8 @@ using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
 using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
 using Application.Services.Encryptions;
+using Application.Features.Patients.Rules;
+using static Nest.JoinField;
 
 namespace Application.Features.Doctors.Commands.Update;
 
@@ -60,6 +62,7 @@ public class UpdateDoctorCommand : IRequest<UpdatedDoctorResponse>,  ILoggableRe
             doctor.Address = CryptoHelper.Encrypt(doctor.Address);
             doctor.Email = CryptoHelper.Encrypt(doctor.Email);
 
+            await _doctorBusinessRules.UserNationalIdentityShouldBeNotExists(doctor.NationalIdentity);
 
             await _doctorRepository.UpdateAsync(doctor!);
 

@@ -74,4 +74,11 @@ public class AppointmentManager : IAppointmentService
 
         return deletedAppointment;
     }
+
+    public async Task<bool> HasFutureAppointments(Guid doctorId, DateOnly currentDate)
+    {
+        return await _appointmentRepository.AnyAsync(a => a.DoctorID == doctorId && a.Date > currentDate);
+    }
+
+
 }
