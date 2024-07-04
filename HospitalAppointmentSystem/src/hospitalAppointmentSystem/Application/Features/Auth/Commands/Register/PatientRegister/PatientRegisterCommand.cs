@@ -86,12 +86,8 @@ public class PatientRegisterCommand : IRequest<PatientRegisteredResponse>
             //sinem
             newPatient.FirstName = CryptoHelper.Encrypt(newPatient.FirstName);
             newPatient.LastName = CryptoHelper.Encrypt(newPatient.LastName);
-            newPatient.NationalIdentity = CryptoHelper.Encrypt(newPatient.NationalIdentity);
             newPatient.Phone = CryptoHelper.Encrypt(newPatient.Phone);
-            newPatient.Address = CryptoHelper.Encrypt(newPatient.Address);
             newPatient.Email = CryptoHelper.Encrypt(newPatient.Email);
-
-
 
             Patient createdPatient = await _patientService.AddAsync(newPatient);
 

@@ -10,6 +10,7 @@ using MediatR;
 using static Application.Features.Feedbacks.Commands.Constants.FeedbacksOperationClaims;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Application.Services.Encryptions;
 
 namespace Application.Features.Feedbacks.Queries.GetList;
 
@@ -46,6 +47,14 @@ public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackList
                  include: x => x.Include(x => x.User),
                  predicate: filter
             );
+
+
+            for (int i = 0; i < feedbacks.Items.Count; i++)
+            {
+                feedbacks.Items[i].User.FirstName = CryptoHelper.Decrypt(feedbacks.Items[i].User.FirstName);
+                feedbacks.Items[i].User.LastName = CryptoHelper.Decrypt(feedbacks.Items[i].User.LastName);
+
+            }
 
             GetListResponse<GetListFeedbackListItemDto> response = _mapper.Map<GetListResponse<GetListFeedbackListItemDto>>(feedbacks);
             return response;

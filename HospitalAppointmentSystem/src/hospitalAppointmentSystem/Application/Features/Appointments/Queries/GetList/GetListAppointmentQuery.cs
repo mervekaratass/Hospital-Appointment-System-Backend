@@ -57,11 +57,11 @@ public class GetListAppointmentQuery : IRequest<GetListResponse<GetListAppointme
                 appointments.Items[i].Patient.Phone = CryptoHelper.Decrypt(appointments.Items[i].Patient.Phone);
                 appointments.Items[i].Patient.Address = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
                 appointments.Items[i].Patient.Email = CryptoHelper.Decrypt(appointments.Items[i].Patient.Email);
-                appointments.Items[i].Doctor.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-                appointments.Items[i].Doctor.LastName = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-                appointments.Items[i].Doctor.NationalIdentity = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-                appointments.Items[i].Doctor.Phone = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
-                appointments.Items[i].Doctor.Address = CryptoHelper.Decrypt(appointments.Items[i].Patient.Address);
+                appointments.Items[i].Doctor.FirstName = CryptoHelper.Decrypt(appointments.Items[i].Doctor.FirstName);
+                appointments.Items[i].Doctor.LastName = CryptoHelper.Decrypt(appointments.Items[i].Doctor.LastName);
+                appointments.Items[i].Doctor.NationalIdentity = CryptoHelper.Decrypt(appointments.Items[i].Doctor.NationalIdentity);
+                appointments.Items[i].Doctor.Phone = CryptoHelper.Decrypt(appointments.Items[i].Doctor.Phone);
+                appointments.Items[i].Doctor.Address = CryptoHelper.Decrypt(appointments.Items[i].Doctor.Address);
             }
 
          
