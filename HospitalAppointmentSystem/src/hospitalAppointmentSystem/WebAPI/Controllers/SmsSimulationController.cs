@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class SmsController : ControllerBase
     {
         private readonly ILogger<SmsController> _logger;
