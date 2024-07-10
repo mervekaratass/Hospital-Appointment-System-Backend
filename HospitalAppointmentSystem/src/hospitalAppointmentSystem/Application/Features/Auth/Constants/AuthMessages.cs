@@ -14,4 +14,5 @@ public static class AuthMessages
     public const string InvalidRefreshToken = "Geçersiz yenileme belirteci";
     public const string UserMailAlreadyExists = "Böyle bir mail adresi zaten var";
     public const string PasswordDontMatch = "Þifreler eþleþmiyor";
+    public static string EmailActivationKeyExpired = "Aktivasyon kodunun süresi 15 dakikadýr. Lütfen tekrar üye olun!";
 }

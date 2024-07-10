@@ -41,6 +41,7 @@ public class VerifyEmailAuthenticatorCommand : IRequest
             );
             await _authBusinessRules.EmailAuthenticatorShouldBeExists(emailAuthenticator);
             await _authBusinessRules.EmailAuthenticatorActivationKeyShouldBeExists(emailAuthenticator!);
+            await _authBusinessRules.EmailAuthenticatorActivationKeyShouldNotBeExpired(emailAuthenticator!); //check for activation code time
 
             emailAuthenticator!.ActivationKey = null;
             emailAuthenticator.IsVerified = true;
