@@ -3,7 +3,7 @@ using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
 using Domain.Entities;
-using Application.Features.Feedbacks.Commands.Constants;
+using Application.Features.Feedbacks.Constants;
 
 namespace Application.Features.Feedbacks.Rules;
 

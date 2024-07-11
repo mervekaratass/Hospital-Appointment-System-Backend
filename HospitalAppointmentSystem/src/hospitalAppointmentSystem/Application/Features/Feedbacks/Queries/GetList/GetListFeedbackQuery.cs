@@ -7,7 +7,7 @@ using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
-using static Application.Features.Feedbacks.Commands.Constants.FeedbacksOperationClaims;
+using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Application.Services.Encryptions;
@@ -38,7 +38,7 @@ public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackList
 
         public async Task<GetListResponse<GetListFeedbackListItemDto>> Handle(GetListFeedbackQuery request, CancellationToken cancellationToken)
         {
-            // deletedDate null olan geri bildirimleri filtrelemek için bir lambda ifadesi tanýmlýyoruz
+       
             Expression<Func<Feedback, bool>> filter = feedback => feedback.DeletedDate == null;
             IPaginate<Feedback> feedbacks = await _feedbackRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
