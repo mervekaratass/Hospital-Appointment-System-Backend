@@ -15,12 +15,19 @@ public class AuthBusinessRules : BaseBusinessRules
     private readonly IUserRepository _userRepository;
     private readonly IPatientRepository _patientRepository;
     private readonly ILocalizationService _localizationService;
+    private IUserRepository _userRepository1;
 
     public AuthBusinessRules(IUserRepository userRepository,  ILocalizationService localizationService, IPatientRepository patientRepository)
     {
         _userRepository = userRepository;
         _localizationService = localizationService;
         _patientRepository = patientRepository;
+    }
+
+    public AuthBusinessRules(IUserRepository userRepository1, ILocalizationService localizationService)
+    {
+        _userRepository1 = userRepository1;
+        _localizationService = localizationService;
     }
 
     private async Task throwBusinessException(string messageKey)

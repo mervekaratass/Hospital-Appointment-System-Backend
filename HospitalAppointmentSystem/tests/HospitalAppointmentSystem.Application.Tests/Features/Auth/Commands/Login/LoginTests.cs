@@ -67,6 +67,7 @@ public class LoginTests
         IMapper mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<MappingProfiles>()));
         #endregion
         AuthBusinessRules authBusinessRules = new(_userRepository, localizationService);
+
         IAuthService _authService = new AuthManager(
             _userOperationClaimRepository,
             _refreshTokenRepository,

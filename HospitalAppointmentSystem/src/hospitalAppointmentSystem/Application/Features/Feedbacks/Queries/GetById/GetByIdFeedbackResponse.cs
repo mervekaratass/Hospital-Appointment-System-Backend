@@ -10,4 +10,5 @@ public class GetByIdFeedbackResponse : IDto
     public string UserFirstName { get; set; }
     public string UserLastName { get; set; }
     public string Text { get; set; }
+    public bool IsApproved { get; set; }
 }

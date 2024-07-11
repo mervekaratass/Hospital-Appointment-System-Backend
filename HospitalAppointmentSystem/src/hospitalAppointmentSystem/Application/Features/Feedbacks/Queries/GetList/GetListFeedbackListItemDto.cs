@@ -10,5 +10,6 @@ public class GetListFeedbackListItemDto : IDto
     public string UserLastName { get; set; }
     public string Text { get; set; }
     public DateTime CreatedDate { get; set; }
+    public bool IsApproved { get; set; }
 
 }

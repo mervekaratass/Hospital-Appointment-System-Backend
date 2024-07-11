@@ -7,4 +7,5 @@ public class CreatedFeedbackResponse : IResponse
     public int Id { get; set; }
     public Guid UserID { get; set; }
     public string Text { get; set; }
+    public bool IsApproved { get; set; }
 }

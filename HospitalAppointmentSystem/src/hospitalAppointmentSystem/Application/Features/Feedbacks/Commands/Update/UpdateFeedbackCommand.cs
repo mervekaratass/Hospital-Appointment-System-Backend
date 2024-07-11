@@ -19,6 +19,7 @@ public class UpdateFeedbackCommand : IRequest<UpdatedFeedbackResponse>,  ILoggab
     public int Id { get; set; }
     public required Guid UserID { get; set; }
     public required string Text { get; set; }
+    public bool IsApproved { get; set; }
 
     public string[] Roles => [Admin, Write, FeedbacksOperationClaims.Update, PatientsOperationClaims.Update, DoctorsOperationClaims.Update];
 
