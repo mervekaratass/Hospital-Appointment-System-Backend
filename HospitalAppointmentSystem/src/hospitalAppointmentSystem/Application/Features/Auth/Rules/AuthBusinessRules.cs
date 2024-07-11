@@ -1,4 +1,6 @@
 using Application.Features.Auth.Constants;
+using Application.Services.AuthenticatorService;
+using Application.Services.Encryptions;
 using Application.Services.Repositories;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -15,21 +17,15 @@ public class AuthBusinessRules : BaseBusinessRules
     private readonly IUserRepository _userRepository;
     private readonly IPatientRepository _patientRepository;
     private readonly ILocalizationService _localizationService;
-    private IUserRepository _userRepository1;
+    private readonly IAuthenticatorService _authenticatorService;
 
-    public AuthBusinessRules(IUserRepository userRepository,  ILocalizationService localizationService, IPatientRepository patientRepository)
+    public AuthBusinessRules(IUserRepository userRepository, ILocalizationService localizationService, IPatientRepository patientRepository, IAuthenticatorService authenticatorService)
     {
         _userRepository = userRepository;
         _localizationService = localizationService;
         _patientRepository = patientRepository;
+        _authenticatorService = authenticatorService;
     }
-
-    public AuthBusinessRules(IUserRepository userRepository1, ILocalizationService localizationService)
-    {
-        _userRepository1 = userRepository1;
-        _localizationService = localizationService;
-    }
-
     private async Task throwBusinessException(string messageKey)
     {
         string message = await _localizationService.GetLocalizedAsync(messageKey, AuthMessages.SectionName);
@@ -101,6 +97,29 @@ public class AuthBusinessRules : BaseBusinessRules
         if (!HashingHelper.VerifyPasswordHash(password, user!.PasswordHash, user.PasswordSalt))
             await throwBusinessException(AuthMessages.PasswordDontMatch);
     }
+    public async Task CheckIfEmailVerifiedOrNot(User user)
+    {
+        if (user is not Doctor)
+        {
+            bool isEmailVerified = await _authenticatorService.IsEmailVerified(user!.Id);
+            if (!isEmailVerified)
+            {
+                throw new BusinessException(AuthMessages.EmailActivationDontExist);
+            }
+        }
+    }
+
+    public string EncryptEmailForNonAdmin(string email)
+    {
+        if (email == "fatmabireltr@gmail.com")
+        {
+            return email;
+        }
+        else
+        {
+            return CryptoHelper.Encrypt(email);
+        }
+    }
 
     public async Task UserEmailShouldNotBeExpiredAuthenticator(string email)
     {
@@ -123,7 +142,7 @@ public class AuthBusinessRules : BaseBusinessRules
                     {
                         // Soft delete iþlemi için patient ve iliþkili diðer tablolardan veriyi iþaretle
                         patient.DeletedDate = DateTime.UtcNow;
-                        await _patientRepository.UpdateAsync(patient);                        
+                        await _patientRepository.UpdateAsync(patient);
                     }
 
                     // Kullanýcýyý soft delete ile iþaretleyin
