@@ -82,27 +82,7 @@ public class GetListByDoctorQuery : IRequest<GetListResponse<GetListByDoctorDto>
             GetListResponse<GetListByDoctorDto> patiens = _mapper.Map<GetListResponse<GetListByDoctorDto>>(appointments);
             return patiens;
 
-            //SİNEM doktorun hastalarını yazdırıken, bir sefer hastayı yazdırması için
-
-            //GetListResponse<GetListByDoctorDto> patiensDistinct = new GetListResponse<GetListByDoctorDto>  
-            //{
-            //    Count = patiens.Count,
-            //    HasNext = patiens.HasNext,
-            //    HasPrevious = patiens.HasPrevious,
-            //    Index = patiens.Index,
-            //    Pages = patiens.Pages,
-            //    Size = patiens.Size,
-            //    Items=new List<GetListByDoctorDto>()
-            //};
-
-            //foreach (var item in patiens.Items)
-            //{
-            //    if (!patiensDistinct.Items.Any(x=>x.PatientID == item.PatientID))
-            //    {
-            //        patiensDistinct.Items.Add(item);
-            //    }
-            //}
-            //return patiensDistinct;
+  
 
         }
     }

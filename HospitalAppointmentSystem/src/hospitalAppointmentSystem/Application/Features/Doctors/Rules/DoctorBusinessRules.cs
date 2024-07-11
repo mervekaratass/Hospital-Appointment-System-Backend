@@ -5,16 +5,19 @@ using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
 using Domain.Entities;
 using Application.Features.Patients.Constants;
+using Application.Services.Appointments;
 
 namespace Application.Features.Doctors.Rules;
 
 public class DoctorBusinessRules : BaseBusinessRules
 {
     private readonly IDoctorRepository _doctorRepository;
+    private readonly IAppointmentService _appointmentService;
     private readonly ILocalizationService _localizationService;
 
-    public DoctorBusinessRules(IDoctorRepository doctorRepository, ILocalizationService localizationService)
+    public DoctorBusinessRules(IDoctorRepository doctorRepository, ILocalizationService localizationService,IAppointmentService appointmentService)
     {
+        _appointmentService = appointmentService;
         _doctorRepository = doctorRepository;
         _localizationService = localizationService;
     }
@@ -47,4 +50,16 @@ public class DoctorBusinessRules : BaseBusinessRules
         if (doesExists)
             await throwBusinessException(DoctorsBusinessMessages.UserIdentityAlreadyExists);
     }
+
+    public async Task HasFutureAppointments(Guid doctorId, DateOnly currentDate)
+    {
+        var hasFutureAppointments= await _appointmentService.HasFutureAppointments(doctorId,currentDate);
+
+        if (hasFutureAppointments)
+        {
+            throw new BusinessException(DoctorsBusinessMessages.HasFutureAppointments);
+        }
+
+    }
+
 }
