@@ -1,4 +1,5 @@
-﻿using Application.Features.Auth.Rules;
+﻿using Application.Features.Auth.Constants;
+using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.Encryptions;
@@ -51,38 +52,16 @@ public class LoginCommand : IRequest<LoggedResponse>
 
         public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            string emailToCheck;
-            if(request.UserForLoginDto.Email == "fatmabireltr@gmail.com") 
-            {
-                emailToCheck = request.UserForLoginDto.Email;
-            }
-            else 
-            {
-                emailToCheck = CryptoHelper.Encrypt(request.UserForLoginDto.Email);
-            }
+            string emailToCheck = _authBusinessRules.EncryptEmailForNonAdmin(request.UserForLoginDto.Email);  //check email for admin -> dont crypto it
 
             User? user = await _userService.GetAsync(
                 predicate: u => u.Email == emailToCheck,
                 cancellationToken: cancellationToken
             );
 
-            if (user == null)
-            {
-                throw new BusinessException("Kullanıcı bulunamadı.");
-            }
-
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserPasswordShouldBeMatch(user!, request.UserForLoginDto.Password);
-
-            // Kullanıcı Doctor değilse e-posta doğrulaması yapılmış mı kontrol et
-            if (user is not Doctor)
-            {
-                bool isEmailVerified = await _authenticatorService.IsEmailVerified(user!.Id);
-                if (!isEmailVerified)
-                {
-                    throw new BusinessException("E-posta doğrulaması yapılmamış. Lütfen e-posta hesabınızı doğrulayın.");
-                }
-            }
+            await _authBusinessRules.CheckIfEmailVerifiedOrNot(user); // discard email authentication for doctor
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
 

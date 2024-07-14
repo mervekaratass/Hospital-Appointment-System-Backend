@@ -7,10 +7,10 @@ using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using MediatR;
-using static Application.Features.Feedbacks.Commands.Constants.FeedbacksOperationClaims;
+using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
 using Application.Features.Doctors.Constants;
 using Application.Features.Patients.Constants;
-using Application.Features.Feedbacks.Commands.Constants;
+using Application.Features.Feedbacks.Constants;
 
 namespace Application.Features.Feedbacks.Commands.Update;
 
@@ -19,6 +19,7 @@ public class UpdateFeedbackCommand : IRequest<UpdatedFeedbackResponse>,  ILoggab
     public int Id { get; set; }
     public required Guid UserID { get; set; }
     public required string Text { get; set; }
+    public bool IsApproved { get; set; }
 
     public string[] Roles => [Admin, Write, FeedbacksOperationClaims.Update, PatientsOperationClaims.Update, DoctorsOperationClaims.Update];
 

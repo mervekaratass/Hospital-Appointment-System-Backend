@@ -14,7 +14,7 @@ using Application.Features.Managers.Constants;
 using Application.Features.Notifications.Constants;
 using Application.Features.Patients.Constants;
 using Application.Features.Reports.Constants;
-using Application.Features.Feedbacks.Commands.Constants;
+using Application.Features.Feedbacks.Constants;
 
 
 namespace Persistence.EntityConfigurations;

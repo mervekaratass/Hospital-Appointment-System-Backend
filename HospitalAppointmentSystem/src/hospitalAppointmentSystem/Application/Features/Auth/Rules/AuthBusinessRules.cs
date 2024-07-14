@@ -1,6 +1,9 @@
 using Application.Features.Auth.Constants;
+using Application.Services.AuthenticatorService;
+using Application.Services.Encryptions;
 using Application.Services.Repositories;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
@@ -12,14 +15,17 @@ namespace Application.Features.Auth.Rules;
 public class AuthBusinessRules : BaseBusinessRules
 {
     private readonly IUserRepository _userRepository;
+    private readonly IPatientRepository _patientRepository;
     private readonly ILocalizationService _localizationService;
+    private readonly IAuthenticatorService _authenticatorService;
 
-    public AuthBusinessRules(IUserRepository userRepository, ILocalizationService localizationService)
+    public AuthBusinessRules(IUserRepository userRepository, ILocalizationService localizationService, IPatientRepository patientRepository, IAuthenticatorService authenticatorService)
     {
         _userRepository = userRepository;
         _localizationService = localizationService;
+        _patientRepository = patientRepository;
+        _authenticatorService = authenticatorService;
     }
-
     private async Task throwBusinessException(string messageKey)
     {
         string message = await _localizationService.GetLocalizedAsync(messageKey, AuthMessages.SectionName);
@@ -48,6 +54,11 @@ public class AuthBusinessRules : BaseBusinessRules
     {
         if (emailAuthenticator.ActivationKey is null)
             await throwBusinessException(AuthMessages.EmailActivationKeyDontExists);
+    }
+    public async Task EmailAuthenticatorActivationKeyShouldNotBeExpired(EmailAuthenticator emailAuthenticator)
+    {
+        if (emailAuthenticator.CreatedDate.AddMinutes(15) < DateTime.UtcNow)
+            await throwBusinessException(AuthMessages.EmailActivationKeyExpired);
     }
 
     public async Task UserShouldBeExistsWhenSelected(User? user)
@@ -81,11 +92,69 @@ public class AuthBusinessRules : BaseBusinessRules
             await throwBusinessException(AuthMessages.UserMailAlreadyExists);
     }
 
-
-
     public async Task UserPasswordShouldBeMatch(User user, string password)
     {
         if (!HashingHelper.VerifyPasswordHash(password, user!.PasswordHash, user.PasswordSalt))
             await throwBusinessException(AuthMessages.PasswordDontMatch);
     }
+    public async Task CheckIfEmailVerifiedOrNot(User user)
+    {
+        if (user is not Doctor)
+        {
+            bool isEmailVerified = await _authenticatorService.IsEmailVerified(user!.Id);
+            if (!isEmailVerified)
+            {
+                throw new BusinessException(AuthMessages.EmailActivationDontExist);
+            }
+        }
+    }
+
+    public string EncryptEmailForNonAdmin(string email)
+    {
+        if (email == "fatmabireltr@gmail.com")
+        {
+            return email;
+        }
+        else
+        {
+            return CryptoHelper.Encrypt(email);
+        }
+    }
+
+    public async Task UserEmailShouldNotBeExpiredAuthenticator(string email)
+    {
+        // User ve EmailAuthenticators'ý yükle
+        var user = await _userRepository.Query()
+                                        .Include(u => u.EmailAuthenticators)
+                                        .FirstOrDefaultAsync(u => u.Email == email && u.DeletedDate == null);
+
+        if (user != null)
+        {
+            var emailAuthenticator = user.EmailAuthenticators?.FirstOrDefault();
+            if (emailAuthenticator != null)
+            {
+                if (emailAuthenticator.CreatedDate.AddMinutes(15) < DateTime.UtcNow)
+                {
+                    await _userRepository.DeleteAuthenticatorCode(user.Id);
+                    // Ýliþkili Patient kaydýný manuel olarak sorgulayýn
+                    var patient = await _patientRepository.GetAsync(p => p.Id == user.Id);
+                    if (patient != null)
+                    {
+                        // Soft delete iþlemi için patient ve iliþkili diðer tablolardan veriyi iþaretle
+                        patient.DeletedDate = DateTime.UtcNow;
+                        await _patientRepository.UpdateAsync(patient);
+                    }
+
+                    // Kullanýcýyý soft delete ile iþaretleyin
+                    user.DeletedDate = DateTime.UtcNow;
+                    await _userRepository.UpdateAsync(user);
+                }
+            }
+        }
+    }
+
+
+
+
 }
+

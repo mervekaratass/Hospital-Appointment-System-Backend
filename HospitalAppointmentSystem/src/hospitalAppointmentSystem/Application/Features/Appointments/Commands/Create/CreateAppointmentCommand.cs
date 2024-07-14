@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Features.Appointments.Constants;
 using Application.Features.Appointments.Rules;
 using Application.Services.Encryptions;
 using Application.Services.Repositories;
@@ -11,139 +13,91 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using MediatR;
 using MimeKit;
+using NArchitecture.Core.Application.Pipelines.Authorization;
+using static Application.Features.Appointments.Constants.AppointmentsOperationClaims;
+
 using NArchitecture.Core.Security.Entities;
+using Application.Features.Patients.Constants;
+using Application.Features.Doctors.Constants;
+using Application.Services.Doctors;
+using Application.Services.Patients;
+using Application.Services.Branches;
 
 namespace Application.Features.Appointments.Commands.Create
 {
-    public class CreateAppointmentCommand : IRequest<CreatedAppointmentResponse>
+    public class CreateAppointmentCommand : IRequest<CreatedAppointmentResponse>, ISecuredRequest
     {
         public DateOnly Date { get; set; }
         public TimeOnly Time { get; set; }
         public bool Status { get; set; }
         public Guid DoctorID { get; set; }
         public Guid PatientID { get; set; }
-    }
 
-    public class CreateAppointmentCommandHandler : IRequestHandler<CreateAppointmentCommand, CreatedAppointmentResponse>
-    {
-        private readonly IMapper _mapper;
-        private readonly IAppointmentRepository _appointmentRepository;
-        private readonly IDoctorRepository _doctorRepository;
-        private readonly IPatientRepository _patientRepository;
-        private readonly IBranchRepository _branchRepository;
-        private readonly AppointmentBusinessRules _appointmentBusinessRules;
 
-        public CreateAppointmentCommandHandler(IMapper mapper, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository, IBranchRepository branchRepository, AppointmentBusinessRules appointmentBusinessRules)
+        public string[] Roles => [Admin, Write, PatientsOperationClaims.Update,DoctorsOperationClaims.Update];
+
+        public bool BypassCache { get; }
+        public string? CacheKey { get; }
+        public string[]? CacheGroupKey => ["GetAppointments"];
+
+
+        public class CreateAppointmentCommandHandler : IRequestHandler<CreateAppointmentCommand, CreatedAppointmentResponse>
         {
-            _mapper = mapper;
-            _appointmentRepository = appointmentRepository;
-            _doctorRepository = doctorRepository;
-            _patientRepository = patientRepository;
-            _branchRepository = branchRepository;
-            _appointmentBusinessRules = appointmentBusinessRules;
-        }
+            private readonly IMapper _mapper;
+            private readonly IAppointmentRepository _appointmentRepository;
+            private readonly IDoctorService _doctorService;
+            private readonly IPatientService _patientService;
+            private readonly IBranchService _branchService;
+            private readonly AppointmentBusinessRules _appointmentBusinessRules;
 
-        public async Task<CreatedAppointmentResponse> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
-        {
-
-            // Yeni randevu oluþtur
-            Appointment appointment = _mapper.Map<Appointment>(request);
-
-            // Doctor bilgisini al
-            Doctor doctor = await _doctorRepository.GetAsync(d => d.Id == request.DoctorID);
-            appointment.Doctor = doctor;
-
-            // Patient bilgisini al
-            Patient patient = await _patientRepository.GetAsync(p => p.Id == request.PatientID);
-            appointment.Patient = patient;
-
-            // Branþ bilgisini al
-            Branch branch = await _branchRepository.GetAsync(p => p.Id == doctor.BranchID);
-            doctor.Branch = branch;
-
-            // Hasta ayný doktordan ayný güne ait randevusu olup olmadýðýný kontrol et
-            await _appointmentBusinessRules.PatientCannotHaveMultipleAppointmentsOnSameDayWithSameDoctor(request.PatientID, request.DoctorID, request.Date);
-
-            // Ayný doktor ve tarihte silinmiþ randevu var mý kontrol et
-            Appointment existingDeletedAppointment = await _appointmentRepository.GetAsync(a =>
-                a.PatientID == request.PatientID &&
-                a.DoctorID == request.DoctorID &&
-                a.Date == request.Date &&
-                a.DeletedDate != null);
-
-            if (existingDeletedAppointment != null)
+            public CreateAppointmentCommandHandler(IMapper mapper, IAppointmentRepository appointmentRepository, IDoctorService doctorService, IPatientService patientService, IBranchService branchService, AppointmentBusinessRules appointmentBusinessRules)
             {
-                // Silinmiþ randevuyu güncelle
-                existingDeletedAppointment.Time = request.Time;
-                existingDeletedAppointment.Status = request.Status;
-                existingDeletedAppointment.DeletedDate = null; // Silinmiþ durumu kaldýr
-                await _appointmentRepository.UpdateAsync(existingDeletedAppointment);
-
-
-
-                await SendAppointmentConfirmationMail(existingDeletedAppointment);
-                CreatedAppointmentResponse response = _mapper.Map<CreatedAppointmentResponse>(existingDeletedAppointment);
-                return response;
+                _mapper = mapper;
+                _appointmentRepository = appointmentRepository;
+                _doctorService = doctorService;
+                _patientService = patientService;
+                _branchService = branchService;
+                _appointmentBusinessRules = appointmentBusinessRules;
             }
-            else
+
+            public async Task<CreatedAppointmentResponse> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
             {
-             
 
-                await _appointmentRepository.AddAsync(appointment);
+                // Yeni randevu oluþtur
+                Appointment appointment = _mapper.Map<Appointment>(request);
 
-                // Oluþturulan randevu bilgilerini mail olarak gönder
-                await SendAppointmentConfirmationMail(appointment);
+                // Doctor bilgisini al
+                Doctor doctor = await _doctorService.GetAsync(d => d.Id == request.DoctorID);
+                appointment.Doctor = doctor;
 
-                CreatedAppointmentResponse response = _mapper.Map<CreatedAppointmentResponse>(appointment);
-                return response;
+
+                // Patient bilgisini al
+                Patient patient = await _patientService.GetAsync(p => p.Id == request.PatientID);
+                appointment.Patient = patient;
+
+
+
+                // Branþ bilgisini al
+                Branch branch = await _branchService.GetAsync(p => p.Id == doctor.BranchID);
+                doctor.Branch = branch;
+
+
+                // Hasta ayný doktordan ayný güne ait randevusu olup olmadýðýný kontrol et
+                await _appointmentBusinessRules.PatientCannotHaveMultipleAppointmentsOnSameDayWithSameDoctor(request.PatientID, request.DoctorID, request.Date);
+
+
+
+                  // Ayný doktor ve tarihte silinmiþ randevu var mý kontrol et
+                    Appointment result = await _appointmentBusinessRules.CheckForExistingDeletedAppointment(request,appointment);
+
+
+                    await _appointmentBusinessRules.SendAppointmentConfirmationMail(result);
+                    CreatedAppointmentResponse response = _mapper.Map<CreatedAppointmentResponse>(result);
+                    return response;
+               
+                }
             }
-        }
 
-        private async Task SendAppointmentConfirmationMail(Appointment appointment)
-        {
-            // Mail içeriðini hazýrla
-            var mailMessage = new MimeMessage();
-            mailMessage.From.Add(new MailboxAddress("Pair 5 Hastanesi", "fatmabireltr@gmail.com")); // Gönderen bilgisi
-            appointment.Patient.Email = CryptoHelper.Decrypt(appointment.Patient.Email);
-            appointment.Patient.FirstName = CryptoHelper.Decrypt(appointment.Patient.FirstName);
-            appointment.Patient.LastName = CryptoHelper.Decrypt(appointment.Patient.LastName);
-            appointment.Doctor.FirstName = CryptoHelper.Decrypt(appointment.Doctor.FirstName);
-            appointment.Doctor.LastName = CryptoHelper.Decrypt(appointment.Doctor.LastName);
-
-            mailMessage.To.Add(new MailboxAddress("Pair 5 Hastanesi", appointment.Patient.Email)); // Alýcý bilgisi 
-            mailMessage.Subject = "Randevu Bilgilendirme"; // Mail konusu
-
-            // HTML ve CSS içeriði oluþtur
-            var bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = $@"
-       <html>
-        <head>
-            <style>
-                body {{ font-family: Arial, sans-serif; }}
-                .container {{ border: 1px solid red; padding: 10px; }}
-            </style>
-        </head>
-        <body>
-            <div class='container'>
-                <p>Sayýn {appointment.Patient.FirstName} {appointment.Patient.LastName},</p>
-                <p>{appointment.Date} tarihinde, saat {appointment.Time} için bir randevu aldýnýz.</p>
-                <p>Doktor: {appointment.Doctor.Title} {appointment.Doctor.FirstName} {appointment.Doctor.LastName}</p>
-                <p>Branþ: {appointment.Doctor.Branch.Name}</p>
-            </div>
-        </body>
-        </html>";
-
-            // MimeKit'e gövdeyi ayarla
-            mailMessage.Body = bodyBuilder.ToMessageBody();
-
-            // SMTP ile baðlantý kur ve maili gönder
-            using (var smtp = new SmtpClient())
-            {
-                smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-                smtp.Authenticate("fatmabireltr@gmail.com", "rxuv hpfv wlqq htpa");
-                await smtp.SendAsync(mailMessage);
-                smtp.Disconnect(true);
-            }
+        
         }
     }
-}

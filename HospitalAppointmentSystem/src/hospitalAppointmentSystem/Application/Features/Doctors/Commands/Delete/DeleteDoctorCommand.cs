@@ -48,11 +48,8 @@ public class DeleteDoctorCommand : IRequest<DeletedDoctorResponse>,  ILoggableRe
             await _doctorBusinessRules.DoctorShouldExistWhenSelected(doctor);
 
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Today);
-            bool hasFutureAppointments = await _appointmentService.HasFutureAppointments(request.Id,currentDate);
-            if (hasFutureAppointments)
-            {
-                throw new BusinessException("Doktorun ileri tarihlerde randevularý bulunduðundan silinemez.");
-            }
+            await _doctorBusinessRules.HasFutureAppointments(request.Id, currentDate);
+        
 
 
             doctor.DeletedDate=DateTime.Now;

@@ -10,7 +10,7 @@ public interface IUserService
     Task<User?> GetAsync(
         Expression<Func<User, bool>> predicate,
         Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = null,
-        bool withDeleted = false,
+        bool withDeleted = true,
         bool enableTracking = true,
         CancellationToken cancellationToken = default
     );

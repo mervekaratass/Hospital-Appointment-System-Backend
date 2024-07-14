@@ -51,6 +51,7 @@ public class CreateBranchCommand : IRequest<CreatedBranchResponse>,ILoggableRequ
                 return response;
             }
 
+
             // Create a new branch
             Branch branch = _mapper.Map<Branch>(request);
             await _branchRepository.AddAsync(branch);

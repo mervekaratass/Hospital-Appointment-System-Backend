@@ -4,7 +4,7 @@ using AutoMapper;
 using Domain.Entities;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
-using static Application.Features.Feedbacks.Commands.Constants.FeedbacksOperationClaims;
+using static Application.Features.Feedbacks.Constants.FeedbacksOperationClaims;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Feedbacks.Queries.GetById;
