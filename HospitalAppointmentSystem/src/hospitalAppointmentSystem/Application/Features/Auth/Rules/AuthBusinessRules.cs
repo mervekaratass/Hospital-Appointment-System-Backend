@@ -1,4 +1,5 @@
 using Application.Features.Auth.Constants;
+using Application.Features.Doctors.Constants;
 using Application.Services.AuthenticatorService;
 using Application.Services.Encryptions;
 using Application.Services.Repositories;
@@ -9,6 +10,7 @@ using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
 using NArchitecture.Core.Security.Enums;
 using NArchitecture.Core.Security.Hashing;
+using TurkishCitizenIdValidator;
 
 namespace Application.Features.Auth.Rules;
 
@@ -36,6 +38,15 @@ public class AuthBusinessRules : BaseBusinessRules
     {
         if (emailAuthenticator is null)
             await throwBusinessException(AuthMessages.EmailAuthenticatorDontExists);
+    }
+
+    public void ValidateNationalIdentityAndBirthYearWithMernis(string nationalIdentity, string firstName, string lastName, int birthYear)
+    {
+        bool isValid = new TurkishCitizenIdentity(long.Parse(nationalIdentity), firstName, lastName, birthYear).IsValid();
+        if (!isValid)
+        {
+            throw new BusinessException(DoctorsBusinessMessages.InvalidIdentity);
+        }
     }
 
     public async Task OtpAuthenticatorShouldBeExists(OtpAuthenticator? otpAuthenticator)

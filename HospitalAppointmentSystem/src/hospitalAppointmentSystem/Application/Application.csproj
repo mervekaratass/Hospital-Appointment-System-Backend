@@ -20,6 +20,7 @@
 	<PackageReference Include="NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection" Version="1.0.1" />
 	<PackageReference Include="NArchitecture.Core.ElasticSearch" Version="1.0.0" />
 	<PackageReference Include="NArchitecture.Core.Security.DependencyInjection" Version="1.2.0" />
+	<PackageReference Include="TcKimlikNumarasi-Dogrulama" Version="1.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\Repositories" />

@@ -6,17 +6,22 @@ using NArchitecture.Core.Localization.Abstraction;
 using Domain.Entities;
 using NArchitecture.Core.Persistence.Paging;
 using Application.Features.Auth.Constants;
+using TurkishCitizenIdValidator;
+using Application.Features.Doctors.Constants;
+using Application.Services.UsersService;
 
 namespace Application.Features.Patients.Rules;
 
 public class PatientBusinessRules : BaseBusinessRules
 {
     private readonly IPatientRepository _patientRepository;
+    private readonly IUserService _userService;
     private readonly ILocalizationService _localizationService;
 
-    public PatientBusinessRules(IPatientRepository patientRepository, ILocalizationService localizationService)
+    public PatientBusinessRules(IPatientRepository patientRepository, IUserService userService, ILocalizationService localizationService)
     {
         _patientRepository = patientRepository;
+        _userService = userService;
         _localizationService = localizationService;
     }
 
@@ -48,10 +53,21 @@ public class PatientBusinessRules : BaseBusinessRules
         await PatientShouldExistWhenSelected(patient);
     }
 
-    public async Task UserNationalIdentityShouldBeNotExists(string identity)
+    public async Task UserNationalIdentityShouldBeNotExists(Guid patientId, string identity)
     {
-        bool doesExists = await _patientRepository.AnyAsync(predicate: u => u.NationalIdentity == identity);
-        if (doesExists)
-            await throwBusinessException(PatientsBusinessMessages.UserIdentityAlreadyExists);
+        var doesExists = await _userService.UserNationalIdentityShouldBeNotExists(patientId, identity);
+        if (doesExists is not null)
+        {
+            await throwBusinessException(DoctorsBusinessMessages.UserIdentityAlreadyExists);
+        }
+    }
+
+    public async Task ValidateNationalIdentityAndBirthYearWithMernis(string nationalIdentity, string firstName, string lastName, int birthYear)
+    {
+        bool isValid = new TurkishCitizenIdentity(long.Parse(nationalIdentity), firstName, lastName, birthYear).IsValid();
+        if (!isValid)
+        {
+            throw new BusinessException(PatientsBusinessMessages.InvalidIdentity);
+        }
     }
 }

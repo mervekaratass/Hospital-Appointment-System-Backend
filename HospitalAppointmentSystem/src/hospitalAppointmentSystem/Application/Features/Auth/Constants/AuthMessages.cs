@@ -13,6 +13,7 @@ public static class AuthMessages
     public const string RefreshDontExists = "Böyle bir yenileme yok";
     public const string InvalidRefreshToken = "Geçersiz yenileme belirteci";
     public const string UserMailAlreadyExists = "Böyle bir mail adresi zaten var";
+    public const string InvalidIdentity = "Geçersiz TC kimlik numarasý veya kimlik bilgileri";
     public const string PasswordDontMatch = "Þifreler eþleþmiyor";
     public static string EmailActivationKeyExpired = "Aktivasyon kodunun süresi 15 dakikadýr. Lütfen tekrar üye olun!";
     public static string EmailActivationDontExist = "E-posta doðrulamasý yapýlmamýþ. Lütfen e-posta hesabýnýzý doðrulayýn";

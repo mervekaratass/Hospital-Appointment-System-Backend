@@ -29,4 +29,5 @@ public interface IUserService
     Task<User> AddAsync(User user);
     Task<User> UpdateAsync(User user);
     Task<User> DeleteAsync(User user, bool permanent = false);
+    Task<User> UserNationalIdentityShouldBeNotExists(Guid userId, string nationalIdentity);
 }

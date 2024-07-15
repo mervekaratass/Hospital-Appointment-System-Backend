@@ -12,6 +12,7 @@ using static Application.Features.Doctors.Constants.DoctorsOperationClaims;
 using Application.Services.Encryptions;
 using Application.Features.Patients.Rules;
 using static Nest.JoinField;
+using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 
 namespace Application.Features.Doctors.Commands.Update;
 
@@ -51,6 +52,9 @@ public class UpdateDoctorCommand : IRequest<UpdatedDoctorResponse>,  ILoggableRe
 
         public async Task<UpdatedDoctorResponse> Handle(UpdateDoctorCommand request, CancellationToken cancellationToken)
         {
+            //MERNIS VALIDATION
+            await _doctorBusinessRules.ValidateNationalIdentityAndBirthYearWithMernis(request.NationalIdentity, request.FirstName, request.LastName, request.DateOfBirth.Year);
+
             Doctor? doctor = await _doctorRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken);
             await _doctorBusinessRules.DoctorShouldExistWhenSelected(doctor);
             doctor = _mapper.Map(request, doctor);
@@ -62,8 +66,8 @@ public class UpdateDoctorCommand : IRequest<UpdatedDoctorResponse>,  ILoggableRe
             doctor.Address = CryptoHelper.Encrypt(doctor.Address);
             doctor.Email = CryptoHelper.Encrypt(doctor.Email);
 
-            await _doctorBusinessRules.UserNationalIdentityShouldBeNotExists(doctor.NationalIdentity);
-
+            await _doctorBusinessRules.UserNationalIdentityShouldBeNotExists(request.Id, doctor.NationalIdentity);
+            
             await _doctorRepository.UpdateAsync(doctor!);
 
             UpdatedDoctorResponse response = _mapper.Map<UpdatedDoctorResponse>(doctor);

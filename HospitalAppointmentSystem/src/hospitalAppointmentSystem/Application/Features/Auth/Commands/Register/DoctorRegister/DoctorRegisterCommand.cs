@@ -1,5 +1,6 @@
 ﻿using Application.Features.Auth.Commands.Register.PatientRegister;
 using Application.Features.Auth.Rules;
+using Application.Features.Doctors.Rules;
 using Application.Services.AuthService;
 using Application.Services.Doctors;
 using Application.Services.Encryptions;
@@ -64,6 +65,9 @@ public class DoctorRegisterCommand : IRequest<DoctorRegisteredResponse>
 
         public async Task<DoctorRegisteredResponse> Handle(DoctorRegisterCommand request, CancellationToken cancellationToken)
         {
+            //MERNIS VALIDATION
+            _authBusinessRules.ValidateNationalIdentityAndBirthYearWithMernis(request.DoctorForRegisterDto.NationalIdentity, request.DoctorForRegisterDto.FirstName, request.DoctorForRegisterDto.LastName, request.DoctorForRegisterDto.DateOfBirth.Year);
+
             await _authBusinessRules.UserEmailShouldBeNotExists(request.DoctorForRegisterDto.Email);
 
             HashingHelper.CreatePasswordHash(
@@ -91,15 +95,12 @@ public class DoctorRegisterCommand : IRequest<DoctorRegisteredResponse>
 
                 };
 
-         //sinem
             newDoctor.FirstName = CryptoHelper.Encrypt(newDoctor.FirstName);
             newDoctor.LastName = CryptoHelper.Encrypt(newDoctor.LastName);
             newDoctor.NationalIdentity = CryptoHelper.Encrypt(newDoctor.NationalIdentity);
             newDoctor.Phone = CryptoHelper.Encrypt(newDoctor.Phone);
             newDoctor.Address = CryptoHelper.Encrypt(newDoctor.Address);
             newDoctor.Email = CryptoHelper.Encrypt(newDoctor.Email);
-            //burda bitti
-
 
             Doctor createdDoctor = await _doctorService.AddAsync(newDoctor);
 

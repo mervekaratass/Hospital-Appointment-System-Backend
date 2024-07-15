@@ -52,10 +52,13 @@ public class UpdatePatientCommand : IRequest<UpdatedPatientResponse>,  ILoggable
 
         public async Task<UpdatedPatientResponse> Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
         {
+            //MERNIS VALIDATION
+            await _patientBusinessRules.ValidateNationalIdentityAndBirthYearWithMernis(request.NationalIdentity, request.FirstName, request.LastName, request.DateOfBirth.Year);
+
             Patient? patient = await _patientRepository.GetAsync(predicate: p => p.Id == request.Id, cancellationToken: cancellationToken);
             await _patientBusinessRules.PatientShouldExistWhenSelected(patient);
+
             patient = _mapper.Map(request, patient);
-            //sinem
             patient.FirstName = CryptoHelper.Encrypt(patient.FirstName);
             patient.LastName = CryptoHelper.Encrypt(patient.LastName);
             patient.NationalIdentity = CryptoHelper.Encrypt(patient.NationalIdentity);
@@ -63,7 +66,7 @@ public class UpdatePatientCommand : IRequest<UpdatedPatientResponse>,  ILoggable
             patient.Address = CryptoHelper.Encrypt(patient.Address);
             patient.Email = CryptoHelper.Encrypt(patient.Email);
 
-            await _patientBusinessRules.UserNationalIdentityShouldBeNotExists(patient.NationalIdentity);
+            await _patientBusinessRules.UserNationalIdentityShouldBeNotExists(patient.Id,patient.NationalIdentity);
             await _patientRepository.UpdateAsync(patient!);
 
             UpdatedPatientResponse response = _mapper.Map<UpdatedPatientResponse>(patient);
