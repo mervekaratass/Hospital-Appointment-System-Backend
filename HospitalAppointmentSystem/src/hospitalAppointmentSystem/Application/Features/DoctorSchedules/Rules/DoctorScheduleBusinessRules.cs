@@ -4,20 +4,26 @@ using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
 using Domain.Entities;
+using Application.Services.DoctorSchedules;
+using Org.BouncyCastle.Asn1.Ocsp;
+using Application.Services.Appointments;
+using Application.Features.Doctors.Constants;
+using Application.Features.DoctorSchedules.Commands.Update;
 
 namespace Application.Features.DoctorSchedules.Rules;
 
 public class DoctorScheduleBusinessRules : BaseBusinessRules
 {
     private readonly IDoctorScheduleRepository _doctorScheduleRepository;
-    private readonly IAppointmentRepository _appointmentRepository;
+    private readonly IAppointmentService _appointmentService;
     private readonly ILocalizationService _localizationService;
 
-    public DoctorScheduleBusinessRules(IDoctorScheduleRepository doctorScheduleRepository, IAppointmentRepository appointmentRepository, ILocalizationService localizationService)
+    public DoctorScheduleBusinessRules(IDoctorScheduleRepository doctorScheduleRepository, ILocalizationService localizationService,
+       IAppointmentService appointmentService )
     {
-        _appointmentRepository = appointmentRepository;
         _doctorScheduleRepository = doctorScheduleRepository;
         _localizationService = localizationService;
+        _appointmentService = appointmentService;
     }
 
     private async Task throwBusinessException(string messageKey)
@@ -54,12 +60,12 @@ public class DoctorScheduleBusinessRules : BaseBusinessRules
         if (doctorSchedule == null)
             await throwBusinessException(DoctorSchedulesBusinessMessages.DoctorScheduleNotExists);
 
-        bool hasAppointments = await _appointmentRepository.AnyAsync(
+        var hasAppointments = await _appointmentService.GetAsync(
             predicate: a => a.DoctorID == doctorSchedule.DoctorID && a.Date == doctorSchedule.Date,
             cancellationToken: cancellationToken
         );
 
-        if (hasAppointments)
+        if (hasAppointments!=null)
             await throwBusinessException(DoctorSchedulesBusinessMessages.DoctorScheduleCannotBeDeletedDueToExistingAppointments);
     }
 
@@ -74,19 +80,7 @@ public class DoctorScheduleBusinessRules : BaseBusinessRules
         }
     }
 
-    public async Task CheckIfDoctorScheduleDateIsUniqueForDoctorOnUpdate(int doctorScheduleId, Guid doctorId, DateOnly date, CancellationToken cancellationToken)
-    {
-        var existingSchedule = await _doctorScheduleRepository.GetAsync(
-            predicate: ds => ds.DoctorID == doctorId && ds.Date == date && ds.Id != doctorScheduleId && ds.DeletedDate == null,
-            enableTracking: false,
-            cancellationToken: cancellationToken
-        );
 
-        if (existingSchedule != null)
-        {
-            throw new BusinessException(DoctorSchedulesBusinessMessages.DoctorScheduleAlreadyExistsForThisDate);
-        }
-    }
 
     public async Task<DoctorSchedule?> CheckAndRetrieveSoftDeletedSchedule(Guid doctorId, DateOnly date)
     {
@@ -94,10 +88,10 @@ public class DoctorScheduleBusinessRules : BaseBusinessRules
     }
 
     //güncelleme iþlemi için soft delete
-    public async Task DoctorScheduleShouldNotBeUpdatedIfSoftDeleted(int doctorScheduleId, CancellationToken cancellationToken)
+    public async Task<DoctorSchedule> CheckIfDoctorScheduleExists(int doctorScheduleId, CancellationToken cancellationToken)
     {
         var existingSchedule = await _doctorScheduleRepository.GetAsync(
-            predicate: ds => ds.Id == doctorScheduleId,
+            predicate: ds => ds.Id == doctorScheduleId &&ds.DeletedDate == null,
             enableTracking: false,
             cancellationToken: cancellationToken
         );
@@ -106,13 +100,60 @@ public class DoctorScheduleBusinessRules : BaseBusinessRules
         {
             throw new BusinessException(DoctorSchedulesBusinessMessages.DoctorScheduleNotExists);
         }
+        return existingSchedule;
 
-        if (existingSchedule.DeletedDate != null)
+    }
+
+    public async Task CheckIfDoctorScheduleDateIsAvailable(Guid doctorId, DateOnly date, int existingId)
+    {
+        var conflictingSchedule =await  _doctorScheduleRepository.GetAsync(ds => ds.DoctorID == doctorId && ds.Date == date);
+        
+        if (conflictingSchedule != null && conflictingSchedule.Id != existingId )
         {
-            throw new BusinessException(DoctorSchedulesBusinessMessages.DoctorScheduleIsSoftDeletedAndCannotBeUpdated);
+            if(conflictingSchedule.DeletedDate==null)
+            throw new BusinessException("Bu doktorun belirtilen tarihteki programý zaten mevcut.");
+
         }
     }
 
+    public async Task<Appointment> CheckIfAppointmentsExistOnDateDoctor(Guid doctorId,DateOnly currentDate )
+    {
+        var appointment = await _appointmentService.CheckIfAppointmentsExistOnDate(doctorId, currentDate);
+        if(appointment != null )
+        {
+            throw new BusinessException(DoctorSchedulesBusinessMessages.CheckIfAppointmentsExistOnDate);
+        }
+        return appointment;
 
+
+    }
+
+
+
+    public async Task HandleConflictingSchedule(DoctorSchedule conflictingSchedule, DoctorSchedule existingSchedule, UpdateDoctorScheduleCommand request)
+    {
+        if (conflictingSchedule != null && conflictingSchedule.Id != request.Id)
+        {
+            if (conflictingSchedule.DeletedDate == null)
+            {
+                // Silinmemiþ bir kayýtta çakýþma var, hata fýrlatalým
+                throw new BusinessException(DoctorSchedulesBusinessMessages.DoctorScheduleAlreadyExistsForThisDate);
+            }
+            else
+            {
+                // Silinmiþ bir kayýtta çakýþma var, bu kaydý güncelleyelim
+                conflictingSchedule.Date = request.Date;
+                conflictingSchedule.StartTime = request.StartTime;
+                conflictingSchedule.EndTime = request.EndTime;
+                conflictingSchedule.UpdatedDate = null;
+                conflictingSchedule.DeletedDate = null;
+                await _doctorScheduleRepository.UpdateAsync(conflictingSchedule);
+
+                // Ýstek yapýlan kaydý silindi olarak iþaretleyelim
+                existingSchedule.DeletedDate = DateTime.UtcNow;
+                await _doctorScheduleRepository.UpdateAsync(existingSchedule);
+            }
+        }
+    }
 
 }

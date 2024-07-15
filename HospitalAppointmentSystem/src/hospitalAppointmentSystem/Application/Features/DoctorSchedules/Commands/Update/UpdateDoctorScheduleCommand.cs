@@ -11,6 +11,8 @@ using MediatR;
 using static Application.Features.DoctorSchedules.Constants.DoctorSchedulesOperationClaims;
 using Application.Features.Doctors.Constants;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
+using Application.Services.Appointments;
+using Application.Services.DoctorSchedules;
 
 namespace Application.Features.DoctorSchedules.Commands.Update
 {
@@ -33,76 +35,45 @@ namespace Application.Features.DoctorSchedules.Commands.Update
             private readonly IMapper _mapper;
             private readonly IDoctorScheduleRepository _doctorScheduleRepository;
             private readonly DoctorScheduleBusinessRules _doctorScheduleBusinessRules;
-            private readonly IAppointmentRepository _appointmentRepository;
+            private readonly IAppointmentService _appointmentService;
 
             public UpdateDoctorScheduleCommandHandler(IMapper mapper, IDoctorScheduleRepository doctorScheduleRepository,
-                                             DoctorScheduleBusinessRules doctorScheduleBusinessRules,IAppointmentRepository appointmentRepository)
+                                             DoctorScheduleBusinessRules doctorScheduleBusinessRules,IAppointmentService appointmentService)
             {
                 _mapper = mapper;
                 _doctorScheduleRepository = doctorScheduleRepository;
                 _doctorScheduleBusinessRules = doctorScheduleBusinessRules;
-                _appointmentRepository = appointmentRepository;
+                _appointmentService = appointmentService;
             }
 
             public async Task<UpdatedDoctorScheduleResponse> Handle(UpdateDoctorScheduleCommand request, CancellationToken cancellationToken)
             {
                 // Ýlk olarak güncellemek istediðimiz mevcut kaydý alalým
-                var existingSchedule = await _doctorScheduleRepository.GetAsync(ds => ds.Id == request.Id && ds.DeletedDate==null);
-                if (existingSchedule == null)
-                {
-                    throw new BusinessException("Doktor takviminizde böyle bir kayýt bulunmamaktadýr.");
-                  
-                }
+                var existingSchedule = await _doctorScheduleBusinessRules.CheckIfDoctorScheduleExists(request.Id, cancellationToken);
+
+
+
+                var appointment = await _doctorScheduleBusinessRules.CheckIfAppointmentsExistOnDateDoctor(request.DoctorID, existingSchedule.Date );
 
                 // Güncellenmek istenen tarih ve doktor ID'si ile silinmiþ bir kayýt var mý diye kontrol edelim
                 var conflictingSchedule = await _doctorScheduleRepository.GetAsync(ds => ds.DoctorID == request.DoctorID && ds.Date == request.Date);
 
-                var appointment=await _appointmentRepository.GetAsync(x=>x.DoctorID==existingSchedule.DoctorID && x.Date==existingSchedule.Date &&x.DeletedDate==null);
-                if (appointment != null)
-                {
-                    throw new BusinessException("Bu tarihe ait hastalar tarafýnda alýnmýþ randevular bulunmaktadýr.Tarihi güncelleyemezsiniz");
-                }
-                else
-                {
-                    if (conflictingSchedule != null && conflictingSchedule.Id != request.Id)
-                    {
-                        if (conflictingSchedule.DeletedDate == null)
-                        {
-                            // Silinmemiþ bir kayýtta çakýþma var, hata fýrlatalým
-                            throw new BusinessException("Bu doktorun belirtilen tarihteki programý zaten mevcut.");
-                        }
-                        else
-                        {
-                            // Silinmiþ bir kayýtta çakýþma var, bu kaydý güncelleyelim
-                            conflictingSchedule.Date = request.Date;
-                            conflictingSchedule.StartTime = request.StartTime;
-                            conflictingSchedule.EndTime = request.EndTime;
-                            conflictingSchedule.UpdatedDate = null;
-                            conflictingSchedule.DeletedDate = null;
-                            //_mapper.Map(request, conflictingSchedule);
-                            //conflictingSchedule.DeletedDate = null; // DeletedDate'i null yap
-                            await _doctorScheduleRepository.UpdateAsync(conflictingSchedule);
+                await _doctorScheduleBusinessRules.HandleConflictingSchedule(conflictingSchedule, existingSchedule, request);
 
-                            // Ýstek yapýlan kaydý silindi olarak iþaretleyelim
-                            existingSchedule.DeletedDate = DateTime.UtcNow;
-                            await _doctorScheduleRepository.UpdateAsync(existingSchedule);
-
-                            // Güncellenen veriyi response olarak dönelim
-                            UpdatedDoctorScheduleResponse updatedResponse = _mapper.Map<UpdatedDoctorScheduleResponse>(conflictingSchedule);
-                            return updatedResponse;
-                        }
-                    }
-                    else
-                    {
-                        // Çakýþan bir kayýt yoksa mevcut kaydý güncelleyelim
-                        _mapper.Map(request, existingSchedule);
-                        await _doctorScheduleRepository.UpdateAsync(existingSchedule);
-                        // Güncellenen veriyi response olarak dönelim
-                        UpdatedDoctorScheduleResponse updatedResponse = _mapper.Map<UpdatedDoctorScheduleResponse>(existingSchedule);
-                        return updatedResponse;
-                    }
+                // Çakýþan bir kayýt yoksa mevcut kaydý güncelleyelim
+                if (conflictingSchedule == null || conflictingSchedule.Id == request.Id)
+                {
+                    _mapper.Map(request, existingSchedule);
+                    await _doctorScheduleRepository.UpdateAsync(existingSchedule);
                 }
+
+                // Güncellenen veriyi response olarak dönelim
+                UpdatedDoctorScheduleResponse updatedResponse = _mapper.Map<UpdatedDoctorScheduleResponse>(existingSchedule);
+                return updatedResponse;
+
+
             }
+          
         }
     }
 }

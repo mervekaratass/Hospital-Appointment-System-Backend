@@ -29,4 +29,6 @@ public interface IAppointmentService
     Task<Appointment> DeleteAsync(Appointment appointment, bool permanent = false);
 
     Task<bool> HasFutureAppointments(Guid doctorId, DateOnly date);
+
+    Task<Appointment> CheckIfAppointmentsExistOnDate(Guid doctorId, DateOnly currentDate);
 }

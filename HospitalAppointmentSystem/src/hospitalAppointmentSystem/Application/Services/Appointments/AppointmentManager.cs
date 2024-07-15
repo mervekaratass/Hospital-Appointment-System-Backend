@@ -80,5 +80,12 @@ public class AppointmentManager : IAppointmentService
         return await _appointmentRepository.AnyAsync(a => a.DoctorID == doctorId && a.Date > currentDate);
     }
 
+    public async Task<Appointment> CheckIfAppointmentsExistOnDate(Guid doctorId, DateOnly currentDate)
+    {
+        return await _appointmentRepository.GetAsync(predicate:ds=>ds.DoctorID==doctorId && ds.Date == currentDate &&ds.DeletedDate==null);
+       
+    }
+
+
 
 }

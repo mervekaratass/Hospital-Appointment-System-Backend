@@ -39,13 +39,7 @@ public class CreateReportCommand : IRequest<CreatedReportResponse>, ISecuredRequ
         }
 
         public async Task<CreatedReportResponse> Handle(CreateReportCommand request, CancellationToken cancellationToken)
-        {/*
-            Report report = _mapper.Map<Report>(request);
-
-            await _reportRepository.AddAsync(report);
-
-            CreatedReportResponse response = _mapper.Map<CreatedReportResponse>(report);
-            return response;*/
+        {
             // Soft delete uygulanmýþ raporlarý kontrol et
             var deletedReport = await _reportRepository.GetAsync(r => r.AppointmentID == request.AppointmentID && r.DeletedDate != null);
 

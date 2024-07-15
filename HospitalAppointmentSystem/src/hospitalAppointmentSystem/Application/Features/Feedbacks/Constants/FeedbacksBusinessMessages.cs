@@ -1,4 +1,4 @@
-namespace Application.Features.Feedbacks.Commands.Constants;
+namespace Application.Features.Feedbacks.Constants;
 
 public static class FeedbacksBusinessMessages
 {
