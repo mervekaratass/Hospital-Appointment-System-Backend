@@ -27,4 +27,6 @@ public interface IDoctorService
     Task<Doctor> AddAsync(Doctor doctor);
     Task<Doctor> UpdateAsync(Doctor doctor);
     Task<Doctor> DeleteAsync(Doctor doctor, bool permanent = false);
+    Task<bool> AnyDoctorsInBranch(int branchId);
+
 }

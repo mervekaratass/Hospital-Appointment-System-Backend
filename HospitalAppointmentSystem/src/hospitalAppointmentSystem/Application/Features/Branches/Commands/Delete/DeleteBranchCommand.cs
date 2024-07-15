@@ -43,6 +43,8 @@ public class DeleteBranchCommand : IRequest<DeletedBranchResponse>, ILoggableReq
             Branch? branch = await _branchRepository.GetAsync(predicate: b => b.Id == request.Id && b.DeletedDate==null, cancellationToken: cancellationToken);
             await _branchBusinessRules.BranchShouldExistWhenSelected(branch);
 
+            await _branchBusinessRules.CheckIfDoctorsExistInBranch(request.Id); // dont delete if branch has doctor
+
             await _branchRepository.DeleteAsync(branch!);
 
             DeletedBranchResponse response = _mapper.Map<DeletedBranchResponse>(branch);

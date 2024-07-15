@@ -18,35 +18,15 @@ public class BranchesController : BaseController
 {
     [HttpPost]
     public async Task<ActionResult<CreatedBranchResponse>> Add([FromBody] CreateBranchCommand command)
-    {
-        GetByNameBranchWithoutControlQuery getByNameQuery = new() { Name = command.Name };
-
-        GetByNameBranchResponse getByNameResponse = await Mediator.Send(getByNameQuery);
-
-        if (getByNameResponse != null && getByNameResponse.Name == command.Name)
-        {
-            return BadRequest("Bu isimde branþ zaten mevcut");
-        }
-
-
+    {        
         CreatedBranchResponse response = await Mediator.Send(command);
 
-        return CreatedAtAction(nameof(GetById), new { response.Id }, response);
-        
+        return CreatedAtAction(nameof(GetById), new { response.Id }, response);        
     }
 
     [HttpPut]
     public async Task<ActionResult<UpdatedBranchResponse>> Update([FromBody] UpdateBranchCommand command)
-    {
-        GetByNameBranchWithoutControlQuery getByNameQuery = new() { Name = command.Name };
-
-        GetByNameBranchResponse getByNameResponse = await Mediator.Send(getByNameQuery);
-
-        if (getByNameResponse != null && getByNameResponse.Name == command.Name)
-        {
-            return BadRequest("Bu isimde branþ zaten mevcut");
-        }
-
+    {       
         UpdatedBranchResponse response = await Mediator.Send(command);
 
         return Ok(response);
@@ -54,22 +34,7 @@ public class BranchesController : BaseController
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<DeletedBranchResponse>> Delete([FromRoute] int id , [FromQuery] PageRequest  pageRequest)
-    {
-        GetListDoctorQuery DoctorIdQuery = new() { PageRequest = pageRequest };
-
-        GetListResponse<GetListDoctorListItemDto> DoctorIdResponse = await Mediator.Send(DoctorIdQuery);
-
-        foreach (var doctor in DoctorIdResponse.Items)
-        {
-
-            if (doctor.BranchID == id)
-            {
-                return BadRequest("Bu branþý silemezsiniz");
-            }
-        }
-
-
-
+    {        
         DeleteBranchCommand command = new() { Id = id };
 
         DeletedBranchResponse response = await Mediator.Send(command);

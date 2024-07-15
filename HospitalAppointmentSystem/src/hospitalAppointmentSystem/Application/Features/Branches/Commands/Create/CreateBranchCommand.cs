@@ -12,15 +12,15 @@ using static Application.Features.Branches.Constants.BranchesOperationClaims;
 
 namespace Application.Features.Branches.Commands.Create;
 
-public class CreateBranchCommand : IRequest<CreatedBranchResponse>,ILoggableRequest, ITransactionalRequest,ISecuredRequest
+public class CreateBranchCommand : IRequest<CreatedBranchResponse>, ILoggableRequest, ITransactionalRequest, ISecuredRequest
 {
     public required string Name { get; set; }
 
-    public string[] Roles => [Admin, Write, BranchesOperationClaims.Create];
+    public string[] Roles => new[] { Admin, Write, BranchesOperationClaims.Create };
 
     public bool BypassCache { get; }
     public string? CacheKey { get; }
-    public string[]? CacheGroupKey => ["GetBranches"];
+    public string[]? CacheGroupKey => new[] { "GetBranches" };
 
     public class CreateBranchCommandHandler : IRequestHandler<CreateBranchCommand, CreatedBranchResponse>
     {
@@ -38,25 +38,16 @@ public class CreateBranchCommand : IRequest<CreatedBranchResponse>,ILoggableRequ
 
         public async Task<CreatedBranchResponse> Handle(CreateBranchCommand request, CancellationToken cancellationToken)
         {
-            // Check if a branch with the same name exists and is deleted
-            Branch? existingBranch = await _branchRepository.GetAsync(b => b.Name == request.Name && b.DeletedDate != null);
+            await _branchBusinessRules.CheckIfBranchNameExistsAndHandle(request.Name);
 
-            if (existingBranch != null)
-            {
-                // Undelete the existing branch
-                existingBranch.DeletedDate = null;
-                await _branchRepository.UpdateAsync(existingBranch);
+            await _branchBusinessRules.CheckIfBranchNameExistsAndNotDeleted(request.Name);
 
-                CreatedBranchResponse response = _mapper.Map<CreatedBranchResponse>(existingBranch);
-                return response;
-            }
-
-            // Create a new branch
             Branch branch = _mapper.Map<Branch>(request);
             await _branchRepository.AddAsync(branch);
 
             CreatedBranchResponse newResponse = _mapper.Map<CreatedBranchResponse>(branch);
             return newResponse;
         }
+
     }
 }

@@ -41,8 +41,9 @@ public class UpdateBranchCommand : IRequest<UpdatedBranchResponse>,  ISecuredReq
         {
             Branch? branch = await _branchRepository.GetAsync(predicate: b => b.Id == request.Id, cancellationToken: cancellationToken);
             await _branchBusinessRules.BranchShouldExistWhenSelected(branch);
-            branch = _mapper.Map(request, branch);
+            await _branchBusinessRules.CheckIfBranchNameExistsAndNotDeleted(request.Name);
 
+            branch = _mapper.Map(request, branch);
             await _branchRepository.UpdateAsync(branch!);
 
             UpdatedBranchResponse response = _mapper.Map<UpdatedBranchResponse>(branch);
