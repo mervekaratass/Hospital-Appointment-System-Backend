@@ -39,7 +39,7 @@ public class GetByAppointmentIdQuery : IRequest<GetByAppointmentIdResponse>, ISe
         {
             Report? report = await _reportRepository.GetAsync(predicate: r => r.AppointmentID == request.Id && r.DeletedDate==null , include: x => x.Include(x => x.Appointment).Include(x => x.Appointment.Patient).Include(x => x.Appointment.Doctor),
                 cancellationToken: cancellationToken);
-            await _reportBusinessRules.ReportShouldExistWhenSelected(report);
+         
 
 
 
