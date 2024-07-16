@@ -90,7 +90,6 @@ namespace Application.Features.Appointments.Commands.Create
                   // Ayný doktor ve tarihte silinmiþ randevu var mý kontrol et
                     Appointment result = await _appointmentBusinessRules.CheckForExistingDeletedAppointment(request,appointment);
 
-
                     await _appointmentBusinessRules.SendAppointmentConfirmationMail(result);
                     CreatedAppointmentResponse response = _mapper.Map<CreatedAppointmentResponse>(result);
                     return response;

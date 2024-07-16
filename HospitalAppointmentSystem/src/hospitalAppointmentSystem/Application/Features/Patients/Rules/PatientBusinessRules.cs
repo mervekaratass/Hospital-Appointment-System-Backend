@@ -48,10 +48,20 @@ public class PatientBusinessRules : BaseBusinessRules
         await PatientShouldExistWhenSelected(patient);
     }
 
-    public async Task UserNationalIdentityShouldBeNotExists(string identity)
+    //public async Task UserNationalIdentityShouldBeNotExists(string identity)
+    //{
+    //    bool doesExists = await _patientRepository.AnyAsync(predicate: u => u.NationalIdentity == identity);
+    //    if (doesExists)
+    //        await throwBusinessException(PatientsBusinessMessages.UserIdentityAlreadyExists);
+    //}
+
+    public async Task UserNationalIdentityShouldBeNotExists(string identity, string dbPatientIdentity)
     {
-        bool doesExists = await _patientRepository.AnyAsync(predicate: u => u.NationalIdentity == identity);
-        if (doesExists)
-            await throwBusinessException(PatientsBusinessMessages.UserIdentityAlreadyExists);
+        if (identity != dbPatientIdentity)
+        {
+            bool doesExists = await _patientRepository.AnyAsync(predicate: u => u.NationalIdentity == identity);
+            if (doesExists)
+                await throwBusinessException(PatientsBusinessMessages.UserIdentityAlreadyExists);
+        }
     }
 }

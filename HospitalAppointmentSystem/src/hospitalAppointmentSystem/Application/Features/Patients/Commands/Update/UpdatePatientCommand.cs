@@ -62,8 +62,9 @@ public class UpdatePatientCommand : IRequest<UpdatedPatientResponse>,  ILoggable
             patient.Phone = CryptoHelper.Encrypt(patient.Phone);
             patient.Address = CryptoHelper.Encrypt(patient.Address);
             patient.Email = CryptoHelper.Encrypt(patient.Email);
+            request.NationalIdentity = CryptoHelper.Encrypt(request.NationalIdentity);
 
-            await _patientBusinessRules.UserNationalIdentityShouldBeNotExists(patient.NationalIdentity);
+            await _patientBusinessRules.UserNationalIdentityShouldBeNotExists(request.NationalIdentity,patient.NationalIdentity);
             await _patientRepository.UpdateAsync(patient!);
 
             UpdatedPatientResponse response = _mapper.Map<UpdatedPatientResponse>(patient);

@@ -61,8 +61,9 @@ public class UpdateDoctorCommand : IRequest<UpdatedDoctorResponse>,  ILoggableRe
             doctor.Phone = CryptoHelper.Encrypt(doctor.Phone);
             doctor.Address = CryptoHelper.Encrypt(doctor.Address);
             doctor.Email = CryptoHelper.Encrypt(doctor.Email);
+            request.NationalIdentity=CryptoHelper.Encrypt(request.NationalIdentity);
 
-            await _doctorBusinessRules.UserNationalIdentityShouldBeNotExists(doctor.NationalIdentity);
+            await _doctorBusinessRules.UserNationalIdentityShouldBeNotExists(request.NationalIdentity,doctor.NationalIdentity);
 
             await _doctorRepository.UpdateAsync(doctor!);
 

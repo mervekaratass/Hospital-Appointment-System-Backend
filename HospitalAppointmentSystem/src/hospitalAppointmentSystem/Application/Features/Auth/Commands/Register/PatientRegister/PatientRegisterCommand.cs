@@ -80,7 +80,7 @@ namespace Application.Features.Auth.Commands.Register.PatientRegister
                         FirstName = request.PatientForRegisterDto.FirstName,
                         LastName = request.PatientForRegisterDto.LastName,
                         Phone = request.PatientForRegisterDto.Phone,
-                        Email = request.PatientForRegisterDto.Email,
+                        Email = request.PatientForRegisterDto.Email.Trim(),
                         PasswordHash = passwordHash,
                         PasswordSalt = passwordSalt,
                     };

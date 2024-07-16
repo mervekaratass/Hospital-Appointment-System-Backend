@@ -44,12 +44,12 @@ public class DoctorBusinessRules : BaseBusinessRules
         await DoctorShouldExistWhenSelected(doctor);
     }
 
-    public async Task UserNationalIdentityShouldBeNotExists(string identity)
-    {
-        bool doesExists = await _doctorRepository.AnyAsync(predicate: u => u.NationalIdentity == identity);
-        if (doesExists)
-            await throwBusinessException(DoctorsBusinessMessages.UserIdentityAlreadyExists);
-    }
+    //public async Task UserNationalIdentityShouldBeNotExists(string identity)
+    //{
+    //    bool doesExists = await _doctorRepository.AnyAsync(predicate: u => u.NationalIdentity == identity);
+    //    if (doesExists)
+    //        await throwBusinessException(DoctorsBusinessMessages.UserIdentityAlreadyExists);
+    //}
 
     public async Task HasFutureAppointments(Guid doctorId, DateOnly currentDate)
     {
@@ -62,4 +62,13 @@ public class DoctorBusinessRules : BaseBusinessRules
 
     }
 
+    public async Task UserNationalIdentityShouldBeNotExists(string identity, string dbPatientIdentity)
+    {
+        if (identity != dbPatientIdentity)
+        {
+            bool doesExists = await _doctorRepository.AnyAsync(predicate: u => u.NationalIdentity == identity);
+            if (doesExists)
+                await throwBusinessException(DoctorsBusinessMessages.UserIdentityAlreadyExists);
+        }
+    }
 }

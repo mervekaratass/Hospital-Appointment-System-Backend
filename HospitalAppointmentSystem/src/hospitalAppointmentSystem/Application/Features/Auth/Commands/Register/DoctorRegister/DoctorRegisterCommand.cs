@@ -79,7 +79,7 @@ public class DoctorRegisterCommand : IRequest<DoctorRegisteredResponse>
                     FirstName = request.DoctorForRegisterDto.FirstName,
                     LastName = request.DoctorForRegisterDto.LastName,
                     Phone = request.DoctorForRegisterDto.Phone,
-                    Email = request.DoctorForRegisterDto.Email,
+                    Email = request.DoctorForRegisterDto.Email.Trim(),
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
                     Title= request.DoctorForRegisterDto.Title,
@@ -91,14 +91,14 @@ public class DoctorRegisterCommand : IRequest<DoctorRegisteredResponse>
 
                 };
 
-         //sinem
+ 
             newDoctor.FirstName = CryptoHelper.Encrypt(newDoctor.FirstName);
             newDoctor.LastName = CryptoHelper.Encrypt(newDoctor.LastName);
             newDoctor.NationalIdentity = CryptoHelper.Encrypt(newDoctor.NationalIdentity);
             newDoctor.Phone = CryptoHelper.Encrypt(newDoctor.Phone);
             newDoctor.Address = CryptoHelper.Encrypt(newDoctor.Address);
             newDoctor.Email = CryptoHelper.Encrypt(newDoctor.Email);
-            //burda bitti
+         
 
 
             Doctor createdDoctor = await _doctorService.AddAsync(newDoctor);

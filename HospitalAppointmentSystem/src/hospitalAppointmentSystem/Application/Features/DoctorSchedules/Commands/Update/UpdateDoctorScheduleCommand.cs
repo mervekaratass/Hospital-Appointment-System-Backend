@@ -64,7 +64,9 @@ namespace Application.Features.DoctorSchedules.Commands.Update
                 if (conflictingSchedule == null || conflictingSchedule.Id == request.Id)
                 {
                     _mapper.Map(request, existingSchedule);
-                    await _doctorScheduleRepository.UpdateAsync(existingSchedule);
+                  
+                   await _doctorScheduleRepository.UpdateAsync(existingSchedule);
+               
                 }
 
                 // Güncellenen veriyi response olarak dönelim
