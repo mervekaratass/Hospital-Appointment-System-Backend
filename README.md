@@ -316,7 +316,7 @@ Proje isterlerine göre eklenen Controller sınıfları ise şunlardır;
 -----------------------------------------------------------------------
 
 ## 🌱PROJEYE EKLENEN EK ÖZELLİKLER:
-### 🪪  MERNİS ile TC Kimlik Numarası Doğrulama
+### 🪪 MERNİS ile TC Kimlik Numarası Doğrulama
 
 <p>📌 Bu özellik, Türkiye Cumhuriyeti Kimlik Numarası (TC Kimlik No) doğrulamasını sağlamak için MERNİS (Merkezi Nüfus İdaresi Sistemi) entegrasyonunu içerir. MERNİS, Türkiye'de nüfus ve kimlik bilgilerinin yönetildiği resmi bir sistemdir. Bu entegrasyon sayesinde kullanıcıların kimlik bilgilerini doğrulayabilir ve güvenli bir şekilde kullanabiliriz. Bu entegrasyon için Application katmanına "TcKimlikNumarasi-Dogrulama" kütüphanesi indirilip projeye entegre edilmiştir. Doğrulama işlemininin sağlanması için TC Kimlik No - Ad - Soyad - Doğum Yılı bilgilerinin doğru bir şekilde girilmesi gerekmektedir. Aksi taktirde doğrulama işlemi başarısız olacaktır. Hasta Bilgileri Güncelleme kodunda bulunan mail doğrulama işlemi aşağıda örnek olarak gösterilmiştir.</p>
 
