@@ -2,25 +2,37 @@
 Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bitirme projesidir. 
 
 #### GEREKSİNİMLER 🛠
-- [x] Web projesi : Asp.NET Web API & Angular 
-- [x] Veri tabanı : MsSQL Server 
-- [x] Dökümantasyon için: Postman,Swagger vs.
+- [x] Web projesi: 
+  ![Asp.NET Web API](https://img.shields.io/badge/asp.net%20web%20api-%231BA3E8.svg?style=for-the-badge&logo=dotnet&logoColor=white)
+  ![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
+- [x] Veri tabanı: 
+  ![MsSQL Server](https://img.shields.io/badge/mssql%20server-%23CC2927.svg?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
+- [x] Dökümantasyon için:
+  ![Postman](https://img.shields.io/badge/postman-%23FF6C37.svg?style=for-the-badge&logo=postman&logoColor=white)
+  ![Swagger](https://img.shields.io/badge/swagger-%2385EA2D.svg?style=for-the-badge&logo=swagger&logoColor=black)
+- [x] Mimari: 
+  ![Onion Mimarisi](https://img.shields.io/badge/onion%20mimarisi-%237D7D7D.svg?style=for-the-badge&logo=generic&logoColor=white)
+- [x] Kullanılan Pattern'ler:
+  ![MediatR](https://img.shields.io/badge/mediatr-%238B008B.svg?style=for-the-badge&logo=generic&logoColor=white)
+  ![CQRS](https://img.shields.io/badge/cqrs-%23121011.svg?style=for-the-badge&logo=generic&logoColor=white)
 
 
-#### PROJEDE KULLANILAN PROGRAMLAMA DİLLERİ VE TEKNOLOJİLER 🎯
+#### PROJEDE KULLANILAN TEKNOLOJİLER VE KÜTÜPHANELER 🛠️
 <p>
   <img alt="C#" src="https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=csharp&logoColor=white" />
   <img alt=".NET" src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white" />
+  <img alt="Entity Framework" src="https://img.shields.io/badge/entity%20framework-%2358B9C9.svg?style=for-the-badge&logo=dotnet&logoColor=white" />
   <img alt="NArchGen" src="https://img.shields.io/badge/narchgen-%23003A70.svg?style=for-the-badge&logo=generic&logoColor=white" />
   <img alt="JWT" src="https://img.shields.io/badge/jwt-%23FFA500.svg?style=for-the-badge&logo=generic&logoColor=white" />
-  <img alt="MediatR" src="https://img.shields.io/badge/mediatr-%238B008B.svg?style=for-the-badge&logo=generic&logoColor=white" />
   <img alt="AutoMapper" src="https://img.shields.io/badge/automapper-%23228B22.svg?style=for-the-badge&logo=generic&logoColor=white" />
+  <img alt="FluentValidation" src="https://img.shields.io/badge/fluentvalidation-%23563D7C.svg?style=for-the-badge&logo=generic&logoColor=white" />
+  <img alt="MailKit" src="https://img.shields.io/badge/mailkit-%234ABDAC.svg?style=for-the-badge&logo=generic&logoColor=white" />
   <img alt="SMTP" src="https://img.shields.io/badge/smtp-%2300C7B7.svg?style=for-the-badge&logo=generic&logoColor=white" />
   <img alt="Quartz" src="https://img.shields.io/badge/quartz-%237D7D7D.svg?style=for-the-badge&logo=generic&logoColor=white" />
   <img alt="Visual Studio" src="https://img.shields.io/badge/Visual%20Studio-5C2D91.svg?style=for-the-badge&logo=visualstudio&logoColor=white" />
-  <img alt="Github" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" />  
-  <img alt="CQRS" src="https://img.shields.io/badge/cqrs-%23121011.svg?style=for-the-badge&logo=generic&logoColor=white" />
+  <img alt="Github" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" />
 </p>
+
 
 #### 📫 NASIL BİR PROJE OLUŞTURDUK?
 <p>Bu proje, hastaların randevu almasını, geçmiş ve gelecek randevularını takip etmelerini ve doktorlar ile kolayca iletişim kurmalarını sağlayan, kullanıcı dostu bir hastane randevu sistemidir.</p>
