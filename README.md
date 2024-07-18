@@ -2,13 +2,14 @@
 Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bitirme projesidir. 
 
 #### GEREKSİNİMLER 🛠
-- [x] Web projesi için: Asp.NET & Angular
-- [x] Veri tabanı işlemleri için: MsSQL Server / PostgreSQL
-- [x] Test işlemleri için: Postman,swagger vs.
+- [x] Web projesi : Asp.NET Web API & Angular 
+- [x] Veri tabanı : MsSQL Server 
+- [x] Dökümantasyon için: Postman,Swagger vs.
+
 
 #### PROJEDE KULLANILAN PROGRAMLAMA DİLLERİ VE TEKNOLOJİLER 🎯
-<p>  
-  <img alt="C#" src="https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=brave&logoColor=white" />
+<p>
+  <img alt="C#" src="https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=csharp&logoColor=white" />
   <img alt=".NET" src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white" />
   <img alt="NArchGen" src="https://img.shields.io/badge/narchgen-%23003A70.svg?style=for-the-badge&logo=generic&logoColor=white" />
   <img alt="JWT" src="https://img.shields.io/badge/jwt-%23FFA500.svg?style=for-the-badge&logo=generic&logoColor=white" />
@@ -16,12 +17,14 @@ Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bit
   <img alt="AutoMapper" src="https://img.shields.io/badge/automapper-%23228B22.svg?style=for-the-badge&logo=generic&logoColor=white" />
   <img alt="SMTP" src="https://img.shields.io/badge/smtp-%2300C7B7.svg?style=for-the-badge&logo=generic&logoColor=white" />
   <img alt="Quartz" src="https://img.shields.io/badge/quartz-%237D7D7D.svg?style=for-the-badge&logo=generic&logoColor=white" />
-  <img alt="Visual Studio" src="https://img.shields.io/badge/Visual%20Studio-5C2D91.svg?style=for-the-badge&logo=brave&logoColor=white" />
-  <img alt="Github" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=brave&logoColor=white" />  
+  <img alt="Visual Studio" src="https://img.shields.io/badge/Visual%20Studio-5C2D91.svg?style=for-the-badge&logo=visualstudio&logoColor=white" />
+  <img alt="Github" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" />  
+  <img alt="CQRS" src="https://img.shields.io/badge/cqrs-%23121011.svg?style=for-the-badge&logo=generic&logoColor=white" />
 </p>
 
 #### 📫 NASIL BİR PROJE OLUŞTURDUK?
-<p>Bu proje, hastaların randevu almasını, geçmiş ve gelecek randevularını takip etmelerini ve doktorlar ile kolayca iletişim kurmalarını sağlayan, kullanıcı dostu bir hastane randevu sistemidir. </p>
+<p>Bu proje,  hastaların randevu almasını, geçmiş ve gelecek randevularını takip etmelerini ve doktorlar ile kolayca iletişim kurmalarını sağlayan, kullanıcı dostu bir hastane randevu sistemidir.</p>
+
 
 <p> Üç tip kullanıcı bulunmaktadır: </p>
 
@@ -46,7 +49,7 @@ Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bit
 - [x] Öneri & Şikayet için oluşturduğu geri bildirimleri görüntüleyebilir ve silebilir. 
 - [x] Kendi bilgilerini güncelleyebilir.
 
-➡️ 2- Hasta 
+➡️ 3- Hasta 
 - [x] Bugünkü Randevularım - Gelecek Randevularım - Raporlarım - Geri Bildirimlerim alanlarını içeren Özet sayfasını görüntüleyebilir.
 - [x] İstediği branş ve doktora randevu alabilir. Gerektiğinde iptal edebilir.
 - [x] Aldığı randevuları Geçmiş Randevular & Gelecek Randevular alanında görüntüleyebilir.
@@ -57,7 +60,18 @@ Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bit
 
 ## PROJE DETAYLARI📝
 
-✎Öncelikle projemiz bir .Net ve Angular teknolojilerini içeren bir web projesidir. Projede veritabanı olarak MsSQL, dökümantasyon olarak Swagger kullanılmıştır. Ayrıca projemizde Narchgen mimarisi kullanılarak daha yönetilebilir bir sistem oluşturulmuştur. 
+Projemiz, .Net ve Angular teknolojilerini içeren modern bir web uygulamasıdır. Projemizde MsSQL kullanılmış olup, dökümantasyon için Swagger entegrasyonu sağlanmıştır.
+
+Bu proje, Kodlamaio tarafından geliştirilen bir kod üreteci olan **narchgen** kullanılarak oluşturulmuştur. Bu sayede, kod üretimi ve yönetimi daha verimli hale getirilmiştir.
+
+Projemizde, **Onion mimarisi**, **Mediatr** ve **CQRS (Command Query Responsibility Segregation)** pattern'leri kullanılarak daha modüler ve yönetilebilir bir yapı sağlanmıştır. Veritabanı işlemleri için **Entity Framework** kullanılmış ve **Code First** yaklaşımı benimsenmiştir.
+
+Ek olarak, projede şu önemli kütüphaneler ve araçlar kullanılmaktadır:
+- **AutoMapper**: Nesneler arası dönüşümleri kolaylaştırmak için.
+- **FluentValidation**: Veri doğrulama süreçlerini yönetmek için.
+- **JWT (JSON Web Token)**: Kimlik doğrulama ve yetkilendirme işlemlerini güvenli bir şekilde gerçekleştirmek için.
+
+Bu sayede, projemiz yüksek performanslı, kolay yönetilebilir ve güvenli bir mimariye sahip olmuştur.
 
 🎯Projede veri tabanı bağlantı yolunu appsetting.development.json içinde yazılmıştır. Bunu yaparak uygulama içerisine bağlantı kodlarımızı yazmak yerine daha genel bir yerde kolay bir şekilde yönetilmesini sağlanmıştır. Böylece bir havuzdaki musluklar gibi hangisini istenilirse o musluktan verilerin çekilmesi sağlanmıştır.
 
@@ -70,12 +84,14 @@ Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bit
 
 🔒 Projemizin katmanları aşağıda gösterilmiştir:
 
-![image](https://github.com/user-attachments/assets/46eb0125-6318-4c26-be4f-a2b17c9f318f)
+</br>
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/0976a4fa-4fea-4f31-8ba7-da3a2739d7a0">
+</br>
 
 -----------------------------------------------------------------------
-### 🌱DOMAIN KATMANI
+## 🌱DOMAIN KATMANI
 
-✎ Entityler Domain katmanında oluşturulmuştur. Aşağıda örnek olarak Branch Entity dosyasını görebilirsiniz. Her class için gereksiz kod tekrarını önlemek adına her class Entity sınıfından miras alır. Diğer entityleri projenin içerisinde inceleyebilirsiniz.
+✎ Entityler Domain katmanında oluşturulmuştur. Aşağıda örnek olarak Branch Entity dosyasını görebilirsiniz. Her class için gereksiz kod tekrarını önlemek adına base class olan Entity sınıfından miras alır. Diğer entityleri projenin içerisinde inceleyebilirsiniz.
 
 Oluşturulan Entityler
 
@@ -111,10 +127,19 @@ public class Branch : Entity<int>
     public virtual ICollection<Doctor> Doctors { get; set; }
 }
 ```
+-----------------------------------------------------------------------
+## 🌱PERSISTENCE KATMANI
 
-### 🌱PERSISTENCE KATMANI
+Persistence katmanı, uygulamanın veri tabanı ile olan etkileşimini düzenleyerek, veri saklama işlemlerinin güvenli ve etkili bir şekilde yönetilmesini sağlayan katmandır.
 
-✎ Oluşturulan Entity sınıflarını veri tabanında gösterebilmek için BaseDbContext sınıfı oluşturulmuştur.Sınıfımız Narchgen tarafından sağlanan DbContext sınıfından kalıtım alarak veritabanında modellerimize karşılık gelecek olan tabloların oluşmasını sağlar.
+</br>
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/1ea4d992-3e39-4d32-83ec-60fe4333d43e">
+</br>
+</br>
+<p>✎ Persistence katmanında, oluşturulan Entity sınıflarını veri tabanı modellerine karşılık gelecek olan tabloların oluşturulması için BaseDbContext sınıfı bulunmaktadır. Ayrıca bu katmanda veri tabanı işlemlerini gerçekleştirmek için oluşturulan repository sınıfları ve Entity sınıflarının veritabanı şemalarını yapılandırmak için kullanılan Entity Configuration Sınıfları bulunmaktadır.</p>
+</br>
+
+📌 Aşağıda BaseDbContext ve BranchConfiguration sınıfları örnek olarak verilmiştir. Diğer sınıfları projeden inceleyebilirsiniz.
 
 ```c#
 public class BaseDbContext : DbContext
@@ -169,16 +194,22 @@ public class BranchConfiguration : IEntityTypeConfiguration<Branch>
 }
 ```
 
-İşlemler tamamlandıktan sonra migration işlemi yapılarak modeller veri tabanına yansıtılmıştır.
-📊 Veri tabanında tablolarımı oluşturuyorum. Aşağıda oluşturulan tabloların diyagramı gösterilmiştir.
+📊İşlemler tamamlandıktan sonra migration işlemi yapılarak modeller veri tabanına yansıtılmıştır. Aşağıda oluşturulan veritabanındaki  tabloların diyagramı gösterilmektedir.
 
-![image](https://github.com/user-attachments/assets/badeff0b-32eb-43cb-80a5-01fb2e9aba7e)
+<img width="1000" alt="image" src="https://github.com/user-attachments/assets/56dec057-ad4b-45ff-849f-d32bb5b6ea74">
+
 -----------------------------------------------------------------------
-### 🌱APPLICATION KATMANI
+## 🌱APPLICATION KATMANI
 
-🌕 Projemizde Fluent Validation ile requestler için kurallar oluşturulmuştur. Peki fluent validation nedir? Fluent Validation bir veri doğrulama kütüphanesidir. Fluent Validation ve benzeri ürünlerin kullanılması, verilerin doğru şekilde yani verilerin oluştururken konulmuş kısıtlamaları sağlayarak kurallara uyumlu halde olmasını ve kullanıcı ya da sistem kaynaklı hataların oluşmasını engeller.
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/f51b7d00-4306-4699-8f9d-97007cc477cd">
+</br>
 
-📃 Bunun için Application katmanına Fluent Validation için gerekli kütüphane indirilip kurallar oluşturulmuştur.
+<p> 
+</br>🌕Bu katmanda, features klasörü altında CQRS Pattern'den faydalanarak her entity  için gerekli olan command ve query sınıfları  ve bunlar için gerekli olan validator sınıfları olşturulmuştur.Ayrıca her entitynin kendi feature klasörü altında rules (kuralların yazılı olduğu), constant (rules için sabit mesajların tutulduğu) ve profile (Automapper için gerekli olan mapleme işlemleri) sınıfı bulunmaktadır. Ayrıca bu katmanda entityler için gerekli servis sınıfları services klasörü altında bulunmaktadır.</br> </p>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/34887671-3942-4bdc-a408-53680a2a9afd">
+
+
+<p></br>📃 Aşağıda Fluent Validation kütüphanesi kullanılarak command için oluşturulan validator sınıfı örnek olarak verilmiştir. Diğer sınıfları projeden inceleyebilirsiniz.</p>
 
 ```c#
 public class CreateBranchCommandValidator : AbstractValidator<CreateBranchCommand>
@@ -193,7 +224,7 @@ public class CreateBranchCommandValidator : AbstractValidator<CreateBranchComman
 🔎 Böylece daha Controller tarafında istek atılmadan requestlerin istenilen kurallara uygun olup olmadığı kontrol edilir.
 
 -----------------------------------------------------------------------
-### 🌱WEBAPI KATMANI
+## 🌱WEBAPI KATMANI
 
 ⚓ Bu katmanda işlemlerin gerçekleştirildiği Controller sınıfları oluşturulur. Aşağıda BranchController dosyasının kodları örnek olarak gösterilmiştir.
 
@@ -263,7 +294,7 @@ public class BranchesController : BaseController
    //diğer metotlara proje kodlarından ulaşabilirsiniz.
 ```
 
-Projede 14 adet Controller sınıfı bulunmaktadır.Bunlardan bazıları Narchgen mimarisi ile hazır gelen Controller sınıfları olup aşağıda gösterilmiştir.
+Projede 14 adet Controller sınıfı bulunmaktadır.Bunlardan bazıları Narchgen genrator ile hazır gelen Controller sınıfları olup aşağıda gösterilmiştir.
 
 - ⚡ AuthController, yetkilendirme işlemlerinin gerçekleştirildiği sınıftır.
 - ⚡ BaseController, diğer Controller sınıflarının miras aldığı Base yapı amacıyla kullanılır.
@@ -285,32 +316,32 @@ Proje isterlerine göre eklenen Controller sınıfları ise şunlardır;
   
 -----------------------------------------------------------------------
 
-### 🌱PROJEMİZE EKLEDİĞİMİZ BAZI KULLANIŞLI ÖZELLİKLER:
-#### ⚓ MERNİS ile TC Kimlik Numarası Doğrulama
+## 🌱PROJEYE EKLENEN EK ÖZELLİKLER:
+### 🪪  MERNİS ile TC Kimlik Numarası Doğrulama
 
-🌕 Bu özellik, Türkiye Cumhuriyeti Kimlik Numarası (TC Kimlik No) doğrulamasını sağlamak için MERNİS (Merkezi Nüfus İdaresi Sistemi) entegrasyonunu içerir. MERNİS, Türkiye'de nüfus ve kimlik bilgilerinin yönetildiği resmi bir sistemdir. Bu entegrasyon sayesinde kullanıcıların kimlik bilgilerini doğrulayabilir ve güvenli bir şekilde kullanabiliriz. Bu entegrasyon için Application katmanına "TcKimlikNumarasi-Dogrulama" kütüphanesi indirilip projeye entegre edilmiştir. Doğrulama işlemininin sağlanması için TC Kimlik No - Ad - Soyad - Doğum Yılı bilgilerinin doğru bir şekilde girilmesi gerekmektedir. Aksi taktirde doğrulama işlemi başarısız olacaktır. Hasta Bilgileri Güncelleme kodunda bulunan mail doğrulama işlemi aşağıda örnek olarak gösterilmiştir.
+<p>📌 Bu özellik, Türkiye Cumhuriyeti Kimlik Numarası (TC Kimlik No) doğrulamasını sağlamak için MERNİS (Merkezi Nüfus İdaresi Sistemi) entegrasyonunu içerir. MERNİS, Türkiye'de nüfus ve kimlik bilgilerinin yönetildiği resmi bir sistemdir. Bu entegrasyon sayesinde kullanıcıların kimlik bilgilerini doğrulayabilir ve güvenli bir şekilde kullanabiliriz. Bu entegrasyon için Application katmanına "TcKimlikNumarasi-Dogrulama" kütüphanesi indirilip projeye entegre edilmiştir. Doğrulama işlemininin sağlanması için TC Kimlik No - Ad - Soyad - Doğum Yılı bilgilerinin doğru bir şekilde girilmesi gerekmektedir. Aksi taktirde doğrulama işlemi başarısız olacaktır. Hasta Bilgileri Güncelleme kodunda bulunan mail doğrulama işlemi aşağıda örnek olarak gösterilmiştir.</p>
 
 ```c#
   await _patientBusinessRules.ValidateNationalIdentityAndBirthYearWithMernis(request.NationalIdentity, request.FirstName, request.LastName, request.DateOfBirth.Year);
 ```
 
-#### ⚓ Email Adresi Doğrulama
+### 📧 Email Adresi Doğrulama
 
-🌕 Bu özellik, kullanıcıların sisteme kayıt olurken sağladıkları e-posta adreslerinin doğruluğunu kontrol etmeyi amaçlar. Doğrulama işlemi, kullanıcıların iletişim bilgilerinin güncel ve geçerli olmasını sağlayarak, iletişimde ve hesap yönetiminde doğru bilgilerin kullanılmasını destekler. Hastanın sisteme kayıt olduktan sonra mail adresini doğrulama şartı eklenmiştir. Bu sayede hastanın kayıt olurken girmiş olduğu mail adresine bir doğrulama linki yollandı. Hasta bu link aracılığıyla malini doğrularsa sisteme giriş yapabilmektedir. Aksi taktirde sisteme giriş yapabilmesi mümkün olmayacaktır. Aşağıda doğrulama mailinin bir görseli bulunmaktadır:
+<p>📌 Bu özellik, kullanıcıların sisteme kayıt olurken sağladıkları e-posta adreslerinin doğruluğunu kontrol etmeyi amaçlar. Doğrulama işlemi, kullanıcıların iletişim bilgilerinin güncel ve geçerli olmasını sağlayarak, iletişimde ve hesap yönetiminde doğru bilgilerin kullanılmasını destekler. Hastanın sisteme kayıt olduktan sonra mail adresini doğrulama şartı eklenmiştir. Bu sayede hastanın kayıt olurken girmiş olduğu mail adresine bir doğrulama linki yollandı. Hasta bu link aracılığıyla malini doğrularsa sisteme giriş yapabilmektedir. Aksi taktirde sisteme giriş yapabilmesi mümkün olmayacaktır. Aşağıda doğrulama mailinin bir görseli bulunmaktadır:</p>
 
 <img alt="Email Doğrulama Ekranı" src="https://github.com/user-attachments/assets/6c7451ba-c953-4eb8-9ad1-ba962b9100f2" width="400" height="auto" />
 
 Kullanıcı mail doğrulamasını 15 dakika içinde yapması durumunda sisteme giriş yapabilir. 15 dakikadan fazla süren doğrulama işlemleri başarısız olacaktır ve kullanıcı tekrar kayıt olmak zorundadır.
 
-#### ⚓ Randevu Alındığında veya Mevcut Randevu İptal Edildiğinde Bilgilendirme Maili Gönderilmesi
+### 📧 Randevu Alındığında veya Mevcut Randevu İptal Edildiğinde Bilgilendirme Maili Gönderilmesi
 
-🌕 Bu özellik, kullanıcıların randevu işlemleri üzerinde gerçekleşen değişiklikler (randevu alma veya iptal etme) durumunda otomatik olarak bilgilendirme e-postaları gönderilmesini sağlar. Kullanıcılar bu e-postalar aracılığıyla randevu durumları hakkında anlık bilgi sahibi olabilirler. MailKit kütüphanesi ve SMTP ayarları, bu özelliğin çalışması için temel altyapıyı sağlar:
+<p>📌 Bu özellik, kullanıcıların randevu işlemleri üzerinde gerçekleşen değişiklikler (randevu alma veya iptal etme) durumunda otomatik olarak bilgilendirme e-postaları gönderilmesini sağlar. Kullanıcılar bu e-postalar aracılığıyla randevu durumları hakkında anlık bilgi sahibi olabilirler. MailKit kütüphanesi ve SMTP ayarları, bu özelliğin çalışması için temel altyapıyı sağlar:
 
-----MailKit: E-posta gönderme işlemleri için kullanılan güçlü ve esnek bir .NET kütüphanesidir. MailKit, SMTP protokolü üzerinden e-posta gönderimini yönetir ve gelişmiş e-posta işlevselliği sağlar.
+- **MailKit**: E-posta gönderme işlemleri için kullanılan güçlü ve esnek bir .NET kütüphanesidir. MailKit, SMTP protokolü üzerinden e-posta gönderimini yönetir ve gelişmiş e-posta işlevselliği sağlar.
 
-----SMTP Ayarları: MailKit'in kullanılabilmesi için SMTP (Simple Mail Transfer Protocol) sunucu ayarları yapılandırılır. Bu ayarlar, e-posta gönderimini sağlayan sunucunun adresi, bağlantı portu, kimlik doğrulama bilgileri gibi bilgileri içerir.
+- **SMTP Ayarları**: MailKit'in kullanılabilmesi için SMTP (Simple Mail Transfer Protocol) sunucu ayarları yapılandırılır. Bu ayarlar, e-posta gönderimini sağlayan sunucunun adresi, bağlantı portu, kimlik doğrulama bilgileri gibi bilgileri içerir.
 
-Aşağıda örnek olarak randevu alma işlemi sonrası mail gönderme kodları gösterilmiştir.
+Aşağıda örnek olarak randevu alma işlemi sonrası mail gönderme kodları gösterilmiştir.</p>
 
 ```c#
    public async Task SendAppointmentConfirmationMail(Appointment appointment)
@@ -360,9 +391,9 @@ Aşağıda örnek olarak randevu alma işlemi sonrası mail gönderme kodları g
       }
 ```
 
-#### ⚓ Randevudan 24 Saat Önce Hatırlatma Maili Gönderilmesi
+### 🔔 Randevudan 24 Saat Önce Hatırlatma Maili Gönderilmesi
 
-🌕 Bu özellik, kullanıcıların randevu işlemleri için otomatik hatırlatma e-postaları almasını sağlar. Infrastructure katmanına indirilen Quartz kütüphanesi kullanılarak oluşturulan zamanlayıcı, randevu tarihinden 24 saat önce e-posta gönderim işlemini başlatır. Bu sayede kullanıcılar randevularını unutmaz ve gerektiği şekilde hazırlıklarını yapabilirler. Aşağıda Quartz ayarlarının yapıldığı komutları içeren Program.cs sayfasına ait kodlar gösterilmiştir.
+<p>📌 Bu özellik, kullanıcıların randevu işlemleri için otomatik hatırlatma e-postaları almasını sağlar. Infrastructure katmanına indirilen Quartz kütüphanesi kullanılarak oluşturulan zamanlayıcı, randevu tarihinden 24 saat önce e-posta gönderim işlemini başlatır. Bu sayede kullanıcılar randevularını unutmaz ve gerektiği şekilde hazırlıklarını yapabilirler. Aşağıda Quartz ayarlarının yapıldığı komutları içeren Program.cs sayfasına ait kodlar gösterilmiştir.</p>
 
 ```c#
  builder.Services.AddQuartz(q =>
@@ -379,9 +410,9 @@ Aşağıda örnek olarak randevu alma işlemi sonrası mail gönderme kodları g
 
 ```
 
-#### ⚓ Kullanıcı Bilgilerinin Veri Tabanında Şifrelenmiş Olarak Tutulması
+### 🔐 Kullanıcı Bilgilerinin Veri Tabanında Şifrelenmiş Olarak Tutulması
 
-🌕 Bu özellik, kullanıcıların hassas bilgilerinin (ad, soyad, adres, e-posta, telefon numarası, kimlik numarası gibi) veritabanında güvenli bir şekilde saklanmasını sağlar. Bu bilgilerin şifrelenmesi, kullanıcı gizliliğini korumak ve veri güvenliğini sağlamak için önemlidir. Projede, bu şifreleme işlemi için CryptoHelper sınıfı kullanılmıştır. CryptoHelper, şifreleme algoritmalarını yönetmek ve kullanıcı bilgilerini güvenli bir şekilde saklamak için kullanılır. Aşağıda hasta bilgilerinin şifrelenme işlemi gösterilmiştir:
+<p>📌 Bu özellik, kullanıcıların hassas bilgilerinin (ad, soyad, adres, e-posta, telefon numarası, kimlik numarası gibi) veritabanında güvenli bir şekilde saklanmasını sağlar. Bu bilgilerin şifrelenmesi, kullanıcı gizliliğini korumak ve veri güvenliğini sağlamak için önemlidir. Projede, bu şifreleme işlemi için CryptoHelper sınıfı kullanılmıştır. CryptoHelper, şifreleme algoritmalarını yönetmek ve kullanıcı bilgilerini güvenli bir şekilde saklamak için kullanılır. Aşağıda hasta bilgilerinin şifrelenme işlemi gösterilmiştir:</p>
 
 ```c#
  public async Task<UpdatedPatientResponse> Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
@@ -411,7 +442,8 @@ Aşağıda örnek olarak randevu alma işlemi sonrası mail gönderme kodları g
 
 ```
 -----------------------------------------------------------------------
-Anlatacaklarım bu kadar. Umarım açık olmuştur. 🧕🏻 Görüşürüz 🎉
+
+Görüşürüz 🎉
 
 ## Badges
 
