@@ -23,8 +23,7 @@ Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bit
 </p>
 
 #### 📫 NASIL BİR PROJE OLUŞTURDUK?
-<p>Bu proje,  hastaların randevu almasını, geçmiş ve gelecek randevularını takip etmelerini ve doktorlar ile kolayca iletişim kurmalarını sağlayan, kullanıcı dostu bir hastane randevu sistemidir.</p>
-
+<p>Bu proje, hastaların randevu almasını, geçmiş ve gelecek randevularını takip etmelerini ve doktorlar ile kolayca iletişim kurmalarını sağlayan, kullanıcı dostu bir hastane randevu sistemidir.</p>
 
 <p> Üç tip kullanıcı bulunmaktadır: </p>
 
