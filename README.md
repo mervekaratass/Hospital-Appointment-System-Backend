@@ -282,7 +282,134 @@ Proje isterlerine göre eklenen Controller sınıfları ise şunlardır;
 - ⚡ ManagersController, yönetici işlemlerinin gerçekleştirildiği sınıftır.
 - ⚡ PatientsController, hasta işlemlerinin gerçekleştirildiği sınıftır.
 - ⚡ ReportsController, rapor işlemlerinin gerçekleştirildiği sınıftır.
+  
+-----------------------------------------------------------------------
 
+### 🌱PROJEMİZE EKLEDİĞİMİZ BAZI KULLANIŞLI ÖZELLİKLER:
+#### ⚓ MERNİS ile TC Kimlik Numarası Doğrulama
+
+🌕 Bu özellik, Türkiye Cumhuriyeti Kimlik Numarası (TC Kimlik No) doğrulamasını sağlamak için MERNİS (Merkezi Nüfus İdaresi Sistemi) entegrasyonunu içerir. MERNİS, Türkiye'de nüfus ve kimlik bilgilerinin yönetildiği resmi bir sistemdir. Bu entegrasyon sayesinde kullanıcıların kimlik bilgilerini doğrulayabilir ve güvenli bir şekilde kullanabiliriz. Bu entegrasyon için Application katmanına "TcKimlikNumarasi-Dogrulama" kütüphanesi indirilip projeye entegre edilmiştir. Doğrulama işlemininin sağlanması için TC Kimlik No - Ad - Soyad - Doğum Yılı bilgilerinin doğru bir şekilde girilmesi gerekmektedir. Aksi taktirde doğrulama işlemi başarısız olacaktır. Hasta Bilgileri Güncelleme kodunda bulunan mail doğrulama işlemi aşağıda örnek olarak gösterilmiştir.
+
+```c#
+  await _patientBusinessRules.ValidateNationalIdentityAndBirthYearWithMernis(request.NationalIdentity, request.FirstName, request.LastName, request.DateOfBirth.Year);
+```
+
+#### ⚓ Email Adresi Doğrulama
+
+🌕 Bu özellik, kullanıcıların sisteme kayıt olurken sağladıkları e-posta adreslerinin doğruluğunu kontrol etmeyi amaçlar. Doğrulama işlemi, kullanıcıların iletişim bilgilerinin güncel ve geçerli olmasını sağlayarak, iletişimde ve hesap yönetiminde doğru bilgilerin kullanılmasını destekler. Hastanın sisteme kayıt olduktan sonra mail adresini doğrulama şartı eklenmiştir. Bu sayede hastanın kayıt olurken girmiş olduğu mail adresine bir doğrulama linki yollandı. Hasta bu link aracılığıyla malini doğrularsa sisteme giriş yapabilmektedir. Aksi taktirde sisteme giriş yapabilmesi mümkün olmayacaktır. Aşağıda doğrulama mailinin bir görseli bulunmaktadır:
+
+<img alt="Email Doğrulama Ekranı" src="https://github.com/user-attachments/assets/6c7451ba-c953-4eb8-9ad1-ba962b9100f2" width="400" height="auto" />
+
+Kullanıcı mail doğrulamasını 15 dakika içinde yapması durumunda sisteme giriş yapabilir. 15 dakikadan fazla süren doğrulama işlemleri başarısız olacaktır ve kullanıcı tekrar kayıt olmak zorundadır.
+
+#### ⚓ Randevu Alındığında veya Mevcut Randevu İptal Edildiğinde Bilgilendirme Maili Gönderilmesi
+
+🌕 Bu özellik, kullanıcıların randevu işlemleri üzerinde gerçekleşen değişiklikler (randevu alma veya iptal etme) durumunda otomatik olarak bilgilendirme e-postaları gönderilmesini sağlar. Kullanıcılar bu e-postalar aracılığıyla randevu durumları hakkında anlık bilgi sahibi olabilirler. MailKit kütüphanesi ve SMTP ayarları, bu özelliğin çalışması için temel altyapıyı sağlar:
+
+----MailKit: E-posta gönderme işlemleri için kullanılan güçlü ve esnek bir .NET kütüphanesidir. MailKit, SMTP protokolü üzerinden e-posta gönderimini yönetir ve gelişmiş e-posta işlevselliği sağlar.
+
+----SMTP Ayarları: MailKit'in kullanılabilmesi için SMTP (Simple Mail Transfer Protocol) sunucu ayarları yapılandırılır. Bu ayarlar, e-posta gönderimini sağlayan sunucunun adresi, bağlantı portu, kimlik doğrulama bilgileri gibi bilgileri içerir.
+
+Aşağıda örnek olarak randevu alma işlemi sonrası mail gönderme kodları gösterilmiştir.
+
+```c#
+   public async Task SendAppointmentConfirmationMail(Appointment appointment)
+  {
+      // Mail içeriğini hazırla
+      var mailMessage = new MimeMessage();
+      mailMessage.From.Add(new MailboxAddress("Pair 5 Hastanesi", "fatmabireltr@gmail.com")); // Gönderen bilgisi
+      appointment.Patient.Email = CryptoHelper.Decrypt(appointment.Patient.Email);
+      appointment.Patient.FirstName = CryptoHelper.Decrypt(appointment.Patient.FirstName);
+      appointment.Patient.LastName = CryptoHelper.Decrypt(appointment.Patient.LastName);
+      appointment.Doctor.FirstName = CryptoHelper.Decrypt(appointment.Doctor.FirstName);
+      appointment.Doctor.LastName = CryptoHelper.Decrypt(appointment.Doctor.LastName);
+
+      mailMessage.To.Add(new MailboxAddress("Pair 5 Hastanesi", appointment.Patient.Email)); // Alıcı bilgisi 
+      mailMessage.Subject = "Randevu Bilgilendirme"; // Mail konusu
+
+      // HTML ve CSS içeriği oluştur
+      var bodyBuilder = new BodyBuilder();
+      bodyBuilder.HtmlBody = $@"
+     <html>
+      <head>
+          <style>
+              body {{ font-family: Arial, sans-serif; }}
+              .container {{ border: 1px solid red; padding: 10px; }}
+          </style>
+      </head>
+      <body>
+          <div class='container'>
+              <p>Sayın {appointment.Patient.FirstName} {appointment.Patient.LastName},</p>
+              <p>{appointment.Date} tarihinde, saat {appointment.Time} için bir randevu aldınız.</p>
+              <p>Doktor: {appointment.Doctor.Title} {appointment.Doctor.FirstName} {appointment.Doctor.LastName}</p>
+              <p>Branş: {appointment.Doctor.Branch.Name}</p>
+          </div>
+      </body>
+      </html>";
+
+      // MimeKit'e gövdeyi ayarla
+      mailMessage.Body = bodyBuilder.ToMessageBody();
+
+      // SMTP ile bağlantı kur ve maili gönder
+      using (var smtp = new SmtpClient())
+      {
+          smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+          smtp.Authenticate("fatmabireltr@gmail.com", "secretsmtppassword");
+          await smtp.SendAsync(mailMessage);
+          smtp.Disconnect(true);
+      }
+```
+
+#### ⚓ Randevudan 24 Saat Önce Hatırlatma Maili Gönderilmesi
+
+🌕 Bu özellik, kullanıcıların randevu işlemleri için otomatik hatırlatma e-postaları almasını sağlar. Infrastructure katmanına indirilen Quartz kütüphanesi kullanılarak oluşturulan zamanlayıcı, randevu tarihinden 24 saat önce e-posta gönderim işlemini başlatır. Bu sayede kullanıcılar randevularını unutmaz ve gerektiği şekilde hazırlıklarını yapabilirler. Aşağıda Quartz ayarlarının yapıldığı komutları içeren Program.cs sayfasına ait kodlar gösterilmiştir.
+
+```c#
+ builder.Services.AddQuartz(q =>
+{
+    q.UseMicrosoftDependencyInjectionJobFactory();
+    // Job ve Trigger ekleyin
+    var jobKey = new JobKey("ReminderAppointmentJob"); // Oluşturulan Reminder 
+    q.AddJob<ReminderAppointmentJob>(opts => opts.WithIdentity(jobKey));
+    q.AddTrigger(opts => opts
+        .ForJob(jobKey)
+        .WithIdentity("ReminderAppointmentJob-trigger")
+        .WithCronSchedule("0 0 0 ? * *")); // Her gün 00:00'da çalışacak şekilde ayarlandı
+});
+
+```
+
+#### ⚓ Kullanıcı Bilgilerinin Veri Tabanında Şifrelenmiş Olarak Tutulması
+
+🌕 Bu özellik, kullanıcıların hassas bilgilerinin (ad, soyad, adres, e-posta, telefon numarası, kimlik numarası gibi) veritabanında güvenli bir şekilde saklanmasını sağlar. Bu bilgilerin şifrelenmesi, kullanıcı gizliliğini korumak ve veri güvenliğini sağlamak için önemlidir. Projede, bu şifreleme işlemi için CryptoHelper sınıfı kullanılmıştır. CryptoHelper, şifreleme algoritmalarını yönetmek ve kullanıcı bilgilerini güvenli bir şekilde saklamak için kullanılır. Aşağıda hasta bilgilerinin şifrelenme işlemi gösterilmiştir:
+
+```c#
+ public async Task<UpdatedPatientResponse> Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
+ {
+     //MERNIS VALIDATION
+     await _patientBusinessRules.ValidateNationalIdentityAndBirthYearWithMernis(request.NationalIdentity, request.FirstName, request.LastName, request.DateOfBirth.Year);
+
+     Patient? patient = await _patientRepository.GetAsync(predicate: p => p.Id == request.Id, cancellationToken: cancellationToken);
+     await _patientBusinessRules.PatientShouldExistWhenSelected(patient);
+
+     patient = _mapper.Map(request, patient);
+
+    //ENCRYPT informations
+     patient.FirstName = CryptoHelper.Encrypt(patient.FirstName);
+     patient.LastName = CryptoHelper.Encrypt(patient.LastName);
+     patient.NationalIdentity = CryptoHelper.Encrypt(patient.NationalIdentity);
+     patient.Phone = CryptoHelper.Encrypt(patient.Phone);
+     patient.Address = CryptoHelper.Encrypt(patient.Address);
+     patient.Email = CryptoHelper.Encrypt(patient.Email);
+
+     await _patientBusinessRules.UserNationalIdentityShouldBeNotExists(patient.Id,patient.NationalIdentity);
+     await _patientRepository.UpdateAsync(patient!);
+
+     UpdatedPatientResponse response = _mapper.Map<UpdatedPatientResponse>(patient);
+     return response;
+ }
+
+```
 -----------------------------------------------------------------------
 Anlatacaklarım bu kadar. Umarım açık olmuştur. 🧕🏻 Görüşürüz 🎉
 
