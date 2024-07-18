@@ -1,12 +1,26 @@
-# Hospital Appointment System📝
+# Hastane Randevu Sistemi📝
 Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bitirme projesidir. 
 
-🛠 Gereksinimler: 
+#### GEREKSİNİMLER 🛠
 - [x] Web projesi için: Asp.NET & Angular
 - [x] Veri tabanı işlemleri için: MsSQL Server / PostgreSQL
 - [x] Test işlemleri için: Postman,swagger vs.
 
-📫 Nasıl bir proje oluşturduk?
+#### PROJEDE KULLANILAN PROGRAMLAMA DİLLERİ VE TEKNOLOJİLER 🎯
+<p>  
+  <img alt="C#" src="https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=brave&logoColor=white" />
+  <img alt=".NET" src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white" />
+  <img alt="NArchGen" src="https://img.shields.io/badge/narchgen-%23003A70.svg?style=for-the-badge&logo=generic&logoColor=white" />
+  <img alt="JWT" src="https://img.shields.io/badge/jwt-%23FFA500.svg?style=for-the-badge&logo=generic&logoColor=white" />
+  <img alt="MediatR" src="https://img.shields.io/badge/mediatr-%238B008B.svg?style=for-the-badge&logo=generic&logoColor=white" />
+  <img alt="AutoMapper" src="https://img.shields.io/badge/automapper-%23228B22.svg?style=for-the-badge&logo=generic&logoColor=white" />
+  <img alt="SMTP" src="https://img.shields.io/badge/smtp-%2300C7B7.svg?style=for-the-badge&logo=generic&logoColor=white" />
+  <img alt="Quartz" src="https://img.shields.io/badge/quartz-%237D7D7D.svg?style=for-the-badge&logo=generic&logoColor=white" />
+  <img alt="Visual Studio" src="https://img.shields.io/badge/Visual%20Studio-5C2D91.svg?style=for-the-badge&logo=brave&logoColor=white" />
+  <img alt="Github" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=brave&logoColor=white" />  
+</p>
+
+#### 📫 NASIL BİR PROJE OLUŞTURDUK?
 <p>Bu proje, hastaların randevu almasını, geçmiş ve gelecek randevularını takip etmelerini ve doktorlar ile kolayca iletişim kurmalarını sağlayan, kullanıcı dostu bir hastane randevu sistemidir. </p>
 
 <p> Üç tip kullanıcı bulunmaktadır: </p>
@@ -43,7 +57,7 @@ Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bit
 
 ## PROJE DETAYLARI📝
 
-✎Öncelikle projemiz bir .Net ve Angular teknolojilerini içeren bir web projesidir .Projede veritabanı olarak MsSQL, dökümantasyon olarak Swagger kullanılmıştır. Ayrıca projemizde Narchgen mimarisi kullanılarak daha yönetilebilir bir sistem oluşturulmuştur. 
+✎Öncelikle projemiz bir .Net ve Angular teknolojilerini içeren bir web projesidir. Projede veritabanı olarak MsSQL, dökümantasyon olarak Swagger kullanılmıştır. Ayrıca projemizde Narchgen mimarisi kullanılarak daha yönetilebilir bir sistem oluşturulmuştur. 
 
 🎯Projede veri tabanı bağlantı yolunu appsetting.development.json içinde yazılmıştır. Bunu yaparak uygulama içerisine bağlantı kodlarımızı yazmak yerine daha genel bir yerde kolay bir şekilde yönetilmesini sağlanmıştır. Böylece bir havuzdaki musluklar gibi hangisini istenilirse o musluktan verilerin çekilmesi sağlanmıştır.
 
