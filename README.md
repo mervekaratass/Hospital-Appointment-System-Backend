@@ -205,7 +205,7 @@ public class BranchConfiguration : IEntityTypeConfiguration<Branch>
 }
 ```
 
-📊İşlemler tamamlandıktan sonra migration işlemi yapılarak modeller veri tabanına yansıtılmıştır. Aşağıda oluşturulan veritabanındaki  tabloların diyagramı gösterilmektedir.
+📊İşlemler tamamlandıktan sonra migration işlemi yapılarak modeller veri tabanına yansıtılmıştır. Aşağıda oluşturulan veritabanındaki tabloların diyagramı gösterilmektedir.
 
 <img width="1000" alt="image" src="https://github.com/user-attachments/assets/56dec057-ad4b-45ff-849f-d32bb5b6ea74">
 
@@ -305,7 +305,7 @@ public class BranchesController : BaseController
    //diğer metotlara proje kodlarından ulaşabilirsiniz.
 ```
 
-Projede 14 adet Controller sınıfı bulunmaktadır.Bunlardan bazıları Narchgen genrator ile hazır gelen Controller sınıfları olup aşağıda gösterilmiştir.
+Projede 14 adet Controller sınıfı bulunmaktadır.Bunlardan bazıları Narchgen Code Generator ile hazır gelen Controller sınıfları olup aşağıda gösterilmiştir.
 
 - ⚡ AuthController, yetkilendirme işlemlerinin gerçekleştirildiği sınıftır.
 - ⚡ BaseController, diğer Controller sınıflarının miras aldığı Base yapı amacıyla kullanılır.
@@ -453,7 +453,7 @@ Aşağıda örnek olarak randevu alma işlemi sonrası mail gönderme kodları g
 
 ```
 
-Projenin frontend kısmına <a href="https://github.com/Fatmabirel/Hospital-Frontend">buradan</a>  ulaşabilirsiniz.
+Projenin frontend kısmına <a href="https://github.com/Fatmabirel/Hospital-Frontend">buradan</a> ulaşabilirsiniz.
 
 -----------------------------------------------------------------------
 
