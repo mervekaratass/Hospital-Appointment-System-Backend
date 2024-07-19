@@ -1,5 +1,7 @@
+<p> 📌 Projenin frontend kısmına <a href="https://github.com/Fatmabirel/Hospital-Frontend">buradan</a> ulaşabilirsiniz. </p>
+
 # Hastane Randevu Sistemi📝
-Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bitirme projesidir. 
+Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bitirme projesinin backend tarafıdır. 
 
 #### GEREKSİNİMLER 🛠
 - [x] Web projesi: 
@@ -453,7 +455,7 @@ Aşağıda örnek olarak randevu alma işlemi sonrası mail gönderme kodları g
 
 ```
 
-<p> 📌 Projenin frontend kısmına <a href="https://github.com/Fatmabirel/Hospital-Frontend">buradan</a> ulaşabilirsiniz. </p>
+
 <p> 📌 Projenin veri tabanı backup dosyasına <a href="https://github.com/mervekaratass/Hospital/blob/main/HospitalAppointmentSystem/Hospital.bak"> buradan </a> ulaşabilirsiniz. </p>
 
 -----------------------------------------------------------------------
