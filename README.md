@@ -1,7 +1,7 @@
-<p> 📌 Projenin frontend kısmına <a href="https://github.com/Fatmabirel/Hospital-Frontend">buradan</a> ulaşabilirsiniz. </p>
-
 # Hastane Randevu Sistemi📝
 Bu proje Tobeto ile gerçekleştirilen .NET & Angular Full Stack eğitiminin bitirme projesinin backend tarafıdır. 
+
+<p> 📌 Projenin frontend kısmına <a href="https://github.com/Fatmabirel/Hospital-Frontend">buradan</a> ulaşabilirsiniz. </p>
 
 #### GEREKSİNİMLER 🛠
 - [x] Web projesi: 
