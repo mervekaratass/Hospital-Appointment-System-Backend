@@ -453,7 +453,8 @@ Aşağıda örnek olarak randevu alma işlemi sonrası mail gönderme kodları g
 
 ```
 
-Projenin frontend kısmına <a href="https://github.com/Fatmabirel/Hospital-Frontend">buradan</a> ulaşabilirsiniz.
+<p> 📌 Projenin frontend kısmına <a href="https://github.com/Fatmabirel/Hospital-Frontend">buradan</a> ulaşabilirsiniz. </p>
+<p> 📌 Projenin veri tabanı backup dosyasına <a href="https://github.com/mervekaratass/Hospital/blob/main/HospitalAppointmentSystem/Hospital.bak"> buradan </a> ulaşabilirsiniz. </p>
 
 -----------------------------------------------------------------------
 
